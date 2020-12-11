@@ -57,3 +57,14 @@
     width: 5px;
     padding-right: 30px;
   }
+
+  a{
+    color: #ccc;
+    text-decoration: none;
+  }
+
+  a:hover{
+    color: #ccc;
+    text-decoration: none;
+    opacity: 0.4;
+  }

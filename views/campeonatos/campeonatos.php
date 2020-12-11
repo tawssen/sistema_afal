@@ -4,7 +4,7 @@
 </div>
 </div>
 
-<div class="container mt-3 border p-4">
+<div class="container mt-3 border-top border-bottom p-4">
     <div class="row">
         <div class="col-lg-12">
             <div class="table-responsive">
@@ -16,6 +16,7 @@
                             <th>ASOCIACIÓN</th>
                             <th>SERIE</th>
                             <th>ESTADO</th>
+                            <th class="text-center">ACCIONES</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -26,18 +27,23 @@
                             <td><?php echo $campeonatos['NOMBRE_ASOCIACION']; ?></td>
                             <td><?php echo $campeonatos['NOMBRE_SERIE']; ?></td>
                             <td><?php echo $campeonatos['NOMBRE_ESTADO_CAMPEONATO']; ?></td>
+                            <td class="text-center">
+                                <button class="btn btn-success">Editar</button>
+                                <button class="btn btn-danger">Borrar</button>
+                            </td>
                         </tr>
                     <?php } mysqli_free_result($todosLosCampeonatos);?>
                     </tbody>
-                    <tfoot>
+                    <!--<tfoot>
                         <tr>
                             <th>NOMBRE</th>
                             <th>INICIO</th>
                             <th>ASOCIACIÓN</th>
                             <th>SERIE</th>
                             <th>ESTADO</th>
+                            <th class="text-center">ACCIONES</th>
                         </tr>
-                    </tfoot>
+                    </tfoot>-->
                 </table>
             </div>
         </div>
