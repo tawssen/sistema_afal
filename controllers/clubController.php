@@ -6,10 +6,13 @@ require_once 'config/parameters.php';
 class clubController{
 
     public function index(){
-        include_once 'views/club/club.php';
+        
+        $club = new Club();
+        $todoslosClubes = $club->obtenerClubes();
+        include_once 'views/clubes/club.php';
     }
 
-
+    
 
 
 }

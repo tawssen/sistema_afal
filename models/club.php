@@ -1,5 +1,6 @@
 <?php
 
+require_once 'config/database.php';
 class Club{
 
     private $id_club;
@@ -105,4 +106,17 @@ class Club{
     public function setIdTipoEstado($id_tipo_estado){
         $this->id_tipo_estado = $id_tipo_estado;
     }
+
+    public function obtenerClubes(){
+        $sql = "select * from club
+        inner join direccion on(club.ID_DIRECCION_FK = direccion.ID_DIRECCION)
+        inner join correo on(club.ID_CORREO_FK = correo.ID_CORREO)
+        inner join asociacion on(club.ID_ASOCIACION_FK = asociacion.ID_ASOCIACION)
+        inner join tipo_estado on(club.ID_TIPO_ESTADO_FK = tipo_estado.ID_TIPO_ESTADO)";
+        $database = Database::connect();
+        $datosObtenidosClubes = $database->query($sql);
+        return $datosObtenidosClubes;
+    }
+    
+
 }
