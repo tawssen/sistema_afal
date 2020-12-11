@@ -32,10 +32,10 @@
 
 
   </head>
-  <body>
+  <body style=""> <!-- Cambiar color al fondo -->
 <main>
 
-<header>
+<header class=>
   <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
     <div class="container-fluid">
       <a class="navbar-brand" href="#">Asociación Linares</a>
