@@ -1,4 +1,4 @@
-    <div id="myCarousel" class="carousel slide" data-bs-ride="carousel">
+    <div id="myCarousel" class="carousel slide container-l" data-bs-ride="carousel">
     <ol class="carousel-indicators">
       <li data-bs-target="#myCarousel" data-bs-slide-to="0" class="active"></li>
       <li data-bs-target="#myCarousel" data-bs-slide-to="1"></li>
@@ -162,6 +162,4 @@
     </div>
   </div>
 </div>
-
-    <script src="../assets/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="javascript/main.js"></script>
+<script src="javascript/main.js"></script>
