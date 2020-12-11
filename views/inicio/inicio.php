@@ -162,4 +162,4 @@
     </div>
   </div>
 </div>
-<script src="javascript/main.js"></script>
+<script src="<?=base_url?>javascript/main.js"></script>

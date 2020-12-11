@@ -1,6 +1,7 @@
 <?php
 
 require_once 'config/database.php';
+
 class Club{
 
     private $id_club;

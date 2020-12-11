@@ -67,7 +67,7 @@
         <?php if(!isset($_SESSION['identity'])): ?>
         <input type="submit" class="btn btn-success" value="Iniciar sesión" data-bs-toggle="modal" data-bs-target="#sesionModal">
         <?php else:?>
-         <a href="<?=base_url?>inicio/cerrarsesion"class="btn btn-danger" ><i class="fas fa-power-off"></i>Cerrar Sesion</a>
+         <a href="<?=base_url?>inicio/cerrarsesion"class="btn btn-danger" >Cerrar Sesion</a>
         <?php endif; ?>
       </div>
     </div>

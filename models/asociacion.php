@@ -1,5 +1,7 @@
 <?php 
 
+require_once 'config/database.php';
+
 class Asociacion{
 
     private $id_asociacion;
@@ -81,4 +83,19 @@ class Asociacion{
         $this->id_tipo_estado = $id_tipo_estado;
     }
 
+    public function obtenerAsociaciones(){
+
+        $resultado = false;
+        $database = Database::connect();
+
+        $sql = "SELECT * FROM asociacion";
+
+        $respuesta = $database->query($sql);
+
+        if($respuesta && $respuesta->num_rows > 0){
+            $resultado = $respuesta;
+        }
+
+        return $resultado;
+    }
 }

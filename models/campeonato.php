@@ -74,4 +74,20 @@ class Campeonato{
 
         return $resultado;
     }
+
+    public function obtenerUnCampeonato($idCampeonato){
+
+        $resultado = false;
+        $database = Database::connect();
+
+        $sql = "SELECT * FROM campeonato INNER JOIN asociacion ON campeonato.ID_ASOCIACION_FK = asociacion.ID_ASOCIACION INNER JOIN serie ON campeonato.ID_SERIE_FK = serie.ID_SERIE INNER JOIN estado_campeonato ON campeonato.ID_ESTADO_CAMPEONATO_FK = estado_campeonato.ID_ESTADO_CAMPEONATO WHERE ID_CAMPEONATO = $idCampeonato";
+
+        $respuesta = $database->query($sql);
+
+        if($respuesta && $respuesta->num_rows > 0){
+            $resultado = $respuesta->fetch_assoc();
+        }
+
+        return $resultado;
+    }
 }

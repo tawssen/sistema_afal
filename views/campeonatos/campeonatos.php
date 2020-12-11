@@ -1,6 +1,6 @@
 <div class="container">
 <div class="">
-    <button class="btn btn-secondary mt-5">Crear Campeonato</button>
+    <button class="btn btn-secondary mt-5" onclick="document.location.href='<?=base_url?>campeonatos/gestionCrear'">Crear Campeonato</button>
 </div>
 </div>
 
@@ -28,22 +28,12 @@
                             <td><?php echo $campeonatos['NOMBRE_SERIE']; ?></td>
                             <td><?php echo $campeonatos['NOMBRE_ESTADO_CAMPEONATO']; ?></td>
                             <td class="text-center">
-                                <button class="btn btn-success">Editar</button>
-                                <button class="btn btn-danger">Borrar</button>
+                                <button class="btn btn-success" onclick="document.location.href='<?=base_url?>campeonatos/gestionEditar&id=<?=$campeonatos['ID_CAMPEONATO'];?>'">Editar</button>
+                                <button class="btn btn-danger btn-eliminar" value="<?=$campeonatos['ID_CAMPEONATO'];?>">Borrar</button>
                             </td>
                         </tr>
                     <?php } mysqli_free_result($todosLosCampeonatos);?>
                     </tbody>
-                    <!--<tfoot>
-                        <tr>
-                            <th>NOMBRE</th>
-                            <th>INICIO</th>
-                            <th>ASOCIACIÓN</th>
-                            <th>SERIE</th>
-                            <th>ESTADO</th>
-                            <th class="text-center">ACCIONES</th>
-                        </tr>
-                    </tfoot>-->
                 </table>
             </div>
         </div>
@@ -52,12 +42,22 @@
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.5.4/umd/popper.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
 <script>
     $(document).ready(function() {
         $('#example').DataTable();
     });
 </script>
+
 <script src="<?=base_url?>javascript/main.js"></script>
 <script src="<?=base_url?>datatables/datatables.min.js"></script>
+
+<script>
+    $('.btn-eliminar').click(function(){
+        let id = $(this).val();
+    });
+</script>
+
+
 
 
