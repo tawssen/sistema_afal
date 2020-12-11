@@ -1,46 +1,4 @@
-<!doctype html>
-<html lang="es">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="">
-    <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
-    <meta name="generator" content="Hugo 0.79.0">
-    <title>Carousel Template · Bootstrap v5.0</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous"></script>
-    <link rel="canonical" href="https://getbootstrap.com/docs/5.0/examples/carousel/">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
-
-    <!-- Bootstrap core CSS -->
-<link href="../assets/dist/css/bootstrap.min.css" rel="stylesheet">
-
-    <style>
-      .bd-placeholder-img {
-        font-size: 1.125rem;
-        text-anchor: middle;
-        -webkit-user-select: none;
-        -moz-user-select: none;
-        user-select: none;
-      }
-
-      @media (min-width: 768px) {
-        .bd-placeholder-img-lg {
-          font-size: 3.5rem;
-        }
-      }
-    </style>
-
-    
-    <!-- Custom styles for this template -->
-    <link href="styles/carousel.css" rel="stylesheet">
-    <link href="styles/aside.css" rel="stylesheet">
-  </head>
-  <body>
-<?php include_once 'views/layout/header.php';?>
-<main>
-
-  <div id="myCarousel" class="carousel slide" data-bs-ride="carousel">
+    <div id="myCarousel" class="carousel slide" data-bs-ride="carousel">
     <ol class="carousel-indicators">
       <li data-bs-target="#myCarousel" data-bs-slide-to="0" class="active"></li>
       <li data-bs-target="#myCarousel" data-bs-slide-to="1"></li>
@@ -172,9 +130,6 @@
   </div><!-- /.container -->
 
 
-  <!-- FOOTER -->
-<?php include_once 'views/layout/footer.php';?>
-</main>
 
 <!-- Modal Login -->
 <div class="modal fade" id="sesionModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -186,7 +141,7 @@
       </div>
       <div class="modal-body">
         <div class="d-flex flex-column ">
-        <form action="inicio/iniciarsesion" method="POST">
+        <form action="<?=base_url?>inicio/iniciarsesion" method="POST">
           <div class="mb-3">
             <label for="Nombre_Usuario" class="form-label">Usuario</label>
             <input type="text" class="form-control" name="usuario" aria-describedby="UsuarioHelp">
@@ -210,6 +165,3 @@
 
     <script src="../assets/dist/js/bootstrap.bundle.min.js"></script>
     <script src="javascript/main.js"></script>
-      
-  </body>
-</html>

@@ -5,7 +5,7 @@ require_once 'config/parameters.php';
 class inicioController{
 
     public function index(){
-        include_once 'views/inicio/inicio.php';
+        require_once 'views/inicio/inicio.php';
     }
 
     public function iniciarsesion(){

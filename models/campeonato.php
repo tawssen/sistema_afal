@@ -18,7 +18,7 @@ class Campeonato{
     }
 
     public function getNombreCampeonato(){
-        return $this->nombre_campeonato
+        return $this->nombre_campeonato;
     }
 
     public function setNombreCampeonato($nombre_campeonato){
@@ -46,7 +46,7 @@ class Campeonato{
     }
 
     public function setIdSerie($id_serie){
-        $this->id_serie = $id_serie
+        $this->id_serie = $id_serie;
     }
 
     public function getIdEstadoCampeonato(){
