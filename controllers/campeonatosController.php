@@ -38,22 +38,28 @@ class campeonatosController{
 
     public function crear(){
         $campeonato = new Campeonato();
+
         $campeonato->setNombreCampeonato($_POST['nombreCampeonato']);
         $campeonato->setFechaInicio($_POST['fechaInicioCampeonato']);
         $campeonato->setIdAsociacion($_POST['nombreAsociacion']);
         $campeonato->setIdSerie($_POST['nombreSerie']);
-        var_dump($campeonato);
+
+        $campeonato->crearCampeonato();
+        header('location:'.base_url);
     }
 
     public function editar(){
         $campeonato = new Campeonato();
+        
         $campeonato->setIdCampeonato($_POST['idCampeonato']);
         $campeonato->setNombreCampeonato($_POST['nombreCampeonato']);
         $campeonato->setFechaInicio($_POST['fechaInicioCampeonato']);
         $campeonato->setIdAsociacion($_POST['nombreAsociacion']);
         $campeonato->setIdSerie($_POST['nombreSerie']);
         $campeonato->setIdEstadoCampeonato($_POST['estadoCampeonato']);
-        var_dump($campeonato);
+
+        $campeonato->editarCampeonato();
+        header('location:'.base_url);
     }
 
     public function eliminar(){

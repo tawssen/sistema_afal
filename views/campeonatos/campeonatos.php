@@ -29,7 +29,7 @@
                             <td><?php echo $campeonatos['NOMBRE_ESTADO_CAMPEONATO']; ?></td>
                             <td class="text-center">
                                 <button class="btn btn-success" onclick="document.location.href='<?=base_url?>campeonatos/gestionEditar&id=<?=$campeonatos['ID_CAMPEONATO'];?>'">Editar</button>
-                                <button class="btn btn-danger btn-eliminar" value="<?=$campeonatos['ID_CAMPEONATO'];?>">Borrar</button>
+                                <button class="btn btn-danger btn-eliminar" value="<?=$campeonatos['ID_CAMPEONATO'];?>">Terminar Campeonato</button>
                             </td>
                         </tr>
                     <?php } mysqli_free_result($todosLosCampeonatos);?>

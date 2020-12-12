@@ -10,8 +10,7 @@
 
             <?php if(isset($campeonatoSeleccionado)):?>
             <div class="">
-                <label for="idCampeonato" class="form-label">ID CAMPEONATO</label>
-                <input class="form-control" id="idCampeonato" name="idCampeonato" type="text" value="" disabled>
+                <input class="form-control" id="idCampeonato" name="idCampeonato" type="hidden" value="">
             </div>
             <?php endif; ?>
 

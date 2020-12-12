@@ -6,7 +6,7 @@ class Campeonato{
     
     private $id_campeonato;
     private $nombre_campeonato;
-    private $fecha_inico;
+    private $fecha_inicio;
     private $id_asociacion;
     private $id_serie;
     private $id_estado_campeonato;
@@ -27,12 +27,12 @@ class Campeonato{
         $this->nombre_campeonato = $nombre_campeonato;
     }
 
-    public function getFechaInico(){
-        return $this->fecha_inico;
+    public function getFechaInicio(){
+        return $this->fecha_inicio;
     }
 
-    public function setFechaInicio($fecha_inico){
-        $this->fecha_inicio = $fecha_inico;
+    public function setFechaInicio($fecha_inicio){
+        $this->fecha_inicio = $fecha_inicio;
     }
 
     public function getIdAsociacion(){
@@ -86,6 +86,35 @@ class Campeonato{
 
         if($respuesta && $respuesta->num_rows > 0){
             $resultado = $respuesta->fetch_assoc();
+        }
+
+        return $resultado;
+    }
+
+    public function crearCampeonato(){
+        $resultado = false;
+        $database = Database::connect();
+
+        $sql = "INSERT INTO campeonato (NOMBRE_CAMPEONATO,FECHA_INICIO,ID_ASOCIACION_FK,ID_SERIE_FK,ID_ESTADO_CAMPEONATO_FK) VALUES ('".$this->getNombreCampeonato()."','".$this->getFechaInicio()."',".$this->getIdAsociacion().",".$this->getIdSerie().",1)";
+        $respuesta = $database->query($sql);
+
+        if($respuesta){
+            $resultado = true;
+        }
+
+        return $resultado;
+    }
+
+    public function editarCampeonato(){
+
+        $resultado = false;
+        $database = Database::connect();
+
+        $sql = "UPDATE campeonato SET NOMBRE_CAMPEONATO = '".$this->getNombreCampeonato()."', FECHA_INICIO = '".$this->getFechaInicio()."', ID_ASOCIACION_FK = ".$this->getIdAsociacion().", ID_SERIE_FK = ".$this->getIdSerie().", ID_ESTADO_CAMPEONATO_FK = ".$this->getIdEstadoCampeonato()." WHERE ID_CAMPEONATO =".$this->getIdCampeonato();
+        $respuesta = $database->query($sql);
+
+        if($respuesta){
+            $resultado = true;
         }
 
         return $resultado;
