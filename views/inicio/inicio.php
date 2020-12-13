@@ -128,38 +128,4 @@
     <!-- /END THE FEATURETTES -->
 
   </div><!-- /.container -->
-
-
-
-<!-- Modal Login -->
-<div class="modal fade" id="sesionModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        <div class="d-flex flex-column ">
-        <form action="<?=base_url?>inicio/iniciarsesion" method="POST">
-          <div class="mb-3">
-            <label for="Nombre_Usuario" class="form-label">Usuario</label>
-            <input type="text" class="form-control" name="usuario" aria-describedby="UsuarioHelp">
-            <div id="UsuarioHelp" class="form-text">Debe ingresar su nombre de usuario</div>
-          </div>
-          <div class="mb-3">
-            <label for="Clave_Usuario" class="form-label">Contraseña</label>
-            <input type="password" class="form-control" name="clave" aria-describedby="ContraseñaHelp">
-            <div id="ContraseñaHelp" class="form-text">Debe ingresar su Contraseña</div>
-          </div>        
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-            <button type="submit" class="btn btn-info">Iniciar Sesion</button>
-          </div>          
-        </form>   
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
 <script src="<?=base_url?>javascript/main.js"></script>
