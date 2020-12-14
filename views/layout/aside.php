@@ -9,7 +9,7 @@
         <li><img src="<?=base_url?>images/escudo_linares.png" class="logo"></li>
         <!--<li><img src="img/logo.jpg" alt="Logo Fazt" class="logo"></li>-->
         <li><a href="<?=base_url?>campeonatos/index"><i class="fas fa-trophy"></i>Campeonatos</a></li>
-        <li><a href="<?=base_url?>club/index"><i class="fas fa-shield-alt"></i>Clubes</a></li>
+        <li><a href="<?=base_url?>clubes/index"><i class="fas fa-shield-alt"></i>Clubes</a></li>
         <li><a href="<?=base_url?>partidos/index"><i class="fas fa-futbol"></i>Partidos</a></li>
         <li><i class="fas fa-users"></i>Jugadores</li>
         <li><i class="fas fa-gavel"></i>Arbitros</li>

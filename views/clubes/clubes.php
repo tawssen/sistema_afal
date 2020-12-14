@@ -35,9 +35,9 @@
                             <th>NOMBRE</th>
                             <th>FUNDACIÓN</th>
                             <th>ESTADIO</th>
-                            <th>Direccion</th>
-                            <th>Correo</th>
-                            <th>Asociacion</th>
+                            <th>DIRECCION</th>
+                            <th>CORREO</th>
+                            <th>ASOCIACION</th>
                             <th class="text-center">ACCIONES</th>
                         </tr>
                     </thead>
@@ -54,8 +54,8 @@
                        <td><?php echo $club['CORREO_1'] ?></td>
                        <td><?php echo $club['NOMBRE_ASOCIACION'] ?></td>
                        <td class="text-center">
-                          <button class="btn btn-success" onclick="document.location.href='<?=base_url?>campeonatos/gestionEditar&id=<?=$campeonatos['ID_CAMPEONATO'];?>'">Editar</button>
-                          <button class="btn btn-danger btn-eliminar" value="<?=$campeonatos['ID_CAMPEONATO'];?>">Terminar Club</button>
+                          <button class="btn btn-success" onclick="document.location.href='<?=base_url?>clubes/gestionEditar&id=<?=$club['ID_CLUB'];?>'">Editar</button>
+                          <button class="btn btn-danger btn-eliminar" value="<?=$campeonatos['ID_CLUB'];?>">Eliminar</button>
                        </td>
                        </tr>
                     <?php }?>    
