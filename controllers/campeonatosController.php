@@ -21,28 +21,15 @@ class campeonatosController{
 
     public function gestionCrear(){
         if(isset($_SESSION['identity']) && isset($_SESSION['Dirigente'])){
+            if(!isset($_GET['in'])){
+                $_SESSION['mensajeError'] = true;
+            }else{
+                unset($_SESSION['mensajeError']);
+            }
             $asociacion = new Asociacion();
             $serie = new Serie();
             $todasLasAsociaciones = $asociacion->obtenerAsociaciones();
             $todasLasSeries = $serie->obtenerSeries();
-            require_once 'views/campeonatos/gestionCampeonatos.php';
-        }else{
-            echo '<div class="container mt-5">';
-            echo '<h1>No tienes permiso para acceder a este apartado del sistema</h1>';
-            echo '</div>';
-        }
-    }
-
-    public function gestionEditar(){
-        if(isset($_SESSION['identity']) && isset($_SESSION['Dirigente'])){
-            $asociacion = new Asociacion();
-            $serie = new Serie();
-            $estadoCampeonato = new EstadoCampeonato();
-            $campeonato = new Campeonato();
-            $todasLasAsociaciones = $asociacion->obtenerAsociaciones();
-            $todasLasSeries = $serie->obtenerSeries();
-            $todosLosEstados = $estadoCampeonato->obtenerEstadosDeCampeonatos();
-            $campeonatoSeleccionado = $campeonato->obtenerUnCampeonato($_GET['id']);
             require_once 'views/campeonatos/gestionCampeonatos.php';
         }else{
             echo '<div class="container mt-5">';
@@ -54,14 +41,41 @@ class campeonatosController{
     public function crear(){
         if(isset($_SESSION['identity']) && isset($_SESSION['Dirigente'])){
             $campeonato = new Campeonato();
-
             $campeonato->setNombreCampeonato($_POST['nombreCampeonato']);
             $campeonato->setFechaInicio($_POST['fechaInicioCampeonato']);
             $campeonato->setIdAsociacion($_POST['nombreAsociacion']);
             $campeonato->setIdSerie($_POST['nombreSerie']);
     
-            $campeonato->crearCampeonato();
-            header('location:'.base_url.'campeonatos/index');
+            $respuesta = $campeonato->crearCampeonato();
+            if($respuesta){
+                header('location:'.base_url.'campeonatos/index');
+                exit;
+            }else{
+                header('location:'.base_url.'campeonatos/gestionCrear');
+            }
+        }else{
+            echo '<div class="container mt-5">';
+            echo '<h1>No tienes permiso para acceder a este apartado del sistema</h1>';
+            echo '</div>';
+        }
+    }
+
+    public function gestionEditar(){
+        if(isset($_SESSION['identity']) && isset($_SESSION['Dirigente'])){
+            if(!isset($_GET['in'])){
+                $_SESSION['mensajeError'] = true;
+            }else{
+                unset($_SESSION['mensajeError']);
+            }
+            $asociacion = new Asociacion();
+            $serie = new Serie();
+            $estadoCampeonato = new EstadoCampeonato();
+            $campeonato = new Campeonato();
+            $todasLasAsociaciones = $asociacion->obtenerAsociaciones();
+            $todasLasSeries = $serie->obtenerSeries();
+            $todosLosEstados = $estadoCampeonato->obtenerEstadosDeCampeonatos();
+            $campeonatoSeleccionado = $campeonato->obtenerUnCampeonato($_GET['id']);
+            require_once 'views/campeonatos/gestionCampeonatos.php';
         }else{
             echo '<div class="container mt-5">';
             echo '<h1>No tienes permiso para acceder a este apartado del sistema</h1>';
@@ -80,8 +94,13 @@ class campeonatosController{
             $campeonato->setIdSerie($_POST['nombreSerie']);
             $campeonato->setIdEstadoCampeonato($_POST['estadoCampeonato']);
     
-            $campeonato->editarCampeonato();
-            header('location:'.base_url.'campeonatos/index');
+            $respuesta = $campeonato->editarCampeonato();
+            if($respuesta){
+                header('location:'.base_url.'campeonatos/index');
+                exit;
+            }else{
+                header('location:'.base_url.'campeonatos/gestionEditar&id='.$_GET['id']);
+            }
         }else{
             echo '<div class="container mt-5">';
             echo '<h1>No tienes permiso para acceder a este apartado del sistema</h1>';
@@ -95,5 +114,16 @@ class campeonatosController{
         $campeonato->setIdEstadoCampeonato($_GET['estadocampeonato']);
         $campeonato->deshabilitarCampeonato();
         header('location:'.base_url.'campeonatos/index');
+    }
+
+    public function gestionarParticipantes(){
+        if(isset($_SESSION['identity']) && isset($_SESSION['Dirigente'])){
+
+            require_once 'views/campeonatos/gestionParticipantes.php';
+        }else{
+            echo '<div class="container mt-5">';
+            echo '<h1>No tienes permiso para acceder a este apartado del sistema</h1>';
+            echo '</div>';
+        }
     }
 }

@@ -1,18 +1,35 @@
 <div class="container mt-3">
     <div class="container mt-5 col-6">
 
-        <?php if(isset($campeonatoSeleccionado)):?>
-        <form action="<?=base_url?>campeonatos/editar" method="POST" class="border p-5">
+        <?php if(isset($campeonatoSeleccionado) && isset($_GET['in'])):?>
+        <form action="<?=base_url?>campeonatos/editar&id=<?=$_GET['id']?>&in=<?=$_GET['in']?>" method="POST" class="border p-5">
+
+        <?php elseif(isset($campeonatoSeleccionado)):?>
+        <form action="<?=base_url?>campeonatos/editar&id=<?=$_GET['id']?>" method="POST" class="border p-5">
+
+        <?php elseif(isset($_GET['in'])):?>
+        <form action="<?=base_url?>campeonatos/crear&in=<?=$_GET['in']?>" method="POST" class="border p-5">
+
         <?php else:?>
         <form action="<?=base_url?>campeonatos/crear" method="POST" class="border p-5">
         <?php endif; ?>
+
+            <?php if(isset($campeonatoSeleccionado)):?>
+            <h1 class="pb-3">Editar campeonato</h1>
+            <?php else:?>
             <h1 class="pb-3">Crear campeonato</h1>
+            <?php endif; ?>
+            
+            <?php if(isset($_SESSION['mensajeError'])):?>
+                <p class="alert alert-danger">La acción no se ha podido llevar a cabo. Vuelva a intentarlo por favor.</p>
+            <?php endif; ?>
 
             <?php if(isset($campeonatoSeleccionado)):?>
             <div class="">
                 <input class="form-control" id="idCampeonato" name="idCampeonato" type="hidden" value="">
             </div>
             <?php endif; ?>
+            
 
             <div class="">
                 <label for="nombreAsociacion" class="form-label">NOMBRE CAMPEONATO</label>
