@@ -60,15 +60,14 @@ class Campeonato{
     }
 
     public function obtenerCampeonatos(){
-
         $resultado = false;
         $database = Database::connect();
-
-        $sql = "SELECT * FROM campeonato INNER JOIN asociacion ON campeonato.ID_ASOCIACION_FK = asociacion.ID_ASOCIACION INNER JOIN serie ON campeonato.ID_SERIE_FK = serie.ID_SERIE INNER JOIN estado_campeonato ON campeonato.ID_ESTADO_CAMPEONATO_FK = estado_campeonato.ID_ESTADO_CAMPEONATO";
+        $condicion = 1;
+        $sql = "SELECT * FROM campeonato INNER JOIN asociacion ON campeonato.ID_ASOCIACION_FK = asociacion.ID_ASOCIACION INNER JOIN serie ON campeonato.ID_SERIE_FK = serie.ID_SERIE INNER JOIN estado_campeonato ON campeonato.ID_ESTADO_CAMPEONATO_FK = estado_campeonato.ID_ESTADO_CAMPEONATO WHERE ID_ESTADO_CAMPEONATO_FK = $condicion";
 
         $respuesta = $database->query($sql);
 
-        if($respuesta && $respuesta->num_rows > 0){
+        if($respuesta){
             $resultado = $respuesta;
         }
 
@@ -76,7 +75,6 @@ class Campeonato{
     }
 
     public function obtenerUnCampeonato($idCampeonato){
-
         $resultado = false;
         $database = Database::connect();
 
@@ -106,11 +104,24 @@ class Campeonato{
     }
 
     public function editarCampeonato(){
-
         $resultado = false;
         $database = Database::connect();
 
         $sql = "UPDATE campeonato SET NOMBRE_CAMPEONATO = '".$this->getNombreCampeonato()."', FECHA_INICIO = '".$this->getFechaInicio()."', ID_ASOCIACION_FK = ".$this->getIdAsociacion().", ID_SERIE_FK = ".$this->getIdSerie().", ID_ESTADO_CAMPEONATO_FK = ".$this->getIdEstadoCampeonato()." WHERE ID_CAMPEONATO =".$this->getIdCampeonato();
+        $respuesta = $database->query($sql);
+
+        if($respuesta){
+            $resultado = true;
+        }
+
+        return $resultado;
+    }
+
+    public function deshabilitarCampeonato(){
+        $resultado = false;
+        $database = Database::connect();
+
+        $sql = "UPDATE campeonato SET ID_ESTADO_CAMPEONATO_FK = ".$this->getIdEstadoCampeonato()." WHERE ID_CAMPEONATO =".$this->getIdCampeonato();
         $respuesta = $database->query($sql);
 
         if($respuesta){

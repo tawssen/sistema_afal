@@ -16,18 +16,18 @@
 
             <div class="">
                 <label for="nombreAsociacion" class="form-label">NOMBRE CAMPEONATO</label>
-                <input class="form-control" id="nombreAsociacion" name="nombreCampeonato" type="text" value="Campeonato AFAL 202X">
+                <input class="form-control" id="nombreAsociacion" name="nombreCampeonato" type="text" value="Campeonato AFAL 202X" required>
             </div>
 
             <div class="mt-3">
                 <label for="" class="form-label">FECHA DE INICIO</label>
-                <input id="dateFechaInicio" type="date" name="fechaInicioCampeonato" class="form-control">
+                <input id="dateFechaInicio" type="date" name="fechaInicioCampeonato" class="form-control" required>
             </div>
 
             <div class="mt-3">
                 <label for="" class="form-label">ASOCIACIÓN</label>
                 <select id="selectSerie" class="form-select" name="nombreAsociacion" aria-label="Default select example" required>
-                    <option value="0" selected>Seleccionar Serie</option>
+                    <option value="0" selected>Seleccionar Asociación</option>
                     <?php while($asociacion = mysqli_fetch_assoc($todasLasAsociaciones)){?>
                     <option value="<?php echo $asociacion['ID_ASOCIACION'];?>"><?php echo $asociacion['NOMBRE_ASOCIACION'];?></option>
                     <?php } mysqli_free_result($todasLasAsociaciones);?>
@@ -36,8 +36,8 @@
 
             <div class="mt-3">
                 <label for="" class="form-label">SERIE</label>
-                <select id="selectAsociacion" class="form-select" name="nombreSerie" aria-label="Default select example">
-                    <option value="0" selected>Seleccionar Asociación</option>
+                <select id="selectAsociacion" class="form-select" name="nombreSerie" aria-label="Default select example" required>
+                    <option value="0" selected>Seleccionar Serie</option>
                     <?php while($serie = mysqli_fetch_assoc($todasLasSeries)){?>
                         <option value="<?php echo $serie['ID_SERIE'];?>"><?php echo $serie['NOMBRE_SERIE'];?></option>
                     <?php } mysqli_free_result($todasLasSeries);?>
@@ -68,8 +68,6 @@
         </form>
     </div>
 </div>
-
-
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.5.4/umd/popper.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>

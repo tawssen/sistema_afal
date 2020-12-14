@@ -48,8 +48,7 @@ class inicioController{
         if(isset($_SESSION['identity'])){
             unset($_SESSION['identity']);
        }
-
-       echo "<script>window.location.href='".base_url."'</script>";
+       header('location:'.base_url);
     }
 
 }

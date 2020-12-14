@@ -1,10 +1,10 @@
-<div class="container">
+<div class="container-xl">
 <div class="">
     <button class="btn btn-secondary mt-5" onclick="document.location.href='<?=base_url?>campeonatos/gestionCrear'">Crear Campeonato</button>
 </div>
 </div>
 
-<div class="container mt-3 border-top border-bottom p-4">
+<div class="container-xl mt-3 border-top border-bottom p-4">
     <div class="row">
         <div class="col-lg-12">
             <div class="table-responsive">
@@ -29,7 +29,7 @@
                             <td><?php echo $campeonatos['NOMBRE_ESTADO_CAMPEONATO']; ?></td>
                             <td class="text-center">
                                 <button class="btn btn-success" onclick="document.location.href='<?=base_url?>campeonatos/gestionEditar&id=<?=$campeonatos['ID_CAMPEONATO'];?>'">Editar</button>
-                                <button class="btn btn-danger btn-eliminar" value="<?=$campeonatos['ID_CAMPEONATO'];?>">Terminar Campeonato</button>
+                                <button class="btn btn-danger btn-eliminar" data-bs-toggle="modal" data-bs-target="#terminarCampeonato" value="<?=$campeonatos['ID_CAMPEONATO'];?>">Terminar Campeonato</button>
                             </td>
                         </tr>
                     <?php } mysqli_free_result($todosLosCampeonatos);?>
@@ -38,6 +38,28 @@
             </div>
         </div>
     </div>
+</div>
+
+<!-- Modal Deshabilitar Registro -->
+<div class="modal fade" id="terminarCampeonato" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <div class="d-flex justify-content-center">
+          <h5 class="modal-title d-flex justify-content-center" id="exampleModalLabel">Cerrar Sesion</h5>
+        </div>
+        <input type="hidden" value="" id="eliminarEscondido">
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        ¿Está seguro de dar termino al campeonato?
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+        <button id="btnDarTermino" type="button" onclick="document.location.href='<?=base_url?>inicio/cerrarsesion'" class="btn btn-danger">Dar termino</button>
+      </div>
+    </div>
+  </div>
 </div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.5.4/umd/popper.min.js"></script>
@@ -54,7 +76,11 @@
 
 <script>
     $('.btn-eliminar').click(function(){
+        let boton = document.getElementById("btnDarTermino");
         let id = $(this).val();
+        boton.removeAttribute("onclick");
+        boton.setAttribute("onclick","document.location.href='https://localhost/sistema_afal/campeonatos/eliminar&idcampeonato="+id+"&estadocampeonato=2'");
+        //boton.setAttribute("onclick","document.location.href='https://localhost/sistema_afal/campeonatos/eliminar&idequipo="+id+"'");
     });
 </script>
 

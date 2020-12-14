@@ -121,7 +121,7 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-        <button type="button" class="btn btn-danger">Cerrar sesion</button>
+        <button type="button" onclick="document.location.href='<?=base_url?>inicio/cerrarsesion'" class="btn btn-danger">Cerrar sesion</button>
       </div>
     </div>
   </div>

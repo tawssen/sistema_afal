@@ -1,4 +1,4 @@
-<div class="container">
+<div class="container-xl">
 <div class="">
     <button class="btn btn-secondary mt-5" data-bs-toggle="modal" data-bs-target="#exampleModal">Crear Campeonato</button>
 </div>
@@ -24,22 +24,21 @@
 
 
 <?php $todoslosClubes?>
-<div class="container mt-3 border p-4">
+<div class="container-xl mt-3 border-top border-bottom p-4">
     <div class="row">
         <div class="col-lg-12">
             <div class="table-responsive">
                 <table id="example" class="table table-striped table-bordered" style="width:100%;">
                     <thead>
                         <tr>
-                            <th>Rut</th>
-                            <th>Nombre Club</th>
-                            <th>Fecha Fundacion</th>
-                            <th>Giro</th>
-                            <th>Nombre Estadio</th>
+                            <th>RUT</th>
+                            <th>NOMBRE</th>
+                            <th>FUNDACIÓN</th>
+                            <th>ESTADIO</th>
                             <th>Direccion</th>
                             <th>Correo</th>
                             <th>Asociacion</th>
-                            <th>Estado</th>
+                            <th class="text-center">ACCIONES</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -50,12 +49,14 @@
                        <td><?php echo $club['RUT_CLUB'].'-'.$club['DV_CLUB'] ?></td>
                        <td><?php echo $club['NOMBRE_CLUB'] ?></td>
                        <td><?php echo $club['FECHA_FUNDACION_CLUB'] ?></td>
-                       <td><?php echo $club['GIRO_CLUB'] ?></td>
                        <td><?php echo $club['NOMBRE_ESTADIO'] ?></td>
                        <td><?php echo $club['CALLE_PASAJE'] ?></td>
                        <td><?php echo $club['CORREO_1'] ?></td>
                        <td><?php echo $club['NOMBRE_ASOCIACION'] ?></td>
-                       <td><?php echo $club['NOMBRE_TIPO_ESTADO'] ?></td>
+                       <td class="text-center">
+                          <button class="btn btn-success" onclick="document.location.href='<?=base_url?>campeonatos/gestionEditar&id=<?=$campeonatos['ID_CAMPEONATO'];?>'">Editar</button>
+                          <button class="btn btn-danger btn-eliminar" value="<?=$campeonatos['ID_CAMPEONATO'];?>">Terminar Club</button>
+                       </td>
                        </tr>
                     <?php }?>    
                     </tbody>
