@@ -13,7 +13,7 @@
         <li><a href="<?=base_url?>partidos/index"><i class="fas fa-futbol"></i>Partidos</a></li>
         <li><i class="fas fa-users"></i>Jugadores</li>
         <li><i class="fas fa-gavel"></i>Arbitros</li>
-        <li><i class="fas fa-user"></i>Usuarios</li>
+        <li><a href="<?=base_url?>usuarios/index"><i class="fas fa-user"></i>Usuarios</a></li>
       </ul>
     </div>
 </div>

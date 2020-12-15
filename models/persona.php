@@ -88,4 +88,13 @@ class Persona{
         public function setIdTipoEstado($id_tipo_estado){
             $this->id_tipo_estado = $id_tipo_estado;
         }
+
+
+        public function obtenerPersona(){
+            $sql = "SELECT * FROM PERSONA";
+            $database = Database::connect();
+            $datosObtenidosPersona = $database->query($sql);
+            return $datosObtenidosPersona;
+
+        }
 }

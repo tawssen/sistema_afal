@@ -79,6 +79,67 @@ class Usuario{
         return $result;
        
     }
+
+    public function obtenerUsuarios(){
+        $resultado = false;
+        $database = Database::connect();
+        $sql = "SELECT * FROM USUARIOS
+        INNER JOIN PERSONA ON (USUARIOS.RUT_PERSONA_FK = PERSONA.RUT_PERSONA)
+        INNER JOIN TIPO_ESTADO ON (USUARIOS.ID_TIPO_ESTADO_FK = TIPO_ESTADO.ID_TIPO_ESTADO)";
+      
+        $datosObtenidosUsuarios = $database->query($sql);
+        if($datosObtenidosUsuarios){
+           $resultado = $datosObtenidosUsuarios;
+
+        }
+
+        return $resultado;
+    }
+    public function obtenerUnUsuarios($idUsuario){
+        $resultado = false;
+        $database = Database::connect();
+        $sql = "SELECT * FROM USUARIOS
+        INNER JOIN PERSONA ON (USUARIOS.RUT_PERSONA_FK = PERSONA.RUT_PERSONA)
+        INNER JOIN TIPO_ESTADO ON (USUARIOS.ID_TIPO_ESTADO_FK = TIPO_ESTADO.ID_TIPO_ESTADO)
+        WHERE ID_USUARIO = $idUsuario";
+      
+        $datosObtenidosUsuarios = $database->query($sql);
+        if($datosObtenidosUsuarios && $datosObtenidosUsuarios->num_rows > 0){
+           $resultado = $datosObtenidosUsuarios->fetch_assoc();
+
+        }
+
+        return $resultado;
+    }
+    public function crearUsuario(){
+        $resultado = false;
+        $database = Database::connect();
+        $Estado = 1;
+        $sql = "INSERT INTO usuarios (NOMBRE_USUARIO,CLAVE_USUARIO,RUT_PERSONA_FK,ID_TIPO_ESTADO_FK) VALUES('".$this->getNombreUsuario()."','".$this->getClaveUsuario()."','".$this->getRutUsuario()."',$Estado)";
+        $respuesta = $database->query($sql);
+
+        if($respuesta){
+            $resultado = true;
+        }
+
+        return $resultado;
+    }
+
+    
+    public function editarUsuario(){
+        $resultado = false;
+        $database = Database::connect();
+
+        $sql = "UPDATE usuarios SET NOMBRE_USUARIO = '".$this->getNombreUsuario()."', CLAVE_USUARIO = '".$this->getClaveUsuario()."', RUT_PERSONA_FK = ".$this->getRutUsuario().", ID_TIPO_ESTADO_FK = ".$this->getEstadoUsuario()." WHERE ID_CAMPEONATO =".$this->getIdUsuario();
+        $respuesta = $database->query($sql);
+
+        if($respuesta){
+            $resultado = true;
+        }
+
+        return $resultado;
+    }
+
 }
 
 ?>
