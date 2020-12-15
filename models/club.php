@@ -113,7 +113,7 @@ class Club{
         inner join direccion on(club.ID_DIRECCION_FK = direccion.ID_DIRECCION)
         inner join correo on(club.ID_CORREO_FK = correo.ID_CORREO)
         inner join asociacion on(club.ID_ASOCIACION_FK = asociacion.ID_ASOCIACION)
-        inner join tipo_estado on(club.ID_TIPO_ESTADO_FK = tipo_estado.ID_TIPO_ESTADO)";
+        inner join tipo_estado on(club.ID_TIPO_ESTADO_FK = tipo_estado.ID_TIPO_ESTADO) where ID_TIPO_ESTADO = 1";
         $database = Database::connect();
         $datosObtenidosClubes = $database->query($sql);
         return $datosObtenidosClubes;
