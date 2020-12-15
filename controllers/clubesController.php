@@ -2,7 +2,8 @@
 require_once 'models/club.php';
 require_once 'models/asociacion.php';
 require_once 'config/parameters.php';
-require_once 'models/persona';
+require_once 'models/persona.php';
+require_once 'models/direccion.php';
 
 class clubesController{
 
@@ -25,21 +26,24 @@ class clubesController{
     }
 
     public function crear(){
-        //Lo primero es validar la dirección
-        $persona = new Persona();
-        $persona->setRutPersona();
-        $persona->setDvpersona();
-        $persona->setNombre1();
-        $persona->setNombre2();
-        $persona->setApellido1();
-        $persona->setApellido2();
-        $persona->setFechaNacimiento();
-        $persona->setNumeroTelefono();
-        $persona->setIdDireccion();
-        $persona->setIdCorreo();
-        $persona->setIdAsociacion();
-        $persona->setIdPerfil();
-        $persona->setIdTipoEstado();
-    }
+        $direccion = new Direccion();
+        $club = new Club();
+        $direccion->setCallePasaje($_POST['calle']);
+        $direccion->setComuna($_POST['comuna']);
+        $direccion->setProvincia($_POST['provincia']);
+        $direccion->setRegion($_POST['region']);
 
+        $verificarDireccion = $direccion->verificarDireccion();
+        if($verificarDireccion<1){
+            $ingresar = $direccion->ingresarDireccion();
+            $resultado = $direccion->obtenerDireccion();
+            $club->setIdDireccion($resultado['ID_DIRECCION']);
+        }else{
+            $resultado = $direccion->obtenerDireccion();
+            $club->setIdDireccion($resultado['ID_DIRECCION']);
+        }
+
+        $club->setRutClub();
+        $club->setDvClub();
+    }
 }

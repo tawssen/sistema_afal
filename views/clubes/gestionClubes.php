@@ -43,21 +43,21 @@
             <div class="row">
                 <div class="form-group mt-3 col-4">
                     <label for="" class="form-label">REGION</label>
-                    <select id="selectRegion" class="form-select" name="nombreAsociacion" aria-label="Default select example" required>
+                    <select id="selectRegion" class="form-select" name="region" aria-label="Default select example" required>
                         <option value="0" selected>Seleccionar Region</option>
                     </select>
                 </div>
 
                 <div class="form-group mt-3 col-4">
                     <label for="" class="form-label">PROVINCIA</label>
-                    <select id="selectProvincia" class="form-select" name="nombreSerie" aria-label="Default select example" required>
+                    <select id="selectProvincia" class="form-select" name="provincia" aria-label="Default select example" required>
                         <option value="0" selected>Seleccionar Provincia</option>
                     </select>
                 </div>
 
                 <div class="form-group mt-3 col-4">
                     <label for="" class="form-label">COMUNA</label>
-                    <select id="selectComuna" class="form-select" name="nombreSerie" aria-label="Default select example" required>
+                    <select id="selectComuna" class="form-select" name="comuna" aria-label="Default select example" required>
                         <option value="0" selected>Seleccionar Comuna</option>
                     </select>
                 </div>
@@ -66,7 +66,7 @@
             <div class="mt">
              <div class="">
                 <label for="rutClub" class="form-label">CALLE</label>
-                <input class="form-control" name="rutClub" type="numeric" placeholder="12345678" required>
+                <input class="form-control" name="calle" type="numeric" placeholder="12345678" required>
              </div>
             </div>
 
