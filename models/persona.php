@@ -46,6 +46,12 @@ class Persona{
         public function setApellido1($apellido_1){
             $this->apellido_1 = $apellido_1;   
         }
+        public function getApellido2(){
+            return $this->apellido_2;
+        }
+        public function setApellido2($apellido_2){
+            $this->apellido_2 = $apellido_2;   
+        }
         public function getFechaNacimiento(){
             return $this->fecha_nacimiento;
         }

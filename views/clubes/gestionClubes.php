@@ -4,7 +4,7 @@
         <?php if(isset($asd)):?>
         <form action="<?=base_url?>campeonatos/editar" method="POST" class="border p-5">
         <?php else:?>
-        <form action="<?=base_url?>campeonatos/crear" method="POST" class="border p-5">
+        <form action="<?=base_url?>clubes/crear" method="POST" class="border p-5">
         <?php endif; ?>
             <h1 class="pb-3">Crear Club</h1>
 
@@ -27,17 +27,54 @@
 
             <div class="mt-3">
                 <label for="" class="form-label">NOMBRE CLUB</label>
-                <input  type="text" name="fechaInicioCampeonato" class="form-control" required>
+                <input  type="text" name="nombreClub" class="form-control" required>
             </div>
             
             <div class="mt-3">
                 <label for="" class="form-label">FUNDACION</label>
-                <input id="dateFechaInicio" type="date" name="fechaInicioCampeonato" class="form-control" required>
+                <input id="dateFechaInicio" type="date" name="fechaFundacion" class="form-control" required>
             </div>
             
             <div class="mt-3">
                 <label for="" class="form-label">NOMBRE ESTADIO</label>
-                <input  type="text" name="fechaInicioCampeonato" class="form-control" required>
+                <input  type="text" name="nombreEstadio" class="form-control" required>
+            </div>
+
+            <div class="row">
+                <div class="form-group mt-3 col-4">
+                    <label for="" class="form-label">REGION</label>
+                    <select id="selectRegion" class="form-select" name="nombreAsociacion" aria-label="Default select example" required>
+                        <option value="0" selected>Seleccionar Region</option>
+                    </select>
+                </div>
+
+                <div class="form-group mt-3 col-4">
+                    <label for="" class="form-label">PROVINCIA</label>
+                    <select id="selectProvincia" class="form-select" name="nombreSerie" aria-label="Default select example" required>
+                        <option value="0" selected>Seleccionar Provincia</option>
+                    </select>
+                </div>
+
+                <div class="form-group mt-3 col-4">
+                    <label for="" class="form-label">COMUNA</label>
+                    <select id="selectComuna" class="form-select" name="nombreSerie" aria-label="Default select example" required>
+                        <option value="0" selected>Seleccionar Comuna</option>
+                    </select>
+                </div>
+            </div>
+   
+            <div class="mt">
+             <div class="">
+                <label for="rutClub" class="form-label">CALLE</label>
+                <input class="form-control" name="rutClub" type="numeric" placeholder="12345678" required>
+             </div>
+            </div>
+
+            <div class="mt-3">
+             <div class="">
+                <label for="rutClub" class="form-label">CORREO</label>
+                <input class="form-control" name="rutClub" type="numeric" placeholder="12345678" required>
+             </div>
             </div>
 
             <div class="mt-3">
@@ -49,28 +86,6 @@
                     <?php } mysqli_free_result($todasLasAsociaciones);?>
                 </select>
             </div>
-
-            <div class="form-group mt-3">
-                <label for="" class="form-label">SERIE</label>
-                <select id="selectAsociacion" class="form-select" name="nombreSerie" aria-label="Default select example" required>
-                    <option value="0" selected>Seleccionar Serie</option>
-                    <?php while($serie = mysqli_fetch_assoc($todasLasSeries)){?>
-                        <option value="<?php echo $serie['ID_SERIE'];?>"><?php echo $serie['NOMBRE_SERIE'];?></option>
-                    <?php } mysqli_free_result($todasLasSeries);?>
-                </select>
-            </div>
-
-            <?php if(isset($campeonatoSeleccionado)):?>
-            <div class="mt-3">
-                <label for="" class="form-label">ESTADO CAMPEONATO</label>
-                <select id="selectEstado" class="form-select" name="estadoCampeonato" aria-label="Default select example" required>
-                    <option value="0" selected>Seleccionar Estado</option>
-                    <?php while($estado = mysqli_fetch_assoc($todosLosEstados)){?>
-                        <option value="<?php echo $estado['ID_ESTADO_CAMPEONATO'];?>"><?php echo $estado['NOMBRE_ESTADO_CAMPEONATO'];?></option>
-                    <?php } mysqli_free_result($todosLosEstados);?>
-                </select>
-            </div>
-            <?php endif; ?>
 
             <div class="mt-5 d-flex justify-content-end">
                 <button class="btn btn-danger mr-2">Cancelar</button>
@@ -88,20 +103,4 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.5.4/umd/popper.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="<?=base_url?>javascript/main.js"></script>
-
-<script>
-    function seleccionarOpcion(select,valor){
-        $(select).val(valor);
-    }
-</script>
-
-<?php
-if(isset($campeonatoSeleccionado)){
-    echo "<script>seleccionarOpcion('#idCampeonato','".$campeonatoSeleccionado['ID_CAMPEONATO']."');</script>"; 
-    echo "<script>seleccionarOpcion('#nombreAsociacion','".$campeonatoSeleccionado['NOMBRE_CAMPEONATO']."');</script>"; 
-    echo "<script>seleccionarOpcion('#dateFechaInicio','".$campeonatoSeleccionado['FECHA_INICIO']."');</script>"; 
-    echo "<script>seleccionarOpcion('#selectAsociacion',".$campeonatoSeleccionado['ID_ASOCIACION'].");</script>";
-    echo "<script>seleccionarOpcion('#selectSerie',".$campeonatoSeleccionado['ID_SERIE'].");</script>";
-    echo "<script>seleccionarOpcion('#selectEstado',".$campeonatoSeleccionado['ID_ESTADO_CAMPEONATO'].");</script>";
-}
-?>
+<script src="<?=base_url?>ajax/javascript/obtenerRegiones.js"></script>
