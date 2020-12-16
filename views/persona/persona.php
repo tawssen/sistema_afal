@@ -25,20 +25,20 @@
                     </thead>
                     <tbody>
                     <?php
-                      while($club=mysqli_fetch_assoc($todasLasPersonas)){
+                      while($persona=mysqli_fetch_assoc($todasLasPersonas)){
                     ?>
                        <tr>
-                         <td><?php echo $club['RUT_PERSONA'].'-'.$club['DV'] ?></td>
-                         <td><?php echo $club['NOMBRE_1'].' '.$club['NOMBRE_2'].' '.$club['APELLIDO_1'].' '.$club['APELLIDO_2'] ?></td>
-                         <td><?php echo $club['FECHA_NACIMIENTO'] ?></td>
-                         <td><?php echo $club['NUMERO_TELEFONO'] ?></td>
-                         <td><?php echo $club['CORREO_ELECTRONICO'] ?></td>
-                         <td><?php echo $club['ID_DIRECCION_FK'] ?></td>                    
-                         <td><?php echo $club['ID_ASOCIACION_FK'] ?></td>
-                         <td><?php echo $club['ID_PERFIL_FK'] ?></td>
+                         <td><?php echo $persona['RUT_PERSONA'].'-'.$persona['DV'] ?></td>
+                         <td><?php echo $persona['NOMBRE_1'].' '.$persona['NOMBRE_2'].' '.$persona['APELLIDO_1'].' '.$persona['APELLIDO_2'] ?></td>
+                         <td><?php echo $persona['FECHA_NACIMIENTO'] ?></td>
+                         <td><?php echo $persona['NUMERO_TELEFONO'] ?></td>
+                         <td><?php echo $persona['CORREO_ELECTRONICO'] ?></td>
+                         <td><?php echo $persona['ID_DIRECCION_FK'] ?></td>                    
+                         <td><?php echo $persona['ID_ASOCIACION_FK'] ?></td>
+                         <td><?php echo $persona['ID_PERFIL_FK'] ?></td>
                          <td class="text-center">
-                          <button class="btn btn-success">Editar</button>
-                          <button class="btn btn-danger btn-eliminar">Eliminar</button>
+                                <button class="btn btn-success" onclick="document.location.href='<?=base_url?>persona/gestionEditar&id=<?=$persona['RUT_PERSONA'];?>&in=1'">Editar</button>
+                                <button class="btn btn-danger btn-eliminar" data-bs-toggle="modal" data-bs-target="#terminarCampeonato" value="<?=$persona['RUT_PERSONA'];?>">Terminar</button>
                          </td>
                        </tr>
                     <?php }?>    

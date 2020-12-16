@@ -138,7 +138,25 @@ class Usuario{
         }
 
         return $resultado;
+    
     }
+
+    public function deshabilitarUsuario(){
+        $resultado = false;
+        $database = Database::connect();
+        $idestado = $this->getEstadoUsuario();
+        $iduser = $this->getIdUsuario();
+        $sql = "UPDATE usuarios SET ID_TIPO_ESTADO_FK = $idestado WHERE ID_USUARIO = $iduser ";
+        $respuesta = $database->query($sql);
+
+        if($respuesta){
+            $resultado = true;
+        }
+
+        return $sql;
+    }
+
+
 
 }
 

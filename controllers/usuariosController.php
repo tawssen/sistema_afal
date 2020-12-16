@@ -7,7 +7,7 @@ class usuariosController{
 
     public function index(){   
 
-        if(isset($_SESSION['identity']) && isset($_SESSION['Dirigente'])){
+        if(isset($_SESSION['identity']) && isset($_SESSION['Dirigente'])|| iseet($_SESSION['Dirigente y D_Tecnico']) ){
             $usuario = new Usuario();
             $todosLosUsuarios = $usuario->obtenerUsuarios();
             include_once 'views/usuarios/usuarios.php';
@@ -19,7 +19,7 @@ class usuariosController{
         
     }
     public function gestionEditar(){
-        if(isset($_SESSION['identity']) && isset($_SESSION['Dirigente'])){
+        if(isset($_SESSION['identity']) && isset($_SESSION['Dirigente'])|| iseet($_SESSION['Dirigente y D_Tecnico']) ){
             if(!isset($_GET['in'])){
                 $_SESSION['mensajeError'] = true;
             }else{
@@ -39,7 +39,7 @@ class usuariosController{
         }
     }
     public function editar(){
-        if(isset($_SESSION['identity']) && isset($_SESSION['Dirigente'])){
+        if(isset($_SESSION['identity']) && isset($_SESSION['Dirigente'])|| iseet($_SESSION['Dirigente y D_Tecnico']) ){
             $usuario = new Usuario();
             $usuario->setIdUsuario($_POST['idUsuario']);
             $usuario->setNombreUsuario($_POST['nombreUsuario']);
@@ -61,4 +61,24 @@ class usuariosController{
             echo '</div>';
         }
     }
+    public function eliminar(){
+        if(isset($_SESSION['identity']) && isset($_SESSION['Dirigente'])|| iseet($_SESSION['Dirigente y D_Tecnico']) ){
+                $usuario = new Usuario();
+                $id = $_GET['idUsuario'];
+                $estado = $_GET['estado'];
+        
+              
+           
+                $usuario->setIdUsuario($_GET['idUsuario']);
+                $usuario->setEstadoUsuario($_GET['estado']);
+                echo $id;
+                echo $estado;
+                echo $usuario->deshabilitarUsuario();
+             //   header('location:'.base_url.'usuarios/index');
+            
+        }else{
+
+        }
+    }
+
 }

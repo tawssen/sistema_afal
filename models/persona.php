@@ -103,8 +103,33 @@ class Persona{
             return $datosObtenidosPersona;
 
         }
-        public function ingresarPersona(){
+
+        public function obtenerUnPersona($idPersona){
+            $resultado = false;
             $database = Database::connect();
+            $sql = "SELECT * FROM PERSONA
+            INNER JOIN DIRECCION ON (PERSONA.ID_DIRECCION_FK = DIRECCION.ID_DIRECCION)
+            INNER JOIN ASOCIACION ON (PERSONA.ID_ASOCIACION_FK = ASOCIACION.ID_ASOCIACION)
+            INNER JOIN PERFIL ON (PERSONA.ID_PERFIL_FK = PERFIL.ID_PERFIL)
+            INNER JOIN TIPO_ESTADO ON (PERSONA.ID_TIPO_ESTADO_FK = TIPO_ESTADO.ID_TIPO_ESTADO) WHERE RUT_PERSONA = $idPersona ";
+          
+            $datosObtenidosPersona = $database->query($sql);
+            if($datosObtenidosPersona && $datosObtenidosPersona->num_rows > 0){
+               $resultado = $datosObtenidosPersona->fetch_assoc();
+    
+            }
+    
+            return $resultado;
+        }
+
+       
+
+
+
+        public function ingresarPersona(){            
+            $database = Database::connect();
+
+            $resultado = false;
 
             $rut = $this->getRutPersona();
             $dv = $this->getDvPersona();
@@ -118,13 +143,14 @@ class Persona{
             $direc = $this->getIdDireccion();
             $asoc = $this->getIdAsociacion();
             $perf = $this->getIdPerfil();
-            $t_estado = 1;
-            
-           
+            $t_estado = 1;                       
 
             $sql = "INSERT INTO persona (RUT_PERSONA,DV,NOMBRE_1,NOMBRE_2,APELLIDO_1,APELLIDO_2,FECHA_NACIMIENTO,NUMERO_TELEFONO,CORREO_ELECTRONICO,ID_DIRECCION_FK,ID_ASOCIACION_FK,ID_PERFIL_FK,ID_TIPO_ESTADO_FK) 
             VALUES ($rut,$dv,'$nom_1','$nom_2','$ape_1','$ape_2','$fechaN',$num_tel,'$correo',$direc,$asoc,$perf,$t_estado)";
             $respuesta = $database->query($sql);
-            return 'Esta es la consulta'. $sql;
+            if($respuesta){
+                $resultado = $respuesta;
+            }
+            return  $resultado;
         }
 }

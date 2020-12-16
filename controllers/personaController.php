@@ -9,7 +9,7 @@ class personaController{
 
     public function index(){
 
-        if(isset($_SESSION['identity']) && isset($_SESSION['Dirigente'])){
+        if(isset($_SESSION['identity']) && isset($_SESSION['Dirigente'])|| iseet($_SESSION['Dirigente y D_Tecnico']) ){
             if(!isset($_GET['in'])){
                 $_SESSION['mensajeError'] = true;
             }else{
@@ -27,7 +27,7 @@ class personaController{
 
     public function gestionCrear(){
 
-        if(isset($_SESSION['identity']) && isset($_SESSION['Dirigente'])){
+        if(isset($_SESSION['identity']) && isset($_SESSION['Dirigente'])|| iseet($_SESSION['Dirigente y D_Tecnico']) ){
               if(!isset($_GET['in'])){
                 $_SESSION['mensajeError'] = true;
             }else{
@@ -49,7 +49,7 @@ class personaController{
     
     public function crear(){
         if(isset($_SESSION['identity']) && isset($_SESSION['Dirigente'])){
-            
+
             $direccion = new Direccion();
             $persona = new Persona();            
             $usuario = new Usuario();
@@ -116,5 +116,27 @@ class personaController{
             echo '</div>';
         }
      
+    }
+    
+    public function gestionEditar(){
+        if(isset($_SESSION['identity']) && isset($_SESSION['Dirigente'])|| iseet($_SESSION['Dirigente y D_Tecnico']) ){
+            if(!isset($_GET['in'])){
+                $_SESSION['mensajeError'] = true;
+            }else{
+                unset($_SESSION['mensajeError']);
+            }
+            $persona = new Persona();
+            $datosdeunaPersona = $persona->obtenerUnPersona($_GET['id']);
+            var_dump($datosdeunaPersona);
+            include_once 'views/persona/gestionPersona.php';
+        }else{
+            echo '<div class="container mt-5">';
+            echo '<h1>No tienes permiso para acceder a este apartado del sistema</h1>';
+            echo '</div>';
+        }
+    }
+    
+    public function editar(){
+
     }
 }

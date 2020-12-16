@@ -23,7 +23,8 @@
                             <td><?php echo $usuarios['NOMBRE_TIPO_ESTADO']; ?></td>
                             <td class="text-center">
                                 <button class="btn btn-success" onclick="document.location.href='<?=base_url?>usuarios/gestionEditar&id=<?=$usuarios['ID_USUARIO'];?>&in=1'">Editar</button>
-                                <button class="btn btn-danger btn-eliminar" data-bs-toggle="modal" data-bs-target="#terminarCampeonato" value="<?=$usuarios['ID_USUARIO'];?>">Terminar</button>
+                                <button class="btn btn-danger btn-eliminar" data-bs-toggle="modal" data-bs-target="#terminarUsuario" value="<?=$usuarios['ID_USUARIO'];?>">Terminar</button>
+                                <button onclick="document.location.href='<?=base_url?>usuarios/eliminar&idUsuario<?=$usuarios['ID_USUARIO'];?>&estado=2'">Elimnar 2</button>
                             </td>
                         </tr>
                     <?php } ?>
@@ -60,19 +61,19 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-        <button id="btnDarTermino" type="button" onclick="document.location.href='<?=base_url?>inicio/cerrarsesion'" class="btn btn-danger">Dar termino</button>
+        <button id="btnDarTermino" type="button" onclick="document.location.href='<?=base_url?>usuarios/eliminar&idUsuario<?=$usuarios['ID_USUARIO'];?>&estado=2'" class="btn btn-danger">Dar termino</button>
       </div>
     </div>
   </div>
 </div>
 
 
-<script>
+<!--<script>
     $('.btn-eliminar').click(function(){
         let boton = document.getElementById("btnDarTermino");
         let id = $(this).val();
         boton.removeAttribute("onclick");
-        boton.setAttribute("onclick","document.location.href='https://localhost/sistema_afal/usuarios/eliminar&idusuario="+id+"&estado=2'");
+        boton.setAttribute("onclick","document.location.href='https://localhost/sistema_afal/usuarios/eliminar&idUsuario="+id+"&estado=2'");
         //boton.setAttribute("onclick","document.location.href='https://localhost/sistema_afal/campeonatos/eliminar&idequipo="+id+"'");
     });
-</script>
+</script>-->
