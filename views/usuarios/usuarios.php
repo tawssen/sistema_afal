@@ -1,10 +1,3 @@
-<div class="container-xl">
-<div class="">
-    <button class="btn btn-secondary mt-5" onclick="document.location.href='<?=base_url?>usuarios/gestionCrear'">Crear Usuario</button>
-</div>
-</div>
-
-
 <div class="container-xl mt-3 border-top border-bottom p-4">
     <div class="row">
         <div class="col-lg-12">

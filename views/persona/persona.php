@@ -1,6 +1,6 @@
 <div class="container-xl">
 <div class="">
-    <a href="<?=base_url?>persona/gestionCrear" class="btn btn-secondary mt-5"> Crear Personas </a>
+    <a href="<?=base_url?>persona/gestionCrear&in=1" class="btn btn-secondary mt-5"> Crear Personas </a>
 </div>
 </div>
 

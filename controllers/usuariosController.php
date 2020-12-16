@@ -18,45 +18,6 @@ class usuariosController{
         }
         
     }
-    public function gestionCrear(){
-      
-        if(isset($_SESSION['identity']) && isset($_SESSION['Dirigente'])){    
-            if(!isset($_GET['in'])){
-                $_SESSION['mensajeError'] = true;
-            }else{
-                unset($_SESSION['mensajeError']);
-            }
-            $persona = new Persona();
-            $todasLasPersonas = $persona->obtenerPersona();        
-            include_once 'views/usuarios/gestionUsuarios.php';
-        }else{
-            echo '<div class="container mt-5">';
-            echo '<h1>No tienes permiso para acceder a este apartado del sistema</h1>';
-            echo '</div>';
-        }
-
-    }
-    public function crear(){
-        if(isset($_SESSION['identity']) && isset($_SESSION['Dirigente'])){
-            $usuario = new Usuario();
-            $usuario->setNombreUsuario($_POST['nombreUsuario']);
-            $ClaveEncriptada = password_hash($_POST['claveUsuario'], PASSWORD_DEFAULT);
-            $usuario->setClaveUsuario($ClaveEncriptada);
-            $usuario->setRutUsuario($_POST['rutPersona']);
-            
-            $respuesta = $usuario->crearUsuario();
-            if($respuesta){
-                header('location:'.base_url.'usuarios/index');
-            }else{
-                header('location:'.base_url.'usuarios/gestionCrear');
-            }
-
-        }else{
-            echo '<div class="container mt-5">';
-            echo '<h1>No tienes permiso para acceder a este apartado del sistema</h1>';
-            echo '</div>';
-        }
-    }
     public function gestionEditar(){
         if(isset($_SESSION['identity']) && isset($_SESSION['Dirigente'])){
             if(!isset($_GET['in'])){

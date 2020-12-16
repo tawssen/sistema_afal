@@ -4,6 +4,7 @@ require_once 'models/persona.php';
 require_once 'models/perfil.php';
 require_once 'models/asociacion.php';
 require_once 'models/direccion.php';
+require_once 'models/usuario.php';
 class personaController{
 
     public function index(){
@@ -48,8 +49,11 @@ class personaController{
     
     public function crear(){
         if(isset($_SESSION['identity']) && isset($_SESSION['Dirigente'])){
+            
             $direccion = new Direccion();
-            $persona = new Persona();
+            $persona = new Persona();            
+            $usuario = new Usuario();
+
             $direccion->setCallePasaje($_POST['callePasaje']);
             $direccion->setComuna($_POST['comuna']);
             $direccion->setProvincia($_POST['provincia']);
@@ -79,6 +83,26 @@ class personaController{
             $persona->setIdPerfil($_POST['perfilPersona']);
     
             $respuesta = $persona->ingresarPersona();
+
+            /*=============CREAR USUARIO================*/
+            $nom1 = $_POST['nombrePersona1'];
+            $ape1 = $_POST['apellidoPersona1'];
+            $Inicial = $nom1[0];
+
+            $NombreUsuario = $Inicial.''.$ape1;
+            $ContraseñaUsuario = substr($_POST['rutPersona'], 0, 4); 
+            $RutUsuario = $_POST['rutPersona'];
+
+            $usuario->setNombreUsuario($NombreUsuario);
+            $ClaveEncriptada = password_hash($ContraseñaUsuario, PASSWORD_DEFAULT);
+            $usuario->setClaveUsuario($ClaveEncriptada);
+            $usuario->setRutUsuario($RutUsuario);        
+           
+            if($_POST['perfilPersona'] != 5){                
+                $respuesta = $usuario->crearUsuario();
+
+            }  
+            /*==============================================================*/      
             if($respuesta){
                 header('location:'.base_url.'persona/index');
                 exit;
