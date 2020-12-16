@@ -73,7 +73,7 @@
             <div class="mt-3">
              <div class="">
                 <label for="rutClub" class="form-label">CORREO</label>
-                <input class="form-control" name="rutClub" type="numeric" placeholder="12345678" required>
+                <input class="form-control" name="correoClub" type="numeric" placeholder="12345678" required>
              </div>
             </div>
 

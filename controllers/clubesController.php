@@ -43,7 +43,13 @@ class clubesController{
             $club->setIdDireccion($resultado['ID_DIRECCION']);
         }
 
-        $club->setRutClub();
-        $club->setDvClub();
+        $club->setRutClub($_POST['rutClub']);
+        $club->setDvClub($_POST['dvClub']);
+        $club->setNombreClub($_POST['nombreClub']);
+        $club->setFechaFundacionClub($_POST['fechaFundacion']);
+        $club->setNombreEstadio($_POST['nombreEstadio']);
+        $club->setIdCorreo($_POST['correoClub']);
+        $club->setIdAsociacion($_POST['nombreAsociacion']);
+        $ingreso = $club->ingresarClub();
     }
 }

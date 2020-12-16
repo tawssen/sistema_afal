@@ -68,7 +68,7 @@ class Club{
     }
 
     public function getNombreEstadio(){
-        $this->nombre_estadio;
+        return $this->nombre_estadio;
     }
 
     public function setNombreEstadio($nombre_estadio){
@@ -111,12 +111,19 @@ class Club{
     public function obtenerClubes(){
         $sql = "select * from club
         inner join direccion on(club.ID_DIRECCION_FK = direccion.ID_DIRECCION)
-        inner join correo on(club.ID_CORREO_FK = correo.ID_CORREO)
         inner join asociacion on(club.ID_ASOCIACION_FK = asociacion.ID_ASOCIACION)
         inner join tipo_estado on(club.ID_TIPO_ESTADO_FK = tipo_estado.ID_TIPO_ESTADO) where ID_TIPO_ESTADO = 1";
         $database = Database::connect();
         $datosObtenidosClubes = $database->query($sql);
         return $datosObtenidosClubes;
+    }
+
+    public function ingresarClub(){
+        $database = Database::connect();
+        $sql = 'INSERT INTO club (RUT_CLUB,DV_CLUB,NOMBRE_CLUB,FECHA_FUNDACION_CLUB,GIRO_CLUB,NOMBRE_ESTADIO,CORREO_ELECTRONICO,ID_DIRECCION_FK,ID_ASOCIACION_FK,ID_TIPO_ESTADO_FK) VALUES
+        ('.$this->getRutClub().','.$this->getDvClub().',"'.$this->getNombreClub().'","'.$this->getFechaFundacionClub().'",default,"'.$this->getNombreEstadio().'","'.$this->getIdCorreo().'",'.$this->getIdDireccion().','.$this->getIdAsociacion().',1)';
+        $respuesta = $database->query($sql);
+        return 'Esta es la consulta hijo de perra: '.$sql;
     }
     
 

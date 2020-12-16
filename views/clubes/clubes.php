@@ -32,7 +32,7 @@
                        <td><?php echo $club['FECHA_FUNDACION_CLUB'] ?></td>
                        <td><?php echo $club['NOMBRE_ESTADIO'] ?></td>
                        <td><?php echo $club['CALLE_PASAJE'] ?></td>
-                       <td><?php echo $club['CORREO_1'] ?></td>
+                       <td><?php echo $club['CORREO_ELECTRONICO'] ?></td>
                        <td><?php echo $club['NOMBRE_ASOCIACION'] ?></td>
                        <td class="text-center">
                           <button class="btn btn-success" onclick="document.location.href='<?=base_url?>clubes/gestionEditar&id=<?=$club['ID_CLUB'];?>'">Editar</button>
