@@ -11,9 +11,11 @@
         <li><a href="<?=base_url?>campeonatos/index"><i class="fas fa-trophy"></i>Campeonatos</a></li>
         <li><a href="<?=base_url?>clubes/index"><i class="fas fa-shield-alt"></i>Clubes</a></li>
         <li><a href="<?=base_url?>partidos/index"><i class="fas fa-futbol"></i>Partidos</a></li>
+        <li><a href="<?=base_url?>persona/index"><i class="fas fa-male"></i>Personas</a></li>
         <li><i class="fas fa-users"></i>Jugadores</li>
         <li><i class="fas fa-gavel"></i>Arbitros</li>
         <li><a href="<?=base_url?>usuarios/index"><i class="fas fa-user"></i>Usuarios</a></li>
+        
       </ul>
     </div>
 </div>

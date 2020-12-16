@@ -18,6 +18,20 @@ class Tipoestado{
     public function setNombretipoestado($nombre_tipo_estado){
         $this->nombre_tipo_estado = $nombre_tipo_estado;
     }
+    
+    public function obtenerEstados(){
+        $resultado = false;
+        $database = Database::connect();
 
+        $sql = "SELECT * FROM TIPO_ESTADO";
+
+        $respuesta = $database->query($sql);
+
+        if($respuesta && $respuesta->num_rows > 0){
+            $resultado = $respuesta;
+        }
+
+        return $resultado;
+    }
 
 }
