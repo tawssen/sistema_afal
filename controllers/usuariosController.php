@@ -74,7 +74,7 @@ class usuariosController{
                 echo $id;
                 echo $estado;
                 echo $usuario->deshabilitarUsuario();
-             //   header('location:'.base_url.'usuarios/index');
+                header('location:'.base_url.'usuarios/index');
             
         }else{
 
