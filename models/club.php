@@ -142,16 +142,16 @@ class Club{
     }
 
     public function editarClub(){
-        $resultado = false;
         $database = Database::connect();
-
-        $sql = "UPDATE club SET RUT_CLUB =".$this->getRutClub().",'".$this->getDvClub()."',";
+        $sql = "UPDATE club SET RUT_CLUB =".$this->getRutClub().", DV_CLUB = '".$this->getDvClub()."', NOMBRE_CLUB ='".$this->getNombreClub()."', FECHA_FUNDACION_CLUB ='".$this->getFechaFundacionClub()."', NOMBRE_ESTADIO = '".$this->getNombreEstadio()."', CORREO_ELECTRONICO = '".$this->getIdCorreo()."', ID_ASOCIACION_FK = ".$this->getIdAsociacion();
         $respuesta = $database->query($sql);
+        return $respuesta;
+    }
 
-        if($respuesta){
-            $resultado = true;
-        }
-
-        return $resultado;
+    public function eliminar(){
+        $database = Database::connect();
+        $sql = "UPDATE club SET ID_TIPO_ESTADO_FK =".$this->getIdTipoEstado()." WHERE ID_CLUB =".$this->getIdClub();
+        $respuesta = $database->query($sql);
+        return $sql;
     }
 }

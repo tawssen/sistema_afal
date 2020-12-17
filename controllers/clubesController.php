@@ -74,7 +74,7 @@ class clubesController{
         $direccion->setComuna($_POST['comuna']);
         $direccion->setProvincia($_POST['provincia']);
         $direccion->setRegion($_POST['region']);
-
+        
         $verificarDireccion = $direccion->verificarDireccion();
         if($verificarDireccion<1){
             $ingresar = $direccion->ingresarDireccion();
@@ -84,7 +84,6 @@ class clubesController{
             $resultado = $direccion->obtenerDireccion();
             $club->setIdDireccion($resultado['ID_DIRECCION']);
         }
-        
         $club->setRutClub($_POST['rutClub']);
         $club->setDvClub($_POST['dvClub']);
         $club->setNombreClub($_POST['nombreClub']);
@@ -92,6 +91,15 @@ class clubesController{
         $club->setNombreEstadio($_POST['nombreEstadio']);
         $club->setIdCorreo($_POST['correoClub']);
         $club->setIdAsociacion($_POST['nombreAsociacion']);
-        
+        $club->editarClub();
+        header('location:'.base_url.'clubes/index');
+    }
+
+    public function eliminar(){
+        $club = new Club();
+        $club->setIdClub($_GET['idclub']);
+        $club->setIdTipoEstado(2);
+        $consulta = $club->eliminar();
+        echo $consulta;
     }
 }

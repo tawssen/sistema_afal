@@ -55,7 +55,7 @@
 
                 <div class="mt-3 col-4">
                     <label for="" class="form-label">PROVINCIA</label>
-                    <select id="selectProvincia" class="form-select" name="estadoCampeonato" aria-label="Default select example" required>
+                    <select id="selectProvincia" class="form-select" name="provincia" aria-label="Default select example" required>
                         <option value="0" selected>Seleccionar Provincia</option>
                         <?php while($provincia = mysqli_fetch_assoc($todasLasProvincias)){?>
                             <option value="<?php echo $provincia['ID_PROVINCIA'];?>"><?php echo $provincia['NOMBRE_PROVINCIA'];?></option>
@@ -65,7 +65,7 @@
 
                 <div class="mt-3 col-4">
                     <label for="" class="form-label">COMUNA</label>
-                    <select id="selectComuna" class="form-select" name="estadoCampeonato" aria-label="Default select example" required>
+                    <select id="selectComuna" class="form-select" name="comuna" aria-label="Default select example" required>
                         <option value="0" selected>Seleccionar Comuna</option>
                         <?php while($comuna = mysqli_fetch_assoc($todasLasComunas)){?>
                             <option value="<?php echo $comuna['ID_COMUNA'];?>"><?php echo $comuna['NOMBRE_COMUNA'];?></option>
