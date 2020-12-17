@@ -3,8 +3,11 @@ require_once 'config/parameters.php';
 require_once 'models/persona.php';
 require_once 'models/perfil.php';
 require_once 'models/asociacion.php';
-require_once 'models/direccion.php';
 require_once 'models/usuario.php';
+require_once 'models/direccion.php';
+require_once 'models/provincia.php';
+require_once 'models/comuna.php';
+require_once 'models/tipo_estado.php';
 class personaController{
 
     public function index(){
@@ -119,15 +122,24 @@ class personaController{
     }
     
     public function gestionEditar(){
-        if(isset($_SESSION['identity']) && isset($_SESSION['Dirigente'])|| iseet($_SESSION['Dirigente y D_Tecnico']) ){
+        if(isset($_SESSION['identity']) && isset($_SESSION['Dirigente']) || iseet($_SESSION['Dirigente y D_Tecnico'])){
             if(!isset($_GET['in'])){
                 $_SESSION['mensajeError'] = true;
             }else{
                 unset($_SESSION['mensajeError']);
             }
             $persona = new Persona();
+            $perfil = new Perfil();
+            $asociacion = new Asociacion();
+            $provincia = new Provincia();
+            $comuna = new Comuna();
+            $estado = new Tipoestado();
             $datosdeunaPersona = $persona->obtenerUnPersona($_GET['id']);
-            var_dump($datosdeunaPersona);
+            $todosLosPerfiles = $perfil->obtenerPerfiles();
+            $todasLasAsociaciones = $asociacion->obtenerAsociaciones();                                           
+            $todosLosEstados = $estado->obtenerEstados();
+            $todasLasProvincias = $provincia->obtenerProvinciasDeRegion($datosdeunaPersona['ID_REGION_FK']);
+            $todasLasComunas = $comuna->obtenerComunasDeProvincia($datosdeunaPersona['ID_PROVINCIA_FK']);                        
             include_once 'views/persona/gestionPersona.php';
         }else{
             echo '<div class="container mt-5">';
@@ -137,6 +149,75 @@ class personaController{
     }
     
     public function editar(){
+        if(isset($_SESSION['identity']) && isset($_SESSION['Dirigente']) || iseet($_SESSION['Dirigente y D_Tecnico'])){
+            if(!isset($_GET['in'])){
+                $_SESSION['mensajeError'] = true;
+            }else{
+                unset($_SESSION['mensajeError']);
+            }
+            $direccion = new Direccion();
+            $persona = new Persona();                
+    
+            $direccion->setCallePasaje($_POST['callePasaje']);
+            $direccion->setComuna($_POST['comuna']);
+            $direccion->setProvincia($_POST['provincia']);
+            $direccion->setRegion($_POST['region']);
+    
+            $verificarDireccion = $direccion->verificarDireccion();
+            if($verificarDireccion<1){
+                echo 'ingreso para poder insertar nueva direccion';
+                $ingresar = $direccion->ingresarDireccion();
+                $resultado = $direccion->obtenerDireccion();
+                $persona->setIdDireccion($resultado['ID_DIRECCION']);
+            }else{
+                echo 'ingreso para poder obtener la direccion';
+                $resultado = $direccion->obtenerDireccion();                
+                $persona->setIdDireccion($resultado['ID_DIRECCION']);
+            }
+           $persona->setRutPersona($_POST['rutPersona']);
+            $persona->setDvpersona($_POST['dvPersona']);
+            $persona->setNombre1($_POST['nombrePersona1']);
+            $persona->setNombre2($_POST['nombrePersona2']);
+            $persona->setApellido1($_POST['apellidoPersona1']);
+            $persona->setApellido2($_POST['apellidoPersona2']);
+            $persona->setFechaNacimiento($_POST['fechaNacimiento']);
+            $persona->setNumeroTelefono($_POST['numeroTelefono']);
+            $persona->setCorreo($_POST['correoElectronico']);
+            $persona->setIdAsociacion($_POST['nombreAsociacion']);
+            $persona->setIdPerfil($_POST['perfilPersona']);
+            $persona->setIdTipoEstado($_POST['tipoestado']);
+            $respuesta = $persona->editarPersona();
 
+            if($respuesta){
+                header('location:'.base_url.'persona/index');
+            }else{
+                header('location:'.base_url.'persona/gestionEditar');
+            }
+            
+        }else{
+            echo '<div class="container mt-5">';
+            echo '<h1>No tienes permiso para acceder a este apartado del sistema</h1>';
+            echo '</div>';
+        }        
+      
+    }
+    public function eliminar(){
+        if(isset($_SESSION['identity']) && isset($_SESSION['Dirigente']) || iseet($_SESSION['Dirigente y D_Tecnico'])){                        
+            $persona = new Persona();  
+            $persona->setIdTipoEstado($_GET['estado']);
+            $persona->setRutPersona($_GET['rutPersona']);
+            $respuesta = $persona->eliminarPersona();
+
+            if($respuesta){
+                header('location:'.base_url.'persona/index');
+            }else{
+                header('location:'.base_url.'persona/gestionEditar');
+            }
+            
+        }else{
+            echo '<div class="container mt-5">';
+            echo '<h1>No tienes permiso para acceder a este apartado del sistema</h1>';
+            echo '</div>';
+        }           
     }
 }

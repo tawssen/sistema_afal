@@ -1,10 +1,10 @@
 <div class="container mt-3">
     <div class="container mt-5 col-6">
 
-        <?php if(isset($usuarioSeleccionado) && isset($_GET['in'])):?>
+        <?php if(isset($datosdeunaPersona) && isset($_GET['in'])):?>
         <form action="<?=base_url?>persona/editar&id=<?=$_GET['id']?>&in=<?=$_GET['in']?>" method="POST" class="border p-5">
 
-        <?php elseif(isset($usuarioSeleccionado)):?>
+        <?php elseif(isset($datosdeunaPersona)):?>
         <form action="<?=base_url?>persona/editar&id=<?=$_GET['id']?>" method="POST" class="border p-5">
 
         <?php elseif(isset($_GET['in'])):?>
@@ -14,7 +14,7 @@
         <form action="<?=base_url?>persona/crear" method="POST" class="border p-5">
         <?php endif; ?>
 
-            <?php if(isset($usuarioSeleccionado)):?>
+            <?php if(isset($datosdeunaPersona)):?>
             <h1 class="pb-3">Editar Persona</h1>
             <?php else:?>
             <h1 class="pb-3">Crear Persona</h1>
@@ -24,7 +24,7 @@
                 <p class="alert alert-danger">La acción no se ha podido llevar a cabo. Vuelva a intentarlo por favor.</p>
             <?php endif; ?>
 
-            <?php if(isset($usuarioSeleccionado)):?>
+            <?php if(isset($datosdeunaPersona)):?>
             <div class="">
                 <input class="form-control" id="idPersona" name="idPersona" type="hidden" value="">
             </div>
@@ -86,19 +86,25 @@
                     </select>
                 </div>
 
-                <div class="form-group mt-3 col-4">
+                <div class="mt-3 col-4">
                     <label for="" class="form-label">PROVINCIA</label>
                     <select id="selectProvincia" class="form-select" name="provincia" aria-label="Default select example" required>
                         <option value="0" selected>Seleccionar Provincia</option>
+                        <?php while($provincia = mysqli_fetch_assoc($todasLasProvincias)){?>
+                            <option value="<?php echo $provincia['ID_PROVINCIA'];?>"><?php echo $provincia['NOMBRE_PROVINCIA'];?></option>
+                        <?php } mysqli_free_result($todasLasProvincias);?>
                     </select>
                 </div>
 
-                <div class="form-group mt-3 col-4">
+                <div class="mt-3 col-4">
                     <label for="" class="form-label">COMUNA</label>
                     <select id="selectComuna" class="form-select" name="comuna" aria-label="Default select example" required>
                         <option value="0" selected>Seleccionar Comuna</option>
+                        <?php while($comuna = mysqli_fetch_assoc($todasLasComunas)){?>
+                            <option value="<?php echo $comuna['ID_COMUNA'];?>"><?php echo $comuna['NOMBRE_COMUNA'];?></option>
+                        <?php } mysqli_free_result($todasLasComunas);?>
                     </select>
-                </div>                
+                </div>             
             </div>
 
             <div class="mt-3">
@@ -108,7 +114,7 @@
 
             <div class="mt-3">
                 <label for="" class="form-label">ASOCIACIÓN</label>
-                <select id="selectSerie" class="form-select" name="nombreAsociacion" aria-label="Default select example" required>
+                <select id="selectAsociacion" class="form-select" name="nombreAsociacion" aria-label="Default select example" required>
                     <option value="0" selected>Seleccionar Asociación</option>
                     <?php while($asociacion = mysqli_fetch_assoc($todasLasAsociaciones)){?>
                     <option value="<?php echo $asociacion['ID_ASOCIACION'];?>"><?php echo $asociacion['NOMBRE_ASOCIACION'];?></option>
@@ -126,9 +132,20 @@
                 </select> 
             </div>
 
+            <?php if(isset($datosdeunaPersona)):?>
+            <div class="mt-3">
+                <label for="" class="form-label">ESTADO PERSONA</label>
+                <select id="selectEstado" class="form-select" name="tipoestado" aria-label="Default select example" required>
+                    <option value="0" selected>Seleccionar Estado</option>
+                    <?php while($estado = mysqli_fetch_assoc($todosLosEstados)){?>
+                        <option value="<?php echo $estado['ID_TIPO_ESTADO'];?>"><?php echo $estado['NOMBRE_TIPO_ESTADO'];?></option>
+                    <?php } mysqli_free_result($todosLosEstados);?>
+                </select>
+            </div>
+            <?php endif; ?>
             <div class="mt-5 d-flex justify-content-end">
                 <a href="<?=base_url?>persona/index" class="btn btn-danger mr-2">Cancelar</a>
-                <?php if(isset($usuarioSeleccionado)):?>
+                <?php if(isset($datosdeunaPersona)):?>
                 <input class="btn btn-success" type="submit" value="Actualizar Persona">
                 <?php else:?>
                 <input class="btn btn-success" type="submit" value="Crear Persona">
@@ -142,4 +159,30 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.5.4/umd/popper.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="<?=base_url?>javascript/main.js"></script>
+<script src="<?=base_url?>javascript/cargarInfo.js"></script>
 <script src="<?=base_url?>ajax/javascript/obtenerRegiones.js"></script>
+
+<?php 
+if(isset($datosdeunaPersona)){
+    echo '<script>';
+    echo '$(document).ready(function(){';
+    echo "cargarInfo('#rutPersona','".$datosdeunaPersona['RUT_PERSONA']."');";
+    echo "cargarInfo('#dvPersona','".$datosdeunaPersona['DV']."');";
+    echo "cargarInfo('#nombrePersona1','".$datosdeunaPersona['NOMBRE_1']."');";
+    echo "cargarInfo('#nombrePersona2','".$datosdeunaPersona['NOMBRE_2']."');";
+    echo "cargarInfo('#apellidoPersona1','".$datosdeunaPersona['APELLIDO_1']."');";
+    echo "cargarInfo('#apellidoPersona2','".$datosdeunaPersona['APELLIDO_2']."');";    
+    echo "cargarInfo('#fechaNacimiento','".$datosdeunaPersona['FECHA_NACIMIENTO']."');";
+    echo "cargarInfo('#numeroTelefono','".$datosdeunaPersona['NUMERO_TELEFONO']."');";    
+    echo "cargarInfo('#correoElectronico','".$datosdeunaPersona['CORREO_ELECTRONICO']."');";
+    echo "cargarInfo('#selectRegion',".$datosdeunaPersona['ID_REGION_FK'].");";
+    echo "cargarInfo('#selectProvincia','".$datosdeunaPersona['ID_PROVINCIA_FK']."');";
+    echo "cargarInfo('#selectComuna','".$datosdeunaPersona['ID_COMUNA_FK']."');";
+    echo "cargarInfo('#callePasaje','".$datosdeunaPersona['CALLE_PASAJE']."');";
+    echo "cargarInfo('#selectAsociacion','".$datosdeunaPersona['ID_ASOCIACION_FK']."');";
+    echo "cargarInfo('#selectPerfil','".$datosdeunaPersona['ID_PERFIL_FK']."');";
+    echo "cargarInfo('#selectEstado','".$datosdeunaPersona['ID_TIPO_ESTADO_FK']."');";
+    echo '});';
+    echo '</script>';
+}
+?>

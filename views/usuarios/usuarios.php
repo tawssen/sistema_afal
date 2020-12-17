@@ -72,7 +72,6 @@
         let boton = document.getElementById("btnDarTermino");
         let id = $(this).val();
         boton.removeAttribute("onclick");
-        boton.setAttribute("onclick","document.location.href='<?=base_url?>usuarios/eliminar&idUsuario="+id+"&estado=2'");
-        //boton.setAttribute("onclick","document.location.href='https://localhost/sistema_afal/campeonatos/eliminar&idequipo="+id+"'");
+        boton.setAttribute("onclick","document.location.href='<?=base_url?>usuarios/eliminar&idUsuario="+id+"&estado=2'");        
     });
 </script>

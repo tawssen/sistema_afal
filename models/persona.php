@@ -97,34 +97,25 @@ class Persona{
 
 
         public function obtenerPersona(){
-            $sql = "SELECT * FROM PERSONA";
+            $sql = "SELECT * FROM PERSONA WHERE ID_TIPO_ESTADO_FK = 1";
             $database = Database::connect();
             $datosObtenidosPersona = $database->query($sql);
             return $datosObtenidosPersona;
 
         }
 
-        public function obtenerUnPersona($idPersona){
+        public function obtenerUnPersona($rut){            
             $resultado = false;
             $database = Database::connect();
             $sql = "SELECT * FROM PERSONA
-            INNER JOIN DIRECCION ON (PERSONA.ID_DIRECCION_FK = DIRECCION.ID_DIRECCION)
-            INNER JOIN ASOCIACION ON (PERSONA.ID_ASOCIACION_FK = ASOCIACION.ID_ASOCIACION)
-            INNER JOIN PERFIL ON (PERSONA.ID_PERFIL_FK = PERFIL.ID_PERFIL)
-            INNER JOIN TIPO_ESTADO ON (PERSONA.ID_TIPO_ESTADO_FK = TIPO_ESTADO.ID_TIPO_ESTADO) WHERE RUT_PERSONA = $idPersona ";
-          
-            $datosObtenidosPersona = $database->query($sql);
-            if($datosObtenidosPersona && $datosObtenidosPersona->num_rows > 0){
-               $resultado = $datosObtenidosPersona->fetch_assoc();
+            INNER JOIN DIRECCION ON (PERSONA.ID_DIRECCION_FK = DIRECCION.ID_DIRECCION) WHERE RUT_PERSONA = $rut ";          
+            $datosObtenidosunaPersona = $database->query($sql);            
+            if($datosObtenidosunaPersona && $datosObtenidosunaPersona->num_rows > 0){
+               $resultado = $datosObtenidosunaPersona->fetch_assoc();
     
             }
-    
             return $resultado;
-        }
-
-       
-
-
+        }    
 
         public function ingresarPersona(){            
             $database = Database::connect();
@@ -152,5 +143,63 @@ class Persona{
                 $resultado = $respuesta;
             }
             return  $resultado;
+        }
+
+        public function editarPersona(){
+            $database = Database::connect();
+
+            $resultado = false;
+
+            $rut = $this->getRutPersona();
+            $dv = $this->getDvPersona();
+            $nom_1 = $this->getNombre1();
+            $nom_2 = $this->getNombre2();
+            $ape_1 = $this->getApellido1();
+            $ape_2 = $this->getApellido2();
+            $fechaN = $this->getFechaNacimiento();
+            $num_tel = $this->getNumeroTelefono();
+            $correo = $this->getCorreo();
+            $direc = $this->getIdDireccion();
+            $asoc = $this->getIdAsociacion();
+            $perf = $this->getIdPerfil();
+            $t_estado = $this->getIdTipoEstado();    
+            
+            $sql = "UPDATE persona
+            SET
+            RUT_PERSONA = $rut,
+            DV = '$dv',
+            NOMBRE_1 ='$nom_1',
+            NOMBRE_2 = '$nom_2',
+            APELLIDO_1 = '$ape_1',
+            APELLIDO_2 = '$ape_2',
+            FECHA_NACIMIENTO = '$fechaN',
+            NUMERO_TELEFONO = $num_tel,
+            CORREO_ELECTRONICO = '$correo ',
+            ID_DIRECCION_FK = $direc,
+            ID_ASOCIACION_FK = $asoc,
+            ID_PERFIL_FK =   $perf ,
+            ID_TIPO_ESTADO_FK = $t_estado
+            WHERE RUT_PERSONA = $rut";
+            
+            $respuesta = $database->query($sql);
+            if($respuesta){
+                $resultado = $respuesta;
+            }
+            return  $resultado;
+        }
+        
+        public function eliminarPersona(){
+            $resultado = false;
+            $database = Database::connect();
+            $idTipoestado = $this->getIdTipoEstado();
+            $rut = $this->getRutPersona();
+            $sql = "UPDATE persona SET ID_TIPO_ESTADO_FK = $idTipoestado WHERE RUT_PERSONA = $rut ";
+            $respuesta = $database->query($sql);
+
+            if($respuesta){
+                $resultado = $respuesta;
+            }
+
+            return $resultado;
         }
 }

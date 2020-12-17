@@ -63,18 +63,11 @@ class usuariosController{
     }
     public function eliminar(){
         if(isset($_SESSION['identity']) && isset($_SESSION['Dirigente'])|| iseet($_SESSION['Dirigente y D_Tecnico']) ){
-                $usuario = new Usuario();
-                $id = $_GET['idUsuario'];
-                $estado = $_GET['estado'];
-        
-              
-           
-                $usuario->setIdUsuario($_GET['idUsuario']);
-                $usuario->setEstadoUsuario($_GET['estado']);
-                echo $id;
-                echo $estado;
-                echo $usuario->deshabilitarUsuario();
-                header('location:'.base_url.'usuarios/index');
+            $usuario = new Usuario();                
+            $usuario->setIdUsuario($_GET['idUsuario']);
+            $usuario->setEstadoUsuario($_GET['estado']);
+            $usuario->deshabilitarUsuario();
+            header('location:'.base_url.'usuarios/index');
             
         }else{
 
