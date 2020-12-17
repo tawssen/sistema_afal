@@ -61,7 +61,7 @@ class Usuario{
         $clave = $this->clave_usuario;
 
         $database = Database::connect();
-        $sql = "SELECT * FROM usuarios inner join persona on (usuarios.RUT_PERSONA_FK = persona.RUT_PERSONA) where NOMBRE_USUARIO = '$user' AND ID_TIPO_ESTADO_FK = 1";
+        $sql = "SELECT * FROM usuarios inner join persona on (usuarios.RUT_PERSONA_FK = persona.RUT_PERSONA) where NOMBRE_USUARIO = '$user' AND usuarios.ID_TIPO_ESTADO_FK = 1";
         $login = $database->query($sql);
         if($login && $login->num_rows == 1)
         {

@@ -141,4 +141,17 @@ class Club{
         return $resultado;
     }
 
+    public function editarClub(){
+        $resultado = false;
+        $database = Database::connect();
+
+        $sql = "UPDATE club SET RUT_CLUB =".$this->getRutClub().",'".$this->getDvClub()."',";
+        $respuesta = $database->query($sql);
+
+        if($respuesta){
+            $resultado = true;
+        }
+
+        return $resultado;
+    }
 }
