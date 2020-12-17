@@ -111,6 +111,24 @@ class Usuario{
 
         return $resultado;
     }
+
+    public function obtenerUnUsuarioEliminar($idUsuario){
+        $resultado = false;
+        $database = Database::connect();
+        $sql = "SELECT * FROM USUARIOS
+        INNER JOIN PERSONA ON (USUARIOS.RUT_PERSONA_FK = PERSONA.RUT_PERSONA)
+        INNER JOIN TIPO_ESTADO ON (USUARIOS.ID_TIPO_ESTADO_FK = TIPO_ESTADO.ID_TIPO_ESTADO)
+        WHERE RUT_PERSONA_FK = $idUsuario";
+      
+        $datosObtenidosUsuarios = $database->query($sql);
+        if($datosObtenidosUsuarios && $datosObtenidosUsuarios->num_rows > 0){
+           $resultado = $datosObtenidosUsuarios->fetch_assoc();
+
+        }
+
+        return $resultado;
+    }
+
     public function crearUsuario(){
         $resultado = false;
         $database = Database::connect();
@@ -155,7 +173,20 @@ class Usuario{
 
         return $sql;
     }
+    
+    public function deshabilitarUsuarioConRut(){
+        $resultado = false;
+        $database = Database::connect();
+        $rut = $this->getRutUsuario();
+        $sql = "UPDATE usuarios SET ID_TIPO_ESTADO_FK = 2 WHERE RUT_PERSONA_FK = $rut ";
+        $respuesta = $database->query($sql);
 
+        if($respuesta){
+            $resultado = $respuesta;
+        }
+
+        return $resultado;
+    }
 
 
 }

@@ -38,7 +38,7 @@
                          <td><?php echo $persona['ID_PERFIL_FK'] ?></td>
                          <td class="text-center">
                                 <button class="btn btn-success" onclick="document.location.href='<?=base_url?>persona/gestionEditar&id=<?=$persona['RUT_PERSONA'];?>&in=1'">Editar</button>
-                                <button class="btn btn-danger btn-eliminar" data-bs-toggle="modal" data-bs-target="#eliminarPersona" value="<?=$persona['RUT_PERSONA'];?>">Terminar</button>
+                                <button class="btn btn-danger btn-eliminar" data-bs-toggle="modal" data-bs-target="#eliminarPersona" value="<?=$persona['RUT_PERSONA'];?>">Terminar</button>                                       
                          </td>
                        </tr>
                     <?php }?>    
@@ -47,7 +47,7 @@
             </div>
         </div>
     </div>
-</div>
+</div> 
 
 <!-- Modal Deshabilitar Usuario -->
 <div class="modal fade" id="eliminarPersona" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -64,8 +64,8 @@
         ¿Está seguro de eliminar ha esta persona?
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-        <button id="btnDarTermino" type="button" onclick="document.location.href='<?=base_url?>persona/index'" class="btn btn-danger">Dar termino</button>
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>       
+        <button id="EliminarPersona" type="button" onclick="document.location.href='<?=base_url?>persona/eliminar'" class="btn btn-danger">Eliminar</button>
       </div>
     </div>
   </div>
@@ -85,9 +85,9 @@
 
 <script>
     $('.btn-eliminar').click(function(){
-        let boton = document.getElementById("btnDarTermino");
+        let boton = document.getElementById("EliminarPersona");
         let id = $(this).val();
         boton.removeAttribute("onclick");
-        boton.setAttribute("onclick","document.location.href='<?=base_url?>personas/eliminar&rutPersona="+id+"&estado=2'");        
+        boton.setAttribute("onclick","document.location.href='<?=base_url?>persona/eliminar&rutPersona="+id+"'");        
     });
 </script>

@@ -201,19 +201,30 @@ class personaController{
         }        
       
     }
+
     public function eliminar(){
         if(isset($_SESSION['identity']) && isset($_SESSION['Dirigente']) || iseet($_SESSION['Dirigente y D_Tecnico'])){                        
-            $persona = new Persona();  
-            $persona->setIdTipoEstado($_GET['estado']);
+            $persona = new Persona();             
             $persona->setRutPersona($_GET['rutPersona']);
+            $variable = $_GET['rutPersona'];
+            $usuario = new Usuario();                          
             $respuesta = $persona->eliminarPersona();
 
+            $datosUsuario = $usuario->obtenerUnUsuarioEliminar($variable);
+            $datos = $persona->obtenerUnPersona($variable);  
+
+            $idEstadoUsuario = $datosUsuario['ID_TIPO_ESTADO_FK'];
+            $idEstadoPersona = $datos['ID_TIPO_ESTADO_FK_PERSONA'];
+
             if($respuesta){
-                header('location:'.base_url.'persona/index');
-            }else{
-                header('location:'.base_url.'persona/gestionEditar');
-            }
-            
+                if($idEstadoPersona==2 && $idEstadoUsuario == 1){               
+                    $usuario->setRutUsuario($variable);
+                    $usuario->deshabilitarUsuarioConRut();                  
+                    header('location:'.base_url.'persona/index');  
+                }else{
+
+                }
+            }                                              
         }else{
             echo '<div class="container mt-5">';
             echo '<h1>No tienes permiso para acceder a este apartado del sistema</h1>';

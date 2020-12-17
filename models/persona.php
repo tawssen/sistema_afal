@@ -97,7 +97,7 @@ class Persona{
 
 
         public function obtenerPersona(){
-            $sql = "SELECT * FROM PERSONA WHERE ID_TIPO_ESTADO_FK = 1";
+            $sql = "SELECT * FROM PERSONA WHERE ID_TIPO_ESTADO_FK_PERSONA = 1";
             $database = Database::connect();
             $datosObtenidosPersona = $database->query($sql);
             return $datosObtenidosPersona;
@@ -108,7 +108,8 @@ class Persona{
             $resultado = false;
             $database = Database::connect();
             $sql = "SELECT * FROM PERSONA
-            INNER JOIN DIRECCION ON (PERSONA.ID_DIRECCION_FK = DIRECCION.ID_DIRECCION) WHERE RUT_PERSONA = $rut ";          
+            INNER JOIN DIRECCION ON (PERSONA.ID_DIRECCION_FK = DIRECCION.ID_DIRECCION)
+            inner join USUARIOS on (PERSONA.RUT_PERSONA = USUARIOS.RUT_PERSONA_FK) WHERE RUT_PERSONA = $rut ";          
             $datosObtenidosunaPersona = $database->query($sql);            
             if($datosObtenidosunaPersona && $datosObtenidosunaPersona->num_rows > 0){
                $resultado = $datosObtenidosunaPersona->fetch_assoc();
@@ -136,7 +137,7 @@ class Persona{
             $perf = $this->getIdPerfil();
             $t_estado = 1;                       
 
-            $sql = "INSERT INTO persona (RUT_PERSONA,DV,NOMBRE_1,NOMBRE_2,APELLIDO_1,APELLIDO_2,FECHA_NACIMIENTO,NUMERO_TELEFONO,CORREO_ELECTRONICO,ID_DIRECCION_FK,ID_ASOCIACION_FK,ID_PERFIL_FK,ID_TIPO_ESTADO_FK) 
+            $sql = "INSERT INTO persona (RUT_PERSONA,DV,NOMBRE_1,NOMBRE_2,APELLIDO_1,APELLIDO_2,FECHA_NACIMIENTO,NUMERO_TELEFONO,CORREO_ELECTRONICO,ID_DIRECCION_FK,ID_ASOCIACION_FK,ID_PERFIL_FK,ID_TIPO_ESTADO_FK_PERSONA) 
             VALUES ($rut,$dv,'$nom_1','$nom_2','$ape_1','$ape_2','$fechaN',$num_tel,'$correo',$direc,$asoc,$perf,$t_estado)";
             $respuesta = $database->query($sql);
             if($respuesta){
@@ -191,9 +192,8 @@ class Persona{
         public function eliminarPersona(){
             $resultado = false;
             $database = Database::connect();
-            $idTipoestado = $this->getIdTipoEstado();
             $rut = $this->getRutPersona();
-            $sql = "UPDATE persona SET ID_TIPO_ESTADO_FK = $idTipoestado WHERE RUT_PERSONA = $rut ";
+            $sql = "UPDATE persona SET ID_TIPO_ESTADO_FK_PERSONA = 2 WHERE RUT_PERSONA = $rut ";
             $respuesta = $database->query($sql);
 
             if($respuesta){

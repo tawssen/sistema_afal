@@ -6,7 +6,6 @@
                     <thead>
                         <tr>
                             <th>NOMBRE</th>
-                            <th>CONTRASEÑA</th>
                             <th>RUT</th>
                             <th>NOMBRE PERSONA</th>
                             <th>ESTADO</th>
@@ -17,7 +16,6 @@
                     <?php while($usuarios = mysqli_fetch_assoc($todosLosUsuarios)){?>
                         <tr>
                             <td><?php echo $usuarios['NOMBRE_USUARIO']; ?></td>
-                            <td><?php echo $usuarios['CLAVE_USUARIO']; ?></td>
                             <td><?php echo $usuarios['RUT_PERSONA_FK']; ?></td>
                             <td><?php echo $usuarios['NOMBRE_1'].' '.$usuarios['NOMBRE_2'].' '.$usuarios['APELLIDO_1'].' '.$usuarios['APELLIDO_2']; ?></td>
                             <td><?php echo $usuarios['NOMBRE_TIPO_ESTADO']; ?></td>
