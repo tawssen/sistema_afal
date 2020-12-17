@@ -123,8 +123,22 @@ class Club{
         $sql = 'INSERT INTO club (RUT_CLUB,DV_CLUB,NOMBRE_CLUB,FECHA_FUNDACION_CLUB,GIRO_CLUB,NOMBRE_ESTADIO,CORREO_ELECTRONICO,ID_DIRECCION_FK,ID_ASOCIACION_FK,ID_TIPO_ESTADO_FK) VALUES
         ('.$this->getRutClub().','.$this->getDvClub().',"'.$this->getNombreClub().'","'.$this->getFechaFundacionClub().'",default,"'.$this->getNombreEstadio().'","'.$this->getIdCorreo().'",'.$this->getIdDireccion().','.$this->getIdAsociacion().',1)';
         $respuesta = $database->query($sql);
-        return 'Esta es la consulta hijo de perra: '.$sql;
+        return $respuesta;
     }
     
+    public function obtenerUnClub($idClub){
+        $resultado = false;
+        $database = Database::connect();
+
+        $sql = "SELECT * FROM club INNER JOIN direccion ON club.ID_DIRECCION_FK = direccion.ID_DIRECCION WHERE ID_CLUB = $idClub";
+
+        $respuesta = $database->query($sql);
+
+        if($respuesta && $respuesta->num_rows > 0){
+            $resultado = $respuesta->fetch_assoc();
+        }
+
+        return $resultado;
+    }
 
 }

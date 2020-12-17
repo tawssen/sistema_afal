@@ -35,8 +35,8 @@
                        <td><?php echo $club['CORREO_ELECTRONICO'] ?></td>
                        <td><?php echo $club['NOMBRE_ASOCIACION'] ?></td>
                        <td class="text-center">
-                          <button class="btn btn-success" onclick="document.location.href='<?=base_url?>clubes/gestionEditar&id=<?=$club['ID_CLUB'];?>'">Editar</button>
-                          <button class="btn btn-danger btn-eliminar" value="<?=$campeonatos['ID_CLUB'];?>">Eliminar</button>
+                          <button class="btn btn-success" onclick="document.location.href='<?=base_url?>clubes/gestionEditar&clubSeleccionado=<?=$club['ID_CLUB'];?>'">Editar</button>
+                          <button class="btn btn-danger btn-eliminar" value="<?=$club['ID_CLUB'];?>">Eliminar</button>
                        </td>
                        </tr>
                     <?php }?>    

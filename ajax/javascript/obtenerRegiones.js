@@ -21,10 +21,15 @@ $(document).ready(function(){
 $('#selectRegion').change(function(){
     const idRegion = $("#selectRegion option:selected").val();
     $('#selectProvincia').html("");
-    let opcionDefault = document.createElement("option");
-    opcionDefault.value = 0;
-    opcionDefault.text = "Seleccionar Provincia";
-    $('#selectProvincia').append(opcionDefault);
+    $('#selectComuna').html("");
+    let opcionDefaultProvincia = document.createElement("option");
+    opcionDefaultProvincia.text = "Seleccionar Provincia";
+    opcionDefaultProvincia.value = 0;
+    let opcionDefaultComuna = document.createElement("option");
+    opcionDefaultComuna.text = "Seleccionar Comuna";
+    opcionDefaultComuna.value = 0;
+    $('#selectProvincia').append(opcionDefaultProvincia);
+    $('#selectComuna').append(opcionDefaultComuna);
     $.ajax({
         url: "../ajax/php/obtenerProvincias.php",
         type: "POST",

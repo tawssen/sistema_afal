@@ -80,8 +80,7 @@
         let boton = document.getElementById("btnDarTermino");
         let id = $(this).val();
         boton.removeAttribute("onclick");
-        boton.setAttribute("onclick","document.location.href='https://localhost/sistema_afal/campeonatos/eliminar&idcampeonato="+id+"&estadocampeonato=2'");
-        //boton.setAttribute("onclick","document.location.href='https://localhost/sistema_afal/campeonatos/eliminar&idequipo="+id+"'");
+        boton.setAttribute("onclick","document.location.href='<?=base_url?>campeonatos/eliminar&idcampeonato="+id+"&estadocampeonato=2'");
     });
 </script>
 
