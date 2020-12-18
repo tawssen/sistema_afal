@@ -33,9 +33,9 @@
                          <td><?php echo $persona['FECHA_NACIMIENTO'] ?></td>
                          <td><?php echo $persona['NUMERO_TELEFONO'] ?></td>
                          <td><?php echo $persona['CORREO_ELECTRONICO'] ?></td>
-                         <td><?php echo $persona['ID_DIRECCION_FK'] ?></td>                    
-                         <td><?php echo $persona['ID_ASOCIACION_FK'] ?></td>
-                         <td><?php echo $persona['ID_PERFIL_FK'] ?></td>
+                         <td><?php echo $persona['NOMBRE_COMUNA'].', '.$persona['CALLE_PASAJE'] ?></td>                    
+                         <td><?php echo $persona['NOMBRE_ASOCIACION'] ?></td>
+                         <td><?php echo $persona['NOMBRE_PERFIL'] ?></td>
                          <td class="text-center">
                                 <button class="btn btn-success" onclick="document.location.href='<?=base_url?>persona/gestionEditar&id=<?=$persona['RUT_PERSONA'];?>&in=1'">Editar</button>
                                 <button class="btn btn-danger btn-eliminar" data-bs-toggle="modal" data-bs-target="#eliminarPersona" value="<?=$persona['RUT_PERSONA'];?>">Terminar</button>                                       

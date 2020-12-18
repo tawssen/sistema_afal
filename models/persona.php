@@ -97,7 +97,13 @@ class Persona{
 
 
         public function obtenerPersona(){
-            $sql = "SELECT * FROM PERSONA WHERE ID_TIPO_ESTADO_FK_PERSONA = 1";
+            $sql = "SELECT * FROM PERSONA
+            INNER JOIN DIRECCION ON (PERSONA.ID_DIRECCION_FK = DIRECCION.ID_DIRECCION)
+            inner join COMUNA on (DIRECCION.ID_COMUNA_FK = COMUNA.ID_COMUNA)
+            INNER JOIN ASOCIACION ON (PERSONA.ID_ASOCIACION_FK = ASOCIACION.ID_ASOCIACION)
+            INNER JOIN PERFIL ON (PERSONA.ID_PERFIL_FK = PERFIL.ID_PERFIL)
+            INNER JOIN TIPO_ESTADO ON (PERSONA.ID_TIPO_ESTADO_FK_PERSONA = TIPO_ESTADO.ID_TIPO_ESTADO) WHERE ID_TIPO_ESTADO_FK_PERSONA = 1";
+                        
             $database = Database::connect();
             $datosObtenidosPersona = $database->query($sql);
             return $datosObtenidosPersona;
