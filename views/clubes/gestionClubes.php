@@ -13,9 +13,15 @@
             <h1 class="pb-3">Crear Club</h1>
             <?php endif; ?>
 
+            <?php if(isset($_GET['errorcreate'])):?>
+            <p class="alert alert-danger">No se ha podido crear correctamente el club. Intente nuevamente por favor.</p>
+            <?php elseif(isset($_GET['erroredit'])):?>
+            <p class="alert alert-danger">No se ha podido actualizar correctamente el club. Intente nuevamente por favor.</p>
+            <?php endif; ?>
+
             <?php if(isset($clubSeleccionado)):?>
             <div class="">
-                <input class="form-control" id="idClub" name="idCampeonato" type="hidden" value="">
+                <input class="form-control" id="idClub" name="idClub" type="hidden" value="<?=$clubSeleccionado['ID_CLUB']?>">
             </div>
             <?php endif; ?>
 
@@ -99,7 +105,7 @@
             </div>
 
             <div class="mt-5 d-flex justify-content-end">
-                <button class="btn btn-danger mr-2">Cancelar</button>
+                <a href="<?=base_url?>clubes/index" class="btn btn-danger mr-2">Cancelar</a>
                 <?php if(isset($clubSeleccionado)):?>
                 <input class="btn btn-success" type="submit" value="Actualizar Club">
                 <?php else:?>

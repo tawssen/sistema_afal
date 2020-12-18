@@ -74,7 +74,7 @@
             <?php endif; ?>
 
             <div class="mt-5 d-flex justify-content-end">
-                <button class="btn btn-danger mr-2">Cancelar</button>
+                <a href="<?=base_url?>campeonatos/index" class="btn btn-danger mr-2">Cancelar</a>
                 <?php if(isset($campeonatoSeleccionado)):?>
                 <input class="btn btn-success" type="submit" value="Actualizar Campeonato">
                 <?php else:?>
