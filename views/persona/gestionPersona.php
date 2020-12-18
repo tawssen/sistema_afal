@@ -78,6 +78,7 @@
                 <input id="correoElectronico" type="email" name="correoElectronico" class="form-control" required>
             </div>
 
+            
             <div class="row">
                 <div class="form-group mt-3 col-4">
                     <label for="" class="form-label">REGION</label>
@@ -87,6 +88,8 @@
                 </div>
 
                 <div class="mt-3 col-4">
+
+                <?php if(isset($todasLasProvincias)):?>
                     <label for="" class="form-label">PROVINCIA</label>
                     <select id="selectProvincia" class="form-select" name="provincia" aria-label="Default select example" required>
                         <option value="0" selected>Seleccionar Provincia</option>
@@ -94,9 +97,16 @@
                             <option value="<?php echo $provincia['ID_PROVINCIA'];?>"><?php echo $provincia['NOMBRE_PROVINCIA'];?></option>
                         <?php } mysqli_free_result($todasLasProvincias);?>
                     </select>
+                <?php else:?>
+                    <label for="" class="form-label">PROVINCIA</label>
+                    <select id="selectProvincia" class="form-select" name="provincia" aria-label="Default select example" required>
+                        <option value="0" selected>Seleccionar Provincia</option>
+                    </select>
+                <?php endif; ?>                                
                 </div>
 
                 <div class="mt-3 col-4">
+                <?php if(isset($todasLasProvincias)):?>
                     <label for="" class="form-label">COMUNA</label>
                     <select id="selectComuna" class="form-select" name="comuna" aria-label="Default select example" required>
                         <option value="0" selected>Seleccionar Comuna</option>
@@ -104,7 +114,13 @@
                             <option value="<?php echo $comuna['ID_COMUNA'];?>"><?php echo $comuna['NOMBRE_COMUNA'];?></option>
                         <?php } mysqli_free_result($todasLasComunas);?>
                     </select>
-                </div>             
+                <?php else:?>
+                    <label for="" class="form-label">COMUNA</label>
+                    <select id="selectComuna" class="form-select" name="comuna" aria-label="Default select example" required>
+                        <option value="0" selected>Seleccionar Comuna</option>
+                    </select>
+                <?php endif; ?>   
+                </div>
             </div>
 
             <div class="mt-3">
