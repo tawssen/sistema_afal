@@ -165,22 +165,7 @@ class Persona{
             $perf = $this->getIdPerfil();
             $t_estado = $this->getIdTipoEstado();    
             
-            $sql = "UPDATE persona
-            SET
-            RUT_PERSONA = $rut,
-            DV = '$dv',
-            NOMBRE_1 ='$nom_1',
-            NOMBRE_2 = '$nom_2',
-            APELLIDO_1 = '$ape_1',
-            APELLIDO_2 = '$ape_2',
-            FECHA_NACIMIENTO = '$fechaN',
-            NUMERO_TELEFONO = $num_tel,
-            CORREO_ELECTRONICO = '$correo ',
-            ID_DIRECCION_FK = $direc,
-            ID_ASOCIACION_FK = $asoc,
-            ID_PERFIL_FK =   $perf ,
-            ID_TIPO_ESTADO_FK = $t_estado
-            WHERE RUT_PERSONA = $rut";
+            $sql = "UPDATE persona SET RUT_PERSONA = $rut,DV = '$dv',NOMBRE_1 ='$nom_1',NOMBRE_2 = '$nom_2',APELLIDO_1 = '$ape_1',APELLIDO_2 = '$ape_2',FECHA_NACIMIENTO = '$fechaN',NUMERO_TELEFONO = $num_tel,CORREO_ELECTRONICO = '$correo ',ID_DIRECCION_FK = $direc,ID_ASOCIACION_FK = $asoc,ID_PERFIL_FK =   $perf ,ID_TIPO_ESTADO_FK_PERSONA = $t_estado WHERE RUT_PERSONA = $rut";
             
             $respuesta = $database->query($sql);
             if($respuesta){

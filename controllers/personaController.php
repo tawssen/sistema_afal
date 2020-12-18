@@ -150,11 +150,7 @@ class personaController{
     
     public function editar(){
         if(isset($_SESSION['identity']) && isset($_SESSION['Dirigente']) || iseet($_SESSION['Dirigente y D_Tecnico'])){
-            if(!isset($_GET['in'])){
-                $_SESSION['mensajeError'] = true;
-            }else{
-                unset($_SESSION['mensajeError']);
-            }
+
             $direccion = new Direccion();
             $persona = new Persona();                
     
@@ -174,7 +170,7 @@ class personaController{
                 $resultado = $direccion->obtenerDireccion();                
                 $persona->setIdDireccion($resultado['ID_DIRECCION']);
             }
-           $persona->setRutPersona($_POST['rutPersona']);
+            $persona->setRutPersona($_POST['rutPersona']);
             $persona->setDvpersona($_POST['dvPersona']);
             $persona->setNombre1($_POST['nombrePersona1']);
             $persona->setNombre2($_POST['nombrePersona2']);
@@ -187,11 +183,12 @@ class personaController{
             $persona->setIdPerfil($_POST['perfilPersona']);
             $persona->setIdTipoEstado($_POST['tipoestado']);
             $respuesta = $persona->editarPersona();
-
+        
             if($respuesta){
+                
                 header('location:'.base_url.'persona/index');
-            }else{
-                header('location:'.base_url.'persona/gestionEditar');
+            }else{                
+                header('location:'.base_url.'persona/gestionEditar&id='.$_POST['rutPersona']);
             }
             
         }else{

@@ -1,19 +1,13 @@
 <div class="container mt-3">
     <div class="container mt-5 col-6">
 
-        <?php if(isset($datosdeunaPersona) && isset($_GET['in'])):?>
-        <form action="<?=base_url?>persona/editar&id=<?=$_GET['id']?>&in=<?=$_GET['in']?>" method="POST" class="border p-5">
-
-        <?php elseif(isset($datosdeunaPersona)):?>
-        <form action="<?=base_url?>persona/editar&id=<?=$_GET['id']?>" method="POST" class="border p-5">
-
-        <?php elseif(isset($_GET['in'])):?>
-        <form action="<?=base_url?>persona/crear&in=<?=$_GET['in']?>" method="POST" class="border p-5">
-
+        <?php if(isset($datosdeunaPersona)):?>
+        <form action="<?=base_url?>persona/editar" method="POST" class="border p-5">
         <?php else:?>
         <form action="<?=base_url?>persona/crear" method="POST" class="border p-5">
         <?php endif; ?>
-
+        
+        
             <?php if(isset($datosdeunaPersona)):?>
             <h1 class="pb-3">Editar Persona</h1>
             <?php else:?>

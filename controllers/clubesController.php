@@ -120,9 +120,9 @@ class clubesController{
 
             if($editar==false){
                 echo 'el false: '.$editar;
-                //header('location:'.base_url.'clubes/gestionCrear&erroredit=true');
+                header('location:'.base_url.'clubes/gestionCrear&erroredit=true');
             }else{
-                //header('location:'.base_url.'clubes/index');
+                header('location:'.base_url.'clubes/index');
                 echo 'el else: '.$editar;
             }
         }else{

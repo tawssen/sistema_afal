@@ -143,7 +143,7 @@ class Club{
 
     public function editarClub(){
         $database = Database::connect();
-        $sql = "UPDATE club SET RUT_CLUB =".$this->getRutClub().", DV_CLUB = '".$this->getDvClub()."', NOMBRE_CLUB ='".$this->getNombreClub()."', FECHA_FUNDACION_CLUB ='".$this->getFechaFundacionClub()."', NOMBRE_ESTADIO = '".$this->getNombreEstadio()."', CORREO_ELECTRONICO = '".$this->getIdCorreo()."', ID_ASOCIACION_FK = ".$this->getIdAsociacion()." WHERE ID_CLUB =".$this->getIdClub();
+        $sql = "UPDATE club SET RUT_CLUB =".$this->getRutClub().", DV_CLUB = '".$this->getDvClub()."', NOMBRE_CLUB ='".$this->getNombreClub()."', FECHA_FUNDACION_CLUB ='".$this->getFechaFundacionClub()."', NOMBRE_ESTADIO = '".$this->getNombreEstadio()."', CORREO_ELECTRONICO = '".$this->getIdCorreo()."', ID_DIRECCION_FK =".$this->getIdDireccion().", ID_ASOCIACION_FK = ".$this->getIdAsociacion()." WHERE ID_CLUB =".$this->getIdClub();
         $respuesta = $database->query($sql);
         return $respuesta;
     }
