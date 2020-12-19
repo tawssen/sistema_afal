@@ -88,11 +88,11 @@ class personaController{
             $respuesta = $persona->ingresarPersona();
 
             /*=============CREAR USUARIO================*/
-            $nom1 = $_POST['nombrePersona1'];
+           /*$nom1 = $_POST['nombrePersona1'];
             $ape1 = $_POST['apellidoPersona1'];
-            $Inicial = $nom1[0];
+            $Inicial = $nom1[0];*/
 
-            $NombreUsuario = $Inicial.''.$ape1;
+            $NombreUsuario = $_POST['rutPersona'].''.$_POST['dvPersona'];
             $ContraseñaUsuario = substr($_POST['rutPersona'], 0, 4); 
             $RutUsuario = $_POST['rutPersona'];
 
