@@ -228,4 +228,30 @@ class personaController{
             echo '</div>';
         }           
     }
+
+    public function habilitarunapersona(){
+        $persona = new Persona();             
+        $usuario = new Usuario();   
+
+        $persona->setRutPersona($_GET['rutHabilitar']);        
+        $respuesta = $persona->habilitarPersona();
+        
+        $datosUsuario = $usuario->obtenerUnUsuarioEliminar($_GET['rutHabilitar']);
+        $datos = $persona->obtenerUnPersona($_GET['rutHabilitar']);  
+
+        
+        $idEstadoUsuario = $datosUsuario['ID_TIPO_ESTADO_FK'];
+        $idEstadoPersona = $datos['ID_TIPO_ESTADO_FK_PERSONA'];
+
+        if($respuesta){
+            if($idEstadoPersona==1 && $idEstadoUsuario == 2){               
+                $usuario->setRutUsuario($_GET['rutHabilitar']);
+                $usuario->habilitarUsuarioConRut();                  
+                header('location:'.base_url.'persona/index');  
+            }else{
+
+            }
+        } 
+       
+    }
 }

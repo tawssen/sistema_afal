@@ -51,18 +51,6 @@
                 </select> 
             </div>
 
-            <?php if(isset($usuarioSeleccionado)):?>
-            <div class="mt-3">
-                <label for="" class="form-label">ESTADO USUARIO</label>
-                <select id="selectEstado" class="form-select" name="tipoestado" aria-label="Default select example" required>
-                    <option value="0" selected>Seleccionar Estado</option>
-                    <?php while($estado = mysqli_fetch_assoc($todosLosEstados)){?>
-                        <option value="<?php echo $estado['ID_TIPO_ESTADO'];?>"><?php echo $estado['NOMBRE_TIPO_ESTADO'];?></option>
-                    <?php } mysqli_free_result($todosLosEstados);?>
-                </select>
-            </div>
-            <?php endif; ?>
-
             <div class="mt-5 d-flex justify-content-end">
                 <a href="<?=base_url?>usuarios/index" class="btn btn-danger mr-2">Cancelar</a>
                 <?php if(isset($usuarioSeleccionado)):?>

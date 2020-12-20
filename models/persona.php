@@ -109,6 +109,7 @@ class Persona{
             return $datosObtenidosPersona;
 
         }
+    
 
         public function obtenerUnPersona($rut){            
             $resultado = false;
@@ -193,4 +194,20 @@ class Persona{
 
             return $resultado;
         }
+
+        public function habilitarPersona(){
+            $resultado = false;
+            $database = Database::connect();
+            $rut = $this->getRutPersona();
+            $sql = "UPDATE persona SET ID_TIPO_ESTADO_FK_PERSONA = 1 WHERE RUT_PERSONA = $rut ";        
+            $respuesta = $database->query($sql);
+
+            if($respuesta){
+                $resultado = $respuesta;
+            }
+
+            return $resultado;
+
+        }
+
 }

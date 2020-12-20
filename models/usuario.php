@@ -85,7 +85,7 @@ class Usuario{
         $database = Database::connect();
         $sql = "SELECT * FROM USUARIOS
         INNER JOIN PERSONA ON (USUARIOS.RUT_PERSONA_FK = PERSONA.RUT_PERSONA)
-        INNER JOIN TIPO_ESTADO ON (USUARIOS.ID_TIPO_ESTADO_FK = TIPO_ESTADO.ID_TIPO_ESTADO)";
+        INNER JOIN TIPO_ESTADO ON (USUARIOS.ID_TIPO_ESTADO_FK = TIPO_ESTADO.ID_TIPO_ESTADO) WHERE ID_TIPO_ESTADO_FK = 1";
       
         $datosObtenidosUsuarios = $database->query($sql);
         if($datosObtenidosUsuarios){
@@ -187,7 +187,20 @@ class Usuario{
 
         return $resultado;
     }
+    
+    public function habilitarUsuarioConRut(){
+        $resultado = false;
+        $database = Database::connect();
+        $rut = $this->getRutUsuario();
+        $sql = "UPDATE usuarios SET ID_TIPO_ESTADO_FK = 1 WHERE RUT_PERSONA_FK = $rut ";
+        $respuesta = $database->query($sql);
 
+        if($respuesta){
+            $resultado = $respuesta;
+        }
+
+        return $resultado;
+    }
 
 }
 

@@ -20,8 +20,7 @@
                             <td><?php echo $usuarios['NOMBRE_1'].' '.$usuarios['NOMBRE_2'].' '.$usuarios['APELLIDO_1'].' '.$usuarios['APELLIDO_2']; ?></td>
                             <td><?php echo $usuarios['NOMBRE_TIPO_ESTADO']; ?></td>
                             <td class="text-center">
-                                <button class="btn btn-success" onclick="document.location.href='<?=base_url?>usuarios/gestionEditar&id=<?=$usuarios['ID_USUARIO'];?>&in=1'">Editar</button>
-                                <button class="btn btn-danger btn-eliminar" data-bs-toggle="modal" data-bs-target="#terminarUsuario" value="<?=$usuarios['ID_USUARIO'];?>">Terminar</button>                               
+                                <button class="btn btn-success" onclick="document.location.href='<?=base_url?>usuarios/gestionEditar&id=<?=$usuarios['ID_USUARIO'];?>&in=1'">Editar</button>                                    
                             </td>
                         </tr>
                     <?php } ?>
