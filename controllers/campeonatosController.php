@@ -4,6 +4,7 @@ require_once 'models/campeonato.php';
 require_once 'models/asociacion.php';
 require_once 'models/serie.php';
 require_once 'models/estado_campeonato.php';
+require_once 'models/campeonatos_equipos.php';
 
 class campeonatosController{
 
@@ -118,12 +119,36 @@ class campeonatosController{
 
     public function gestionarParticipantes(){
         if(isset($_SESSION['identity']) && isset($_SESSION['Dirigente'])){
-
-            require_once 'views/campeonatos/gestionParticipantes.php';
+            $clubesParticipantes = new ClubesParticipantes();
+            $clubesParticipantes->setIdCampeonato($_GET['idcampeonato']);
+            $participantes = $clubesParticipantes->obtenerClubesParticipantes();
+            $clubesNoInscritos = $clubesParticipantes->obtenerClubesNoInscritos();
+            require_once 'views/campeonatos/participantes.php';
         }else{
             echo '<div class="container mt-5">';
             echo '<h1>No tienes permiso para acceder a este apartado del sistema</h1>';
             echo '</div>';
         }
+    }
+
+    public function agregarParticipante(){
+        if(isset($_SESSION['identity']) && isset($_SESSION['Dirigente'])){
+            $participante = new ClubesParticipantes();
+            $participante->setIdClub($_GET['idclub']);
+            $participante->setIdCampeonato($_GET['idcampeonato']);
+            $respuesta = $participante->inscribirClub();
+            header('location:'.base_url.'campeonatos/gestionarParticipantes&idcampeonato='.$_GET['idcampeonato']);
+        }else{
+            echo '<div class="container mt-5">';
+            echo '<h1>No tienes permiso para acceder a este apartado del sistema</h1>';
+            echo '</div>';
+        }
+    }
+
+    public function eliminarInscripcion(){
+        $participante = new ClubesParticipantes();
+        $participante->setIdClubesParticipantes($_GET['id']);
+        $participante->eliminarInscripcion();
+        header('location:'.base_url.'campeonatos/gestionarParticipantes&idcampeonato='.$_GET['idcampeonato']);
     }
 }

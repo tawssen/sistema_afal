@@ -10,7 +10,7 @@ require_once 'models/comuna.php';
 class clubesController{
 
     public function index(){
-        if(isset($_SESSION['identity']) && isset($_SESSION['Dirigente'])|| iseet($_SESSION['Dirigente y D_Tecnico'])){
+        if(isset($_SESSION['identity']) && isset($_SESSION['Dirigente'])|| isset($_SESSION['Dirigente y D_Tecnico'])){
             $club = new Club();
             $todoslosClubes = $club->obtenerClubes();
             include_once 'views/clubes/clubes.php';

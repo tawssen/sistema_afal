@@ -28,7 +28,7 @@
                             <td><?php echo $campeonatos['NOMBRE_SERIE']; ?></td>
                             <td><?php echo $campeonatos['NOMBRE_ESTADO_CAMPEONATO']; ?></td>
                             <td class="text-center">
-                                <button class="btn btn-secondary" onclick="document.location.href='<?=base_url?>campeonatos/gestionarParticipantes'">Participantes</button>
+                                <button class="btn btn-secondary" onclick="document.location.href='<?=base_url?>campeonatos/gestionarParticipantes&idcampeonato=<?=$campeonatos['ID_CAMPEONATO'];?>'">Participantes</button>
                                 <button class="btn btn-success" onclick="document.location.href='<?=base_url?>campeonatos/gestionEditar&id=<?=$campeonatos['ID_CAMPEONATO'];?>&in=1'">Editar</button>
                                 <button class="btn btn-danger btn-eliminar" data-bs-toggle="modal" data-bs-target="#terminarCampeonato" value="<?=$campeonatos['ID_CAMPEONATO'];?>">Terminar</button>
                             </td>

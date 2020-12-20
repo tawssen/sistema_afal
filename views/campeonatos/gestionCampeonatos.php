@@ -43,7 +43,7 @@
 
             <div class="mt-3">
                 <label for="" class="form-label">ASOCIACIÓN</label>
-                <select id="selectSerie" class="form-select" name="nombreAsociacion" aria-label="Default select example" required>
+                <select id="selectAsociacion" class="form-select" name="nombreAsociacion" aria-label="Default select example" required>
                     <option value="0" selected>Seleccionar Asociación</option>
                     <?php while($asociacion = mysqli_fetch_assoc($todasLasAsociaciones)){?>
                     <option value="<?php echo $asociacion['ID_ASOCIACION'];?>"><?php echo $asociacion['NOMBRE_ASOCIACION'];?></option>
@@ -53,7 +53,7 @@
 
             <div class="mt-3">
                 <label for="" class="form-label">SERIE</label>
-                <select id="selectAsociacion" class="form-select" name="nombreSerie" aria-label="Default select example" required>
+                <select id="selectSerie" class="form-select" name="nombreSerie" aria-label="Default select example" required>
                     <option value="0" selected>Seleccionar Serie</option>
                     <?php while($serie = mysqli_fetch_assoc($todasLasSeries)){?>
                         <option value="<?php echo $serie['ID_SERIE'];?>"><?php echo $serie['NOMBRE_SERIE'];?></option>
