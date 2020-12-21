@@ -86,7 +86,7 @@
       </div>
       <div class="modal-body">
        <h1>HISTORIAL ELIMINADO</h1>
-       <?php $todoslosClubes?>
+      
 <div class="container-xl mt-3 border-top border-bottom p-4">
     <div class="row">
         <div class="col-lg-12">
@@ -125,6 +125,7 @@
 <script>
     $(document).ready(function() {
         $('#example').DataTable();
+        $('#tablaHistorial').DataTable();
     } );
 </script>
 <script src="<?=base_url?>javascript/main.js"></script>
