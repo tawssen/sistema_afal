@@ -62,8 +62,9 @@ class Campeonato{
     public function obtenerCampeonatos(){
         $resultado = false;
         $database = Database::connect();
-        $condicion = 1;
-        $sql = "SELECT * FROM campeonato INNER JOIN asociacion ON campeonato.ID_ASOCIACION_FK = asociacion.ID_ASOCIACION INNER JOIN serie ON campeonato.ID_SERIE_FK = serie.ID_SERIE INNER JOIN estado_campeonato ON campeonato.ID_ESTADO_CAMPEONATO_FK = estado_campeonato.ID_ESTADO_CAMPEONATO WHERE ID_ESTADO_CAMPEONATO_FK = $condicion";
+        $condicion1 = 1;
+        $condicion2 = 2;
+        $sql = "SELECT * FROM campeonato INNER JOIN asociacion ON campeonato.ID_ASOCIACION_FK = asociacion.ID_ASOCIACION INNER JOIN serie ON campeonato.ID_SERIE_FK = serie.ID_SERIE INNER JOIN estado_campeonato ON campeonato.ID_ESTADO_CAMPEONATO_FK = estado_campeonato.ID_ESTADO_CAMPEONATO WHERE ID_ESTADO_CAMPEONATO_FK = $condicion1 OR $condicion2";
 
         $respuesta = $database->query($sql);
 
@@ -74,11 +75,11 @@ class Campeonato{
         return $resultado;
     }
 
-    public function obtenerUnCampeonato($idCampeonato){
+    public function obtenerUnCampeonato(){
         $resultado = false;
         $database = Database::connect();
 
-        $sql = "SELECT * FROM campeonato INNER JOIN asociacion ON campeonato.ID_ASOCIACION_FK = asociacion.ID_ASOCIACION INNER JOIN serie ON campeonato.ID_SERIE_FK = serie.ID_SERIE INNER JOIN estado_campeonato ON campeonato.ID_ESTADO_CAMPEONATO_FK = estado_campeonato.ID_ESTADO_CAMPEONATO WHERE ID_CAMPEONATO = $idCampeonato";
+        $sql = "SELECT * FROM campeonato INNER JOIN asociacion ON campeonato.ID_ASOCIACION_FK = asociacion.ID_ASOCIACION INNER JOIN serie ON campeonato.ID_SERIE_FK = serie.ID_SERIE INNER JOIN estado_campeonato ON campeonato.ID_ESTADO_CAMPEONATO_FK = estado_campeonato.ID_ESTADO_CAMPEONATO WHERE ID_CAMPEONATO =".$this->getIdCampeonato();
 
         $respuesta = $database->query($sql);
 

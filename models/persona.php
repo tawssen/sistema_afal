@@ -115,8 +115,7 @@ class Persona{
             $resultado = false;
             $database = Database::connect();
             $sql = "SELECT * FROM PERSONA
-            INNER JOIN DIRECCION ON (PERSONA.ID_DIRECCION_FK = DIRECCION.ID_DIRECCION)
-            inner join USUARIOS on (PERSONA.RUT_PERSONA = USUARIOS.RUT_PERSONA_FK) WHERE RUT_PERSONA = $rut ";          
+            INNER JOIN DIRECCION ON (PERSONA.ID_DIRECCION_FK = DIRECCION.ID_DIRECCION) WHERE RUT_PERSONA = $rut ";          
             $datosObtenidosunaPersona = $database->query($sql);            
             if($datosObtenidosunaPersona && $datosObtenidosunaPersona->num_rows > 0){
                $resultado = $datosObtenidosunaPersona->fetch_assoc();
@@ -145,7 +144,7 @@ class Persona{
             $t_estado = 1;                       
 
             $sql = "INSERT INTO persona (RUT_PERSONA,DV,NOMBRE_1,NOMBRE_2,APELLIDO_1,APELLIDO_2,FECHA_NACIMIENTO,NUMERO_TELEFONO,CORREO_ELECTRONICO,ID_DIRECCION_FK,ID_ASOCIACION_FK,ID_PERFIL_FK,ID_TIPO_ESTADO_FK_PERSONA) 
-            VALUES ($rut,$dv,'$nom_1','$nom_2','$ape_1','$ape_2','$fechaN',$num_tel,'$correo',$direc,$asoc,$perf,$t_estado)";
+            VALUES ($rut,'$dv','$nom_1','$nom_2','$ape_1','$ape_2','$fechaN',$num_tel,'$correo',$direc,$asoc,$perf,$t_estado)";
             $respuesta = $database->query($sql);
             if($respuesta){
                 $resultado = $respuesta;
@@ -207,7 +206,26 @@ class Persona{
             }
 
             return $resultado;
+        }
 
+        public function obtenerArbitros(){
+            $resultado = false;
+            $database = Database::connect();
+            $sql = "SELECT * FROM persona INNER JOIN direccion ON persona.ID_DIRECCION_FK = direccion.ID_DIRECCION INNER JOIN comuna ON direccion.ID_COMUNA_FK = comuna.ID_COMUNA INNER JOIN asociacion ON persona.ID_ASOCIACION_FK = asociacion.ID_ASOCIACION WHERE ID_PERFIL_FK = 6";       
+            $respuesta = $database->query($sql);
+
+            if($respuesta){
+                $resultado = $respuesta;
+            }
+
+            return $resultado;
+        }
+
+        public function eliminarArbitro(){
+            $database = Database::connect();
+            $sql = "UPDATE persona SET ID_PERFIL_FK ="." 7 ".", ID_TIPO_ESTADO_FK_PERSONA ="." 2 "."WHERE RUT_PERSONA = ".$this->getRutPersona();       
+            $respuesta = $database->query($sql);
+            return $sql;
         }
 
 }

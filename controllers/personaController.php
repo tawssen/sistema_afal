@@ -64,12 +64,10 @@ class personaController{
     
             $verificarDireccion = $direccion->verificarDireccion();
             if($verificarDireccion<1){
-                echo 'ingreso para poder insertar nueva direccion';
                 $ingresar = $direccion->ingresarDireccion();
                 $resultado = $direccion->obtenerDireccion();
                 $persona->setIdDireccion($resultado['ID_DIRECCION']);
             }else{
-                echo 'ingreso para poder obtener la direccion';
                 $resultado = $direccion->obtenerDireccion();                
                 $persona->setIdDireccion($resultado['ID_DIRECCION']);
             }
@@ -101,10 +99,11 @@ class personaController{
             $usuario->setClaveUsuario($ClaveEncriptada);
             $usuario->setRutUsuario($RutUsuario);        
            
-            if($_POST['perfilPersona'] != 5){                
+            /*if($_POST['perfilPersona'] == 4  || $_POST['perfilPersona'] == 6 || $_POST['perfilPersona'] == 7){              
+                echo 'No se creó tal por cual el jugador.';
+            }else{
                 $respuesta = $usuario->crearUsuario();
-
-            }  
+            }*/
             /*==============================================================*/      
             if($respuesta){
                 header('location:'.base_url.'persona/index');
@@ -139,7 +138,9 @@ class personaController{
             $todasLasAsociaciones = $asociacion->obtenerAsociaciones();                                           
             $todosLosEstados = $estado->obtenerEstados();
             $todasLasProvincias = $provincia->obtenerProvinciasDeRegion($datosdeunaPersona['ID_REGION_FK']);
-            $todasLasComunas = $comuna->obtenerComunasDeProvincia($datosdeunaPersona['ID_PROVINCIA_FK']);                        
+            $todasLasComunas = $comuna->obtenerComunasDeProvincia($datosdeunaPersona['ID_PROVINCIA_FK']);   
+            var_dump($datosdeunaPersona);     
+            echo 'Éste es el fabuloso ID: '.$_GET['id'];                
             include_once 'views/persona/gestionPersona.php';
         }else{
             echo '<div class="container mt-5">';
@@ -150,7 +151,6 @@ class personaController{
     
     public function editar(){
         if(isset($_SESSION['identity']) && isset($_SESSION['Dirigente']) || iseet($_SESSION['Dirigente y D_Tecnico'])){
-
             $direccion = new Direccion();
             $persona = new Persona();                
     
@@ -161,15 +161,14 @@ class personaController{
     
             $verificarDireccion = $direccion->verificarDireccion();
             if($verificarDireccion<1){
-                echo 'ingreso para poder insertar nueva direccion';
                 $ingresar = $direccion->ingresarDireccion();
                 $resultado = $direccion->obtenerDireccion();
                 $persona->setIdDireccion($resultado['ID_DIRECCION']);
             }else{
-                echo 'ingreso para poder obtener la direccion';
                 $resultado = $direccion->obtenerDireccion();                
                 $persona->setIdDireccion($resultado['ID_DIRECCION']);
             }
+            
             $persona->setRutPersona($_POST['rutPersona']);
             $persona->setDvpersona($_POST['dvPersona']);
             $persona->setNombre1($_POST['nombrePersona1']);
@@ -183,20 +182,19 @@ class personaController{
             $persona->setIdPerfil($_POST['perfilPersona']);
             $persona->setIdTipoEstado($_POST['tipoestado']);
             $respuesta = $persona->editarPersona();
-        
-            if($respuesta){
-                
+
+            if($respuesta && isset($_GET['in'])){
+                header('location:'.base_url.'persona/arbitros');
+            }else if($respuesta){
                 header('location:'.base_url.'persona/index');
-            }else{                
+            }else if($_GET['in']=="crear"){                
                 header('location:'.base_url.'persona/gestionEditar&id='.$_POST['rutPersona']);
             }
-            
         }else{
             echo '<div class="container mt-5">';
             echo '<h1>No tienes permiso para acceder a este apartado del sistema</h1>';
             echo '</div>';
-        }        
-      
+        }
     }
 
     public function eliminar(){
@@ -253,5 +251,18 @@ class personaController{
             }
         } 
        
+    }
+
+    public function arbitros(){
+        $arbitros = new Persona();
+        $todosLosArbitros = $arbitros->obtenerArbitros();
+        require_once 'views/persona/arbitros.php';
+    }
+
+    public function eliminarArbitro(){
+        $persona = new Persona();
+        $persona->setRutPersona($_GET['rut']);
+        $respuesta = $persona->eliminarArbitro();
+        header('location:'.base_url.'persona/arbitros');
     }
 }

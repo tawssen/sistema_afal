@@ -28,7 +28,11 @@
             <form id="inscribirClub" action="<?=base_url?>campeonatos/agregarParticipante&idcampeonato=<?=$_GET['idcampeonato'];?>&idclub=Y" method="POST">
                 <div class="row d-flex justify-content-center">
                     <label for="" class="form-label mr-2">Clubes</label>
+                    <?php if(isset($campeonatoSeleccionado) && $campeonatoSeleccionado['NOMBRE_ESTADO_CAMPEONATO']=="Creación"): ?>
                     <select name="" id="clubesNoInscritos" class="col-8">
+                    <?php elseif(isset($campeonatoSeleccionado) && $campeonatoSeleccionado['NOMBRE_ESTADO_CAMPEONATO']=="Vigente") :?>
+                    <select name="" id="clubesNoInscritos" class="col-8" disabled>
+                    <?php endif; ?>
                     <option value="0" selected>Seleccionar Club</option>
                     <?php while($clubes = mysqli_fetch_assoc($clubesNoInscritos)){?>
                         <option value="<?php echo $clubes['ID_CLUB'];?>"><?php echo $clubes['NOMBRE_CLUB'];?></option>
@@ -36,7 +40,11 @@
                     </select>
                 </div>
                 <div class="row d-flex justify-content-center">
-                    <input type="submit" class="btn btn-success col-6 mt-3" value="Inscribir Club">      
+                    <?php if(isset($campeonatoSeleccionado) && $campeonatoSeleccionado['NOMBRE_ESTADO_CAMPEONATO']=="Creación"): ?>
+                    <input type="submit" class="btn btn-success col-6 mt-3" value="Inscribir Club"> 
+                    <?php elseif(isset($campeonatoSeleccionado) && $campeonatoSeleccionado['NOMBRE_ESTADO_CAMPEONATO']=="Vigente") :?>
+                    <input type="submit" class="btn btn-success col-6 mt-3" value="Inscribir Club" disabled> 
+                    <?php endif; ?>    
                 </div>
             </form>          
         </div>

@@ -1,18 +1,17 @@
 <div class="container mt-3">
     <div class="container mt-5 col-6">
 
-        <?php if(isset($datosdeunaPersona) && isset($_GET['in']) && $_GET['in']=="arbitro"):?>
-        <form action="<?=base_url?>persona/editar&in=<?=$_GET['in'];?>" method="POST" class="border p-5">
-        <?php elseif(isset($datosdeunaPersona)):?>
+        <?php if(isset($datosdeunaPersona)):?>
         <form action="<?=base_url?>persona/editar" method="POST" class="border p-5">
         <?php else:?>
-        <form action="<?=base_url?>persona/crear&in=crear" method="POST" class="border p-5">
+        <form action="<?=base_url?>persona/crear" method="POST" class="border p-5">
         <?php endif; ?>
         
-            <?php if(isset($_GET['in']) && $_GET['in']=="arbitro"):?>
-            <h1 class="pb-3">Editar Arbitro</h1>
-            <?php elseif(isset($datosdeunaPersona)):?>
+        
+            <?php if(isset($datosdeunaPersona)):?>
             <h1 class="pb-3">Editar Persona</h1>
+            <?php else:?>
+            <h1 class="pb-3">Crear Persona</h1>
             <?php endif; ?>
             
             <?php if(isset($_SESSION['mensajeError'])):?>
@@ -172,28 +171,3 @@
 <script src="<?=base_url?>javascript/main.js"></script>
 <script src="<?=base_url?>javascript/cargarInfo.js"></script>
 <script src="<?=base_url?>ajax/javascript/obtenerRegiones.js"></script>
-
-<?php 
-if(isset($datosdeunaPersona)){
-    echo '<script>';
-    echo '$(document).ready(function(){';
-    echo "cargarInfo('#rutPersona','".$datosdeunaPersona['RUT_PERSONA']."');";
-    echo "cargarInfo('#dvPersona','".$datosdeunaPersona['DV']."');";
-    echo "cargarInfo('#nombrePersona1','".$datosdeunaPersona['NOMBRE_1']."');";
-    echo "cargarInfo('#nombrePersona2','".$datosdeunaPersona['NOMBRE_2']."');";
-    echo "cargarInfo('#apellidoPersona1','".$datosdeunaPersona['APELLIDO_1']."');";
-    echo "cargarInfo('#apellidoPersona2','".$datosdeunaPersona['APELLIDO_2']."');";    
-    echo "cargarInfo('#fechaNacimiento','".$datosdeunaPersona['FECHA_NACIMIENTO']."');";
-    echo "cargarInfo('#numeroTelefono','".$datosdeunaPersona['NUMERO_TELEFONO']."');";    
-    echo "cargarInfo('#correoElectronico','".$datosdeunaPersona['CORREO_ELECTRONICO']."');";
-    echo "cargarInfo('#selectRegion',".$datosdeunaPersona['ID_REGION_FK'].");";
-    echo "cargarInfo('#selectProvincia','".$datosdeunaPersona['ID_PROVINCIA_FK']."');";
-    echo "cargarInfo('#selectComuna','".$datosdeunaPersona['ID_COMUNA_FK']."');";
-    echo "cargarInfo('#callePasaje','".$datosdeunaPersona['CALLE_PASAJE']."');";
-    echo "cargarInfo('#selectAsociacion','".$datosdeunaPersona['ID_ASOCIACION_FK']."');";
-    echo "cargarInfo('#selectPerfil','".$datosdeunaPersona['ID_PERFIL_FK']."');";
-    echo "cargarInfo('#selectEstado','".$datosdeunaPersona['ID_TIPO_ESTADO_FK']."');";
-    echo '});';
-    echo '</script>';
-}
-?>

@@ -75,7 +75,8 @@ class campeonatosController{
             $todasLasAsociaciones = $asociacion->obtenerAsociaciones();
             $todasLasSeries = $serie->obtenerSeries();
             $todosLosEstados = $estadoCampeonato->obtenerEstadosDeCampeonatos();
-            $campeonatoSeleccionado = $campeonato->obtenerUnCampeonato($_GET['id']);
+            $campeonato->setIdCampeonato($_GET['id']);
+            $campeonatoSeleccionado = $campeonato->obtenerUnCampeonato();
             require_once 'views/campeonatos/gestionCampeonatos.php';
         }else{
             echo '<div class="container mt-5">';
@@ -123,6 +124,9 @@ class campeonatosController{
             $clubesParticipantes->setIdCampeonato($_GET['idcampeonato']);
             $participantes = $clubesParticipantes->obtenerClubesParticipantes();
             $clubesNoInscritos = $clubesParticipantes->obtenerClubesNoInscritos();
+            $campeonato = new Campeonato();
+            $campeonato->setIdCampeonato($_GET['idcampeonato']);
+            $campeonatoSeleccionado = $campeonato->obtenerUnCampeonato();
             require_once 'views/campeonatos/participantes.php';
         }else{
             echo '<div class="container mt-5">';
