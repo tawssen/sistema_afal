@@ -114,7 +114,7 @@ class campeonatosController{
         $campeonato = new Campeonato();
         $campeonato->setIdCampeonato($_GET['idcampeonato']);
         $campeonato->setIdEstadoCampeonato($_GET['estadocampeonato']);
-        $campeonato->deshabilitarCampeonato();
+        $respuesta = $campeonato->deshabilitarCampeonato();
         header('location:'.base_url.'campeonatos/index');
     }
 

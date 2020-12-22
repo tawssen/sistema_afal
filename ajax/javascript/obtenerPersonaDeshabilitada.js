@@ -1,7 +1,7 @@
 $(document).ready(function(){
 
     $("#btnCargardatosModal").click(function(){
-     
+        $('#tablaHistorial').html("");
         $.ajax({
             url: "../ajax/php/obtenerPersonaDeshabilitada.php",
             type: "POST",
@@ -18,7 +18,8 @@ $(document).ready(function(){
                 <button class="btn btn-info" onclick="document.location.href='http://localhost/sistema_afal/persona/habilitarunapersona&rutHabilitar=${persona.RUT_PERSONA}'">Restaurar</button>
                 </td>
                 </tr>`
-                $('#tablaHistorial').append(fila);                
+                $('#tablaHistorial').append(fila);
+                //$('#tablaHistorial').DataTable();           
                }); 
             },
             error: function(){

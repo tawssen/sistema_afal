@@ -91,7 +91,7 @@
     <div class="row">
         <div class="col-lg-12">
             <div class="table-responsive">
-                <table id="tablaHistorial" class="table table-striped table-bordered" style="width:100%;">
+                <table id="tableHistorial" class="table table-striped table-bordered" style="width:100%;">
                     <thead>
                         <tr>
                             <th>RUT</th>
@@ -100,7 +100,7 @@
                             <th class="text-center">RESTAURAR</th>
                         </tr>
                     </thead>
-                    <tbody id="">
+                    <tbody id="tablaHistorial">
                       
                     </tbody>
                 </table>
@@ -125,7 +125,7 @@
 <script>
     $(document).ready(function() {
         $('#example').DataTable();
-        $('#tablaHistorial').DataTable();
+        $('#tableHistorial').DataTable();
     } );
 </script>
 <script src="<?=base_url?>javascript/main.js"></script>

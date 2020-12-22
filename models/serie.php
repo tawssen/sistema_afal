@@ -38,5 +38,33 @@ class Serie{
         return $resultado;
     }
 
+    public function obtenerUnaSerie(){
+        $database = Database::connect();
+        $sql = "SELECT * FROM serie WHERE ID_SERIE =".$this->getIdSerie();
+        $respuesta = $database->query($sql);
+
+        return $respuesta->fetch_assoc();
+    }
+
+    public function editarSerie(){
+        $database = Database::connect();
+        $sql = 'UPDATE serie SET NOMBRE_SERIE ="'.$this->getNombreSerie().'" WHERE ID_SERIE ='.$this->getIdSerie();
+        $respuesta = $database->query($sql);
+        return $respuesta;
+    }
+
+    public function eliminarSerie(){
+        $database = Database::connect();
+        $sql = 'DELETE FROM serie WHERE ID_SERIE = '.$this->getIdSerie();
+        $respuesta = $database->query($sql);
+        return $respuesta;
+    }
+
+    public function crearSerie(){
+        $database = Database::connect();
+        $sql = 'INSERT INTO serie (NOMBRE_SERIE) VALUES ("'.$this->getNombreSerie().'")';
+        $respuesta = $database->query($sql);
+        return $respuesta;      
+    }
 }
 ?>

@@ -64,7 +64,7 @@ class Campeonato{
         $database = Database::connect();
         $condicion1 = 1;
         $condicion2 = 2;
-        $sql = "SELECT * FROM campeonato INNER JOIN asociacion ON campeonato.ID_ASOCIACION_FK = asociacion.ID_ASOCIACION INNER JOIN serie ON campeonato.ID_SERIE_FK = serie.ID_SERIE INNER JOIN estado_campeonato ON campeonato.ID_ESTADO_CAMPEONATO_FK = estado_campeonato.ID_ESTADO_CAMPEONATO WHERE ID_ESTADO_CAMPEONATO_FK = $condicion1 OR $condicion2";
+        $sql = "SELECT * FROM campeonato INNER JOIN asociacion ON campeonato.ID_ASOCIACION_FK = asociacion.ID_ASOCIACION INNER JOIN serie ON campeonato.ID_SERIE_FK = serie.ID_SERIE INNER JOIN estado_campeonato ON campeonato.ID_ESTADO_CAMPEONATO_FK = estado_campeonato.ID_ESTADO_CAMPEONATO WHERE ID_ESTADO_CAMPEONATO_FK BETWEEN 1 AND 2";
 
         $respuesta = $database->query($sql);
 
@@ -129,6 +129,6 @@ class Campeonato{
             $resultado = true;
         }
 
-        return $resultado;
+        return $sql;
     }
 }
