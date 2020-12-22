@@ -111,9 +111,10 @@ class Persona{
         }
     
 
-        public function obtenerUnPersona($rut){            
+        public function obtenerUnPersona(){            
             $resultado = false;
             $database = Database::connect();
+            $rut = $this->getRutPersona();
             $sql = "SELECT * FROM PERSONA
             INNER JOIN DIRECCION ON (PERSONA.ID_DIRECCION_FK = DIRECCION.ID_DIRECCION) WHERE RUT_PERSONA = $rut ";          
             $datosObtenidosunaPersona = $database->query($sql);            

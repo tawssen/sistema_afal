@@ -85,11 +85,7 @@ class personaController{
     
             $respuesta = $persona->ingresarPersona();
 
-            /*=============CREAR USUARIO================*/
-           /*$nom1 = $_POST['nombrePersona1'];
-            $ape1 = $_POST['apellidoPersona1'];
-            $Inicial = $nom1[0];*/
-
+            /*=============CREAR USUARIO================*/           
             $NombreUsuario = $_POST['rutPersona'].''.$_POST['dvPersona'];
             $ContraseñaUsuario = substr($_POST['rutPersona'], 0, 4); 
             $RutUsuario = $_POST['rutPersona'];
@@ -99,11 +95,11 @@ class personaController{
             $usuario->setClaveUsuario($ClaveEncriptada);
             $usuario->setRutUsuario($RutUsuario);        
            
-            /*if($_POST['perfilPersona'] == 4  || $_POST['perfilPersona'] == 6 || $_POST['perfilPersona'] == 7){              
+            if($_POST['perfilPersona'] == 4  || $_POST['perfilPersona'] == 6 || $_POST['perfilPersona'] == 7){              
                 echo 'No se creó tal por cual el jugador.';
             }else{
                 $respuesta = $usuario->crearUsuario();
-            }*/
+            }
             /*==============================================================*/      
             if($respuesta){
                 header('location:'.base_url.'persona/index');
@@ -128,19 +124,21 @@ class personaController{
                 unset($_SESSION['mensajeError']);
             }
             $persona = new Persona();
+            $persona->setRutPersona($_GET['id']);
             $perfil = new Perfil();
             $asociacion = new Asociacion();
             $provincia = new Provincia();
             $comuna = new Comuna();
             $estado = new Tipoestado();
-            $datosdeunaPersona = $persona->obtenerUnPersona($_GET['id']);
+            $datosdeunaPersona = $persona->obtenerUnPersona();
+
+
             $todosLosPerfiles = $perfil->obtenerPerfiles();
             $todasLasAsociaciones = $asociacion->obtenerAsociaciones();                                           
             $todosLosEstados = $estado->obtenerEstados();
             $todasLasProvincias = $provincia->obtenerProvinciasDeRegion($datosdeunaPersona['ID_REGION_FK']);
             $todasLasComunas = $comuna->obtenerComunasDeProvincia($datosdeunaPersona['ID_PROVINCIA_FK']);   
-            var_dump($datosdeunaPersona);     
-            echo 'Éste es el fabuloso ID: '.$_GET['id'];                
+               
             include_once 'views/persona/gestionPersona.php';
         }else{
             echo '<div class="container mt-5">';
@@ -199,27 +197,44 @@ class personaController{
 
     public function eliminar(){
         if(isset($_SESSION['identity']) && isset($_SESSION['Dirigente']) || iseet($_SESSION['Dirigente y D_Tecnico'])){                        
-            $persona = new Persona();             
-            $persona->setRutPersona($_GET['rutPersona']);
-            $variable = $_GET['rutPersona'];
-            $usuario = new Usuario();                          
-            $respuesta = $persona->eliminarPersona();
+            echo 'paso1: Entra al controlador';
+            $persona = new Persona();
+            $usuarios = new Usuario();   
+             
+            if(isset($_GET['rutPersona'])){ //se consulta si existe valor
+                $persona->setRutPersona($_GET['rutPersona']);               
+                $respuesta = $persona->eliminarPersona();
 
-            $datosUsuario = $usuario->obtenerUnUsuarioEliminar($variable);
-            $datos = $persona->obtenerUnPersona($variable);  
+                if($respuesta == true){
 
-            $idEstadoUsuario = $datosUsuario['ID_TIPO_ESTADO_FK'];
-            $idEstadoPersona = $datos['ID_TIPO_ESTADO_FK_PERSONA'];
+                    $datos = $persona->obtenerUnPersona($_GET['rutPersona']);
+                    $datosUsuario = $usuarios->obtenerUnUsuarioEliminar($_GET['rutPersona']);
+                   
+                    if($datos['ID_PERFIL_FK'] == 4 || $datos['ID_PERFIL_FK'] == 6 || $datos['ID_PERFIL_FK'] == 7){
+                        header('location:'.base_url.'persona/index');   
 
-            if($respuesta){
-                if($idEstadoPersona==2 && $idEstadoUsuario == 1){               
-                    $usuario->setRutUsuario($variable);
-                    $usuario->deshabilitarUsuarioConRut();                  
-                    header('location:'.base_url.'persona/index');  
+                    }else{
+                                                                                                   
+                        $idEstadoUsuario = $datosUsuario['ID_TIPO_ESTADO_FK'];
+                        $idEstadoPersona = $datos['ID_TIPO_ESTADO_FK_PERSONA'];                    
+
+                        if($idEstadoPersona==2 && $idEstadoUsuario == 1){               
+                            $usuarios->setRutUsuario($_GET['rutPersona']);                            
+                            $usuarios->deshabilitarUsuarioConRut();                  
+                            header('location:'.base_url.'persona/index');  
+                        }
+                      
+                    }                   
+                 
                 }else{
-
+                    echo 'No se a ejecutado Correctamente la consulta'; 
                 }
-            }                                              
+              
+            }else{
+                echo 'No se a resibido valor por GET';
+               
+            }
+                                                           
         }else{
             echo '<div class="container mt-5">';
             echo '<h1>No tienes permiso para acceder a este apartado del sistema</h1>';
@@ -230,26 +245,39 @@ class personaController{
     public function habilitarunapersona(){
         $persona = new Persona();             
         $usuario = new Usuario();   
-
-        $persona->setRutPersona($_GET['rutHabilitar']);        
-        $respuesta = $persona->habilitarPersona();
         
-        $datosUsuario = $usuario->obtenerUnUsuarioEliminar($_GET['rutHabilitar']);
-        $datos = $persona->obtenerUnPersona($_GET['rutHabilitar']);  
+        if(isset($_GET['rutHabilitar'])){
+            $persona->setRutPersona($_GET['rutHabilitar']);        
+            $respuesta = $persona->habilitarPersona();
 
+            if($respuesta == true){
+                $datosUsuario = $usuario->obtenerUnUsuarioEliminar($_GET['rutHabilitar']);
+                $datos = $persona->obtenerUnPersona($_GET['rutHabilitar']);  
+
+                if($datos['ID_PERFIL_FK'] == 4 || $datos['ID_PERFIL_FK'] == 6 || $datos['ID_PERFIL_FK'] == 7){
+                     header('location:'.base_url.'persona/index');   
+
+                }else{
+                                                                                               
+                    $idEstadoUsuario = $datosUsuario['ID_TIPO_ESTADO_FK'];
+                    $idEstadoPersona = $datos['ID_TIPO_ESTADO_FK_PERSONA'];                  
+
+                    if($idEstadoPersona==1 && $idEstadoUsuario == 2){               
+                        $usuario->setRutUsuario($_GET['rutHabilitar']);
+                        $usuario->habilitarUsuarioConRut();                  
+                        header('location:'.base_url.'persona/index');  
+                    }else{
         
-        $idEstadoUsuario = $datosUsuario['ID_TIPO_ESTADO_FK'];
-        $idEstadoPersona = $datos['ID_TIPO_ESTADO_FK_PERSONA'];
-
-        if($respuesta){
-            if($idEstadoPersona==1 && $idEstadoUsuario == 2){               
-                $usuario->setRutUsuario($_GET['rutHabilitar']);
-                $usuario->habilitarUsuarioConRut();                  
-                header('location:'.base_url.'persona/index');  
+                    }
+                  
+                }  
             }else{
 
             }
-        } 
+
+        }else{
+
+        }
        
     }
 

@@ -13,6 +13,8 @@
             <h1 class="pb-3">Editar Arbitro</h1>
             <?php elseif(isset($datosdeunaPersona)):?>
             <h1 class="pb-3">Editar Persona</h1>
+            <?php else: ?>
+                <h1 class="pb-3">Crear Persona</h1>
             <?php endif; ?>
             
             <?php if(isset($_SESSION['mensajeError'])):?>
@@ -192,7 +194,7 @@ if(isset($datosdeunaPersona)){
     echo "cargarInfo('#callePasaje','".$datosdeunaPersona['CALLE_PASAJE']."');";
     echo "cargarInfo('#selectAsociacion','".$datosdeunaPersona['ID_ASOCIACION_FK']."');";
     echo "cargarInfo('#selectPerfil','".$datosdeunaPersona['ID_PERFIL_FK']."');";
-    echo "cargarInfo('#selectEstado','".$datosdeunaPersona['ID_TIPO_ESTADO_FK']."');";
+    echo "cargarInfo('#selectEstado','".$datosdeunaPersona['ID_TIPO_ESTADO_FK_PERSONA']."');";
     echo '});';
     echo '</script>';
 }
