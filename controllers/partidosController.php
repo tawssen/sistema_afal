@@ -2,6 +2,7 @@
 require_once 'config/parameters.php';
 require_once 'models/campeonato.php';
 require_once 'models/partido.php';
+require_once 'models/persona.php';
 
 class partidosController{
 
@@ -14,14 +15,16 @@ class partidosController{
     }
 
     public function partidos(){
-        $partido = new Partido();
+        $partido = new Partido();        
         $partido->setIdCampeonato($_GET['campeonato']);
         $todosLosPartidos = $partido->obtenerPartidosDeCampeonato();
         require_once 'views/partidos/partidosCampeonato.php';
     }
 
     public function gestionCrear(){
-
+        $persona = new Persona();
+        $todosLosArbitros = $persona->obtenerArbitros();
+        $todosLosTurnos = $persona->obtenerTurnos();
         require_once 'views/partidos/gestionPartidos.php';
     }
 }

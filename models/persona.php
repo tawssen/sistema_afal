@@ -228,5 +228,18 @@ class Persona{
             $respuesta = $database->query($sql);
             return $sql;
         }
+        
 
+        public function obtenerTurnos(){
+            $resultado = false;
+            $database = Database::connect();
+            $sql = "SELECT * FROM persona INNER JOIN direccion ON persona.ID_DIRECCION_FK = direccion.ID_DIRECCION INNER JOIN comuna ON direccion.ID_COMUNA_FK = comuna.ID_COMUNA INNER JOIN asociacion ON persona.ID_ASOCIACION_FK = asociacion.ID_ASOCIACION WHERE ID_PERFIL_FK = 3";       
+            $respuesta = $database->query($sql);
+
+            if($respuesta){
+                $resultado = $respuesta;
+            }
+
+            return $resultado;
+        }
 }
