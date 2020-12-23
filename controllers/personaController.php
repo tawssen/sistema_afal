@@ -151,21 +151,33 @@ class personaController{
         if(isset($_SESSION['identity']) && isset($_SESSION['Dirigente']) || iseet($_SESSION['Dirigente y D_Tecnico'])){
             $direccion = new Direccion();
             $persona = new Persona();                
+            
+            if(isset($_POST['callePasaje']) && isset($_POST['comuna']) && isset($_POST['provincia']) && isset($_POST['region'])){
+
+                unset($_SESSION['mensajeErrorDireccion']);
+                
+                $direccion->setCallePasaje($_POST['callePasaje']);
+                $direccion->setComuna($_POST['comuna']);
+                $direccion->setProvincia($_POST['provincia']);
+                $direccion->setRegion($_POST['region']);
     
-            $direccion->setCallePasaje($_POST['callePasaje']);
-            $direccion->setComuna($_POST['comuna']);
-            $direccion->setProvincia($_POST['provincia']);
-            $direccion->setRegion($_POST['region']);
-    
-            $verificarDireccion = $direccion->verificarDireccion();
-            if($verificarDireccion<1){
-                $ingresar = $direccion->ingresarDireccion();
-                $resultado = $direccion->obtenerDireccion();
-                $persona->setIdDireccion($resultado['ID_DIRECCION']);
+                $verificarDireccion = $direccion->verificarDireccion();
+
+               if($verificarDireccion<1){
+                   $ingresar = $direccion->ingresarDireccion();
+                   $resultado = $direccion->obtenerDireccion();
+                   $persona->setIdDireccion($resultado['ID_DIRECCION']);
+
+                }else{
+                   $resultado = $direccion->obtenerDireccion();                
+                   $persona->setIdDireccion($resultado['ID_DIRECCION']);
+                }
+               
             }else{
-                $resultado = $direccion->obtenerDireccion();                
-                $persona->setIdDireccion($resultado['ID_DIRECCION']);
+               $_SESSION['mensajeErrorDireccion'] = true;
             }
+
+           
             
             $persona->setRutPersona($_POST['rutPersona']);
             $persona->setDvpersona($_POST['dvPersona']);
