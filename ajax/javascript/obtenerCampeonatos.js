@@ -1,4 +1,5 @@
 $(document).ready(function(){
+    $('#cuerpoPartidosProximos').html("");
     let fecha = moment();
     let fechadesde = fecha.format('YYYY-MM-DD');
     let fechahasta = fecha.add(7, 'days').format('YYYY-MM-DD');
@@ -8,11 +9,20 @@ $(document).ready(function(){
         data: {fechadesde: fechadesde,fechahasta:fechahasta},
         dataType: "json",
         success: function(respuesta){        
-           console.log(respuesta)
+           respuesta.forEach(partido => {
+                var fila =`<tr id="">             
+                <td>${partido.FECHA_STRING}</td>
+                <td>${partido.CLUB_LOCAL}</td>
+                <td>${partido.CLUB_VISITA}</td>
+                <td>${partido.NOMBRE_ARBITRO_1}</td>
+                <td>${partido.NOMBRE_TURNO}</td>
+                </tr>`;
+                $('#partidosProximos').append(fila);
+           });
         },
         error: function(){
 
         }
     })
-    $('#partidosProximos').DataTable(); 
+    .then(res=>($('#partidosProximos').DataTable()))
 })

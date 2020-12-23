@@ -1,27 +1,26 @@
 <div class="container-xl">
     <div class="row mt-5">
-        <div class="col-9">
+        <div class="col-9" id="titulo">
         <div class="table-responsive">
                 <table id="partidosProximos" class="table table-striped table-bordered" style="width:100%;">
                     <thead>
                         <tr>
-                            <th>NOMBRE</th>
-                            <th>INICIO</th>
-                            <th>ASOCIACIÓN</th>
-                            <th>SERIE</th>
-                            <th>ESTADO</th>
-                            <th class="text-center">ACCIONES</th>
+                            <th>FECHA</th>
+                            <th>LOCAL</th>
+                            <th>VISITANTE</th>
+                            <th>ARBITRO</th>
+                            <th>TURNO</th>
                         </tr>
                     </thead>
-                    <tbody>
+                    <tbody id="cuerpoPartidosProximos">
                     </tbody>
                 </table>
             </div>
         </div>
         <div class="col-3 border-left">
         <?php while($campeonatos = mysqli_fetch_assoc($todosLosCampeonatos)){?>
-            <div class="p-2 contenedor-campeonato" id="<?=$campeonatos['ID_CAMPEONATO']?>" >
-                <h5 style="cursor: pointer;"><?=$campeonatos['NOMBRE_CAMPEONATO']?></h5>
+            <div class="campeonato" onclick="document.location.href='<?=base_url?>partidos/partidos&campeonato=<?=$campeonatos['ID_CAMPEONATO']?>'" style="cursor: pointer;">
+                <h5><?=$campeonatos['NOMBRE_CAMPEONATO']?></h5>
                 <p><?=$campeonatos['NOMBRE_SERIE']?></p>
             </div>
         <?php } mysqli_free_result($todosLosCampeonatos);?> 
