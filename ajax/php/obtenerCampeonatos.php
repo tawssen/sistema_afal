@@ -1,0 +1,25 @@
+<?php
+
+require_once '../../config/database.php';
+
+$resultado = false; 
+$database = Database::connect();
+//$sql = 'SELECT * FROM partidos WHERE FECHA_DATE BETWEEN "'.$_POST['fechadesde'].'" AND "'.$_POST['fechahasta'].'"';
+
+$sql = 'SELECT * FROM PARTIDOS
+INNER JOIN FECHA_CAMPEONATO ON (PARTIDOS.ID_FECHA_CAMPEONATO_FK = FECHA_CAMPEONATO.ID_FECHA_CAMPEONATO)
+INNER JOIN CLUB CL ON (PARTIDOS.ID_CLUB_LOCAL_FK = CL.ID_CLUB)
+INNER JOIN CLUB CV ON (PARTIDOS.ID_CLUB_VISITA_FK = CV.ID_CLUB)
+INNER JOIN PARTIDO_ARBITROS ON (PARTIDOS.ID_ARBITROS_PARTIDO_FK = PARTIDO_ARBITROS.ID_PARTIDO_ARBITRO)
+INNER JOIN DIRECCION ON (PARTIDOS.ID_DIRECCION_FK = DIRECCION.ID_DIRECCION)
+INNER JOIN CAMPEONATO ON (PARTIDOS.ID_CAMPEONATO_FK = CAMPEONATO.ID_CAMPEONATO)WHERE FECHA_DATE BETWEEN "'.$_POST['fechadesde'].'" AND "'.$_POST['fechahasta'].'"';
+
+
+
+$respuesta = $database->query($sql);
+
+if($respuesta){
+    $resultado = $respuesta->fetch_all(MYSQLI_ASSOC);
+}
+
+echo json_encode($resultado);

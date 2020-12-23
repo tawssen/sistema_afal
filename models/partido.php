@@ -67,4 +67,11 @@ class Partido{
     public function SetIdDireccion($id_campeonato){
         $this->id_campeonato = $id_campeonato;
     }
+
+    public function obtenerPartidos(){
+        $database = Database::connect();
+        $sql = "SELECT * FROM partidos";
+        $respuesta = $database->query($sql);
+        return $respuesta;
+    }
 }
