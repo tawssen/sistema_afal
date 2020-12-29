@@ -8,6 +8,7 @@ require_once 'models/direccion.php';
 require_once 'models/provincia.php';
 require_once 'models/comuna.php';
 require_once 'models/tipo_estado.php';
+require_once 'models/auditoria.php';
 class personaController{
 
     public function index(){
@@ -56,6 +57,7 @@ class personaController{
             $direccion = new Direccion();
             $persona = new Persona();            
             $usuario = new Usuario();
+            $auditoria = new Auditoria();  
 
             $direccion->setCallePasaje($_POST['callePasaje']);
             $direccion->setComuna($_POST['comuna']);
@@ -99,7 +101,21 @@ class personaController{
                 echo 'No se creó tal por cual el jugador.';
             }else{
                 $respuesta = $usuario->crearUsuario();
-            }
+            }           
+            /*=============INSERTAR TABLA AUDITORIA (ACCION INSERT)=========*/       
+            date_default_timezone_set('America/Santiago');
+            $fechaActual = date('Y-m-d');
+            $horaActual = date("H:i:s");
+
+            $auditoria->setNombreUsuario($_POST['NombreUsuario']);
+            $auditoria->setRutUsuario($_POST['rutUsuario']);
+            $auditoria->setFechaRegistro($fechaActual);
+            $auditoria->setHoraRegistro($horaActual);
+            $auditoria->setModulo('Persona');
+            $auditoria->setAccion('Incersion de datos');
+            $auditoria->setDescripcion('Se a registrado a '.$_POST['nombrePersona1'].' '.$_POST['nombrePersona2'].' '.$_POST['apellidoPersona1'].' '.$_POST['apellidoPersona2'].', cuenta con el perfil id='.$_POST['perfilPersona']);
+            $auditoria->InsertAuditoria();
+                         
             /*==============================================================*/      
             if($respuesta){
                 header('location:'.base_url.'persona/index');
@@ -151,7 +167,7 @@ class personaController{
         if(isset($_SESSION['identity']) && isset($_SESSION['Dirigente']) || iseet($_SESSION['Dirigente y D_Tecnico'])){
             $direccion = new Direccion();
             $persona = new Persona();                
-            
+            $auditoria = new Auditoria();  
             if(isset($_POST['callePasaje']) && isset($_POST['comuna']) && isset($_POST['provincia']) && isset($_POST['region'])){
 
                 unset($_SESSION['mensajeErrorDireccion']);
@@ -192,8 +208,25 @@ class personaController{
             $persona->setIdPerfil($_POST['perfilPersona']);
             $persona->setIdTipoEstado($_POST['tipoestado']);
             $respuesta = $persona->editarPersona();
+           
+                /*=============INSERTAR TABLA AUDITORIA (ACCION UPDATE)=========*/       
+                 date_default_timezone_set('America/Santiago');
+                 $fechaActual = date('Y-m-d');
+                 $horaActual = date("H:i:s");
+     
+                 $auditoria->setNombreUsuario($_POST['NombreUsuario']);
+                 $auditoria->setRutUsuario($_POST['rutUsuario']);
+                 $auditoria->setFechaRegistro($fechaActual);
+                 $auditoria->setHoraRegistro($horaActual);
+                 $auditoria->setModulo('Persona');
+                 $auditoria->setAccion('Modificacion de datos');
+                 $auditoria->setDescripcion('Se han modificado los datos de '.$_POST['nombrePersona1'].' '.$_POST['nombrePersona2'].' '.$_POST['apellidoPersona1'].' '.$_POST['apellidoPersona2'].', cuenta con el perfil id='.$_POST['perfilPersona']);
+                 $auditoria->InsertAuditoria();
+                              
+                /*==============================================================*/  
 
-            if($respuesta && isset($_GET['in'])){
+
+            if($respuesta && isset($_GET['in'])){         
                 header('location:'.base_url.'persona/arbitros');
             }else if($respuesta){
                 header('location:'.base_url.'persona/index');
@@ -212,10 +245,32 @@ class personaController{
             echo 'paso1: Entra al controlador';
             $persona = new Persona();
             $usuarios = new Usuario();   
-             
+            $auditoria = new Auditoria();  
             if(isset($_GET['rutPersona'])){ //se consulta si existe valor
                 $persona->setRutPersona($_GET['rutPersona']);               
                 $respuesta = $persona->eliminarPersona();
+                $datos = $persona->obtenerUnPersona();
+                $arraydatos =(array) $datos;
+                //echo 'el usuario es: '.$_GET['user'].'</br>';
+                //echo 'el rut es: '.$_GET['rutuser'].'</br>';
+                //echo 'Se han modificado los datos de '.$arraydatos['NOMBRE_1'].' '.$arraydatos['NOMBRE_2'].' '.$arraydatos['APELLIDO_1'].' '.$arraydatos['APELLIDO_2'].', cuenta con el perfil id='.$arraydatos['ID_PERFIL_FK'];
+                           
+                /*=============INSERTAR TABLA AUDITORIA (ACCION DELETE)=========*/       
+                 
+                 date_default_timezone_set('America/Santiago');
+                 $fechaActual = date('Y-m-d');
+                 $horaActual = date("H:i:s");
+     
+                 $auditoria->setNombreUsuario($_GET['user']);
+                 $auditoria->setRutUsuario($_GET['rutuser']);
+                 $auditoria->setFechaRegistro($fechaActual);
+                 $auditoria->setHoraRegistro($horaActual);
+                 $auditoria->setModulo('Persona');
+                 $auditoria->setAccion('Eliminar dato');
+                 $auditoria->setDescripcion('Se a deshabilitado a '.$arraydatos['NOMBRE_1'].' '.$arraydatos['NOMBRE_2'].' '.$arraydatos['APELLIDO_1'].' '.$arraydatos['APELLIDO_2'].', cuenta con el perfil id='.$arraydatos['ID_PERFIL_FK']);
+                 $auditoria->InsertAuditoria(); 
+                              
+                /*==============================================================*/  
 
                 if($respuesta == true){
 

@@ -136,6 +136,6 @@
         let boton = document.getElementById("EliminarPersona");
         let id = $(this).val();
         boton.removeAttribute("onclick");
-        boton.setAttribute("onclick","document.location.href='<?=base_url?>persona/eliminar&rutPersona="+id+"'");        
+        boton.setAttribute("onclick","document.location.href='<?=base_url?>persona/eliminar&rutPersona="+id+"&user=<?php echo $_SESSION['NombreUsuario'];?>&rutuser=<?php echo $_SESSION['RutUsuario'];?>'");        
     });
 </script>

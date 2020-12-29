@@ -27,6 +27,10 @@
             </div>
             <?php endif; ?>
             
+            <input class="form-control" id="usuario" name="NombreUsuario" type="hidden" value="<?php echo $_SESSION['NombreUsuario']?>">
+
+            <input class="form-control" id="rut" name="rutUsuario" type="hidden" value="<?php echo $_SESSION['RutUsuario']?>">
+
             <div class="row mt-3">
              <div class="col-8">
                 <label for="rutPersona" class="form-label">RUT</label>
@@ -41,22 +45,22 @@
             <div class="row mt-3">
              <div class="col-6">
                 <label for="nombrePersona1" class="form-label">PRIMER NOMBRE</label>
-                <input class="form-control" id="nombrePersona1" name="nombrePersona1" type="text" placeholder="12345678" required>
+                <input class="form-control" id="nombrePersona1" name="nombrePersona1" type="text" required>
              </div>
              <div class="col-6">
                 <label for="nombrePersona2" class="form-label">SEGUNDO NOMBRE</label>
-                <input class="form-control" id="nombrePersona2" name="nombrePersona2" type="text" placeholder="k o 1-9" required>
+                <input class="form-control" id="nombrePersona2" name="nombrePersona2" type="text" required>
              </div>
             </div>
             
             <div class="row mt-3">
              <div class="col-6">
                 <label for="apellidoPersona1" class="form-label">PRIMER APELLIDO</label>
-                <input class="form-control" id="apellidoPersona1" name="apellidoPersona1" type="text" placeholder="12345678" required>
+                <input class="form-control" id="apellidoPersona1" name="apellidoPersona1" type="text" required>
              </div>
              <div class="col-6">
                 <label for="apellidoPersona2" class="form-label">SEGUNDO APELLIDO</label>
-                <input class="form-control" id="apellidoPersona2" name="apellidoPersona2" type="text" placeholder="k o 1-9" required>
+                <input class="form-control" id="apellidoPersona2" name="apellidoPersona2" type="text" required>
              </div>
             </div>
 

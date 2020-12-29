@@ -16,11 +16,17 @@ class inicioController{
             $usuario->setClaveUsuario($_POST['clave']);
             $identity = $usuario->validarUsuario();
             
-            
+            $datos = (array) $identity;
+            var_dump($datos);
+            $nombre = $datos['NOMBRE_1'].' '.$datos['NOMBRE_2'].' '.$datos['APELLIDO_1'].' '.$datos['APELLIDO_2'];
+            $rut = $datos['RUT_PERSONA'];   
+             
             if($identity && is_object($identity)){
                 
                 $_SESSION['identity'] = $identity;
-                
+                $_SESSION['NombreUsuario'] = $nombre;
+                $_SESSION['RutUsuario'] = $rut;
+
                 if($identity->ID_PERFIL_FK == 1){                        
                     $_SESSION['Dirigente'] = true;                        
                     header("Location:".base_url);
