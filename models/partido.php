@@ -5,11 +5,13 @@ class Partido{
 
     private $id_partido;
     private $fecha_date;
-    private $id_fecha_campeonato;
+    private $fecha_campeonato;
     private $id_club_local;
     private $id_club_visita;
     private $rut_turno; // apunta a la tabla persona aquellas personas que cuenten con perfil turno
-    private $id_arbitros_partido; 
+    private $rut_persona_arbitro_1; 
+    private $rut_persona_arbitro_2; 
+    private $rut_persona_arbitro_3; 
     private $id_direccion;
     private $id_campeonato;
     
@@ -22,10 +24,10 @@ class Partido{
     }
     
     // Geter y Seter IdFechaCampeonato
-    public function getIdFechaCampeonato(){
+    public function getFechaCampeonato(){
         return $this->id_fecha_campeonato;
     }
-    public function setIdFechaCampeonato($id_fecha_campeonato){
+    public function setFechaCampeonato($id_fecha_campeonato){
         $this->id_fecha_campeonato = $id_fecha_campeonato;
     }
      
@@ -54,11 +56,25 @@ class Partido{
     }
 
     // Geter Y Seter IdArbitrosPartido
-    public function getIdArbitrosPartido(){
-        return $this->id_arbitros_partido;
+    public function getRutArbitro1(){
+        return $this->rut_persona_arbitro_1;
     }
-    public function setIdArbitrosPartido($id_arbitros_partido){
-        $this->id_arbitros_partido = $id_arbitros_partido;
+    public function setRutArbitro1($rut_persona_arbitro_1){
+        $this->rut_persona_arbitro_1 = $rut_persona_arbitro_1;
+    }
+
+    public function getRutArbitro2(){
+        return $this->rut_persona_arbitro_2;
+    }
+    public function setRutArbitro2($rut_persona_arbitro_2){
+        $this->rut_persona_arbitro_2 = $rut_persona_arbitro_2;
+    }
+
+    public function getRutArbitro3(){
+        return $this->rut_persona_arbitro_3;
+    }
+    public function setRutArbitro3($rut_persona_arbitro_3){
+        $this->rut_persona_arbitro_3 = $rut_persona_arbitro_3;
     }
 
     // Geter Y Seter IdDireccion
@@ -87,21 +103,30 @@ class Partido{
 
     public function obtenerPartidosDeCampeonato(){
         $database = Database::connect();
-        $sql = 'SELECT ID_PARTIDO, FECHA_DATE, NOMBRE_FECHA AS FECHA_STRING, CL.NOMBRE_CLUB AS CLUB_LOCAL,  CV.NOMBRE_CLUB AS CLUB_VISITA,
+        $sql = 'SELECT ID_PARTIDO, FECHA_DATE, FECHA_CAMPEONATO AS FECHA_STRING, CL.NOMBRE_CLUB AS CLUB_LOCAL,  CV.NOMBRE_CLUB AS CLUB_VISITA,
         CONCAT(PT.NOMBRE_1," ",PT.NOMBRE_2," ",PT.APELLIDO_1," ",PT.APELLIDO_2) AS NOMBRE_TURNO,
-        CONCAT(PA.NOMBRE_1," ",PA.NOMBRE_2," ",PA.APELLIDO_1," ",PA.APELLIDO_2) AS NOMBRE_ARBITRO_1,
         CONCAT(NOMBRE_COMUNA," ", CALLE_PASAJE) AS DIRECCION,
         NOMBRE_CAMPEONATO from PARTIDOS
-        INNER JOIN FECHA_CAMPEONATO ON (PARTIDOS.ID_FECHA_CAMPEONATO_FK = FECHA_CAMPEONATO.ID_FECHA_CAMPEONATO)
         INNER JOIN CLUB CL ON (PARTIDOS.ID_CLUB_LOCAL_FK = CL.ID_CLUB)
         INNER JOIN CLUB CV ON (PARTIDOS.ID_CLUB_VISITA_FK = CV.ID_CLUB)
         INNER JOIN PERSONA PT ON (PARTIDOS.RUT_PERSONA_TURNO_FK = PT.RUT_PERSONA)
-        INNER JOIN PARTIDO_ARBITROS ON (PARTIDOS.ID_ARBITROS_PARTIDO_FK = PARTIDO_ARBITROS.ID_PARTIDO_ARBITRO)
-        INNER JOIN PERSONA PA ON (PARTIDO_ARBITROS.RUT_PERSONA_FK_ARBITRO1 = PA.RUT_PERSONA)
         INNER JOIN DIRECCION ON (PARTIDOS.ID_DIRECCION_FK = DIRECCION.ID_DIRECCION)
         INNER JOIN COMUNA ON (DIRECCION.ID_COMUNA_FK = COMUNA.ID_COMUNA)
         INNER JOIN CAMPEONATO ON (PARTIDOS.ID_CAMPEONATO_FK = CAMPEONATO.ID_CAMPEONATO)WHERE partidos.ID_CAMPEONATO_FK ='.$this->getIdCampeonato();
         $respuesta = $database->query($sql);
         return $respuesta;
+    }
+
+    public function crearPartido(){
+        $database = Database::connect();
+        $sql = "";
+        $resultado = false;
+        
+        $sql = "INSERT INTO partidos (FECHA_DATE,FECHA_CAMPEONATO,ID_CLUB_LOCAL_FK,ID_CLUB_VISITA_FK,RUT_PERSONA_TURNO_FK,RUT_PERSONA_ARBITRO_1,ID_DIRECCION_FK,ID_CAMPEONATO_FK) VALUES ()";
+        $respuesta = $database->query($sql);
+        if($respuesta){
+            $resultado = $respuesta;
+        }
+        return  $resultado;
     }
 }

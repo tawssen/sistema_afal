@@ -85,7 +85,7 @@ class personaController{
             $persona->setIdAsociacion($_POST['nombreAsociacion']);
             $persona->setIdPerfil($_POST['perfilPersona']);
     
-            $respuesta = $persona->ingresarPersona();
+            //$respuesta = $persona->ingresarPersona();
 
             /*=============CREAR USUARIO================*/           
             $NombreUsuario = $_POST['rutPersona'].''.$_POST['dvPersona'];
@@ -114,15 +114,16 @@ class personaController{
             $auditoria->setModulo('Persona');
             $auditoria->setAccion('Incersion de datos');
             $auditoria->setDescripcion('Se a registrado a '.$_POST['nombrePersona1'].' '.$_POST['nombrePersona2'].' '.$_POST['apellidoPersona1'].' '.$_POST['apellidoPersona2'].', cuenta con el perfil id='.$_POST['perfilPersona']);
-            $auditoria->InsertAuditoria();
-                         
+            $resultado = $auditoria->InsertAuditoria();
+            var_dump($resultado);
             /*==============================================================*/      
+            /*
             if($respuesta){
                 header('location:'.base_url.'persona/index');
                 exit;
             }else{
                 header('location:'.base_url.'persona/gestionCrear');
-            }
+            }*/
             
         }else{
             echo '<div class="container mt-5">';

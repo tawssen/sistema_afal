@@ -27,4 +27,26 @@ class partidosController{
         $todosLosTurnos = $persona->obtenerTurnos();
         require_once 'views/partidos/gestionPartidos.php';
     }
+
+    public function crear(){
+        $partido = new Partido();
+        $partido->setFechaDate($_POST['']);
+        $partido->setFechaCampeonato($_POST['fechacampeonato']);
+        $partido->setIdCLubLocal((int) $_POST['clublocal']);
+        $partido->setIdCLubVisita((int) $_POST['clubvisita']);
+        $partido->setRutTurno((int) $_POST['']);
+        $partido->setRutArbitro1((int)$_POST['arbitroprincipal']);
+        $partido->setRutArbitro2((int)$_POST['segundoarbitro']);
+        $partido->setRutArbitro3((int)$_POST['tercerarbitro']);
+        if($fechaCampeonato=="0"){
+            echo 'debe ingresar fecha campeonato';
+        }
+        elseif($arbitro2<1 && $arbitro3<1){
+
+        }elseif($arbitro2>0 && $arbitro3<1){
+
+        }else{
+
+        }
+    }
 }
