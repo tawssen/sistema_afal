@@ -12,7 +12,7 @@ class Partido{
     private $rut_persona_arbitro_1; 
     private $rut_persona_arbitro_2; 
     private $rut_persona_arbitro_3; 
-    private $id_direccion;
+    private $nombre_estadio;
     private $id_campeonato;
     
     // Geter y Seter FechaDate
@@ -25,10 +25,10 @@ class Partido{
     
     // Geter y Seter IdFechaCampeonato
     public function getFechaCampeonato(){
-        return $this->id_fecha_campeonato;
+        return $this->fecha_campeonato;
     }
-    public function setFechaCampeonato($id_fecha_campeonato){
-        $this->id_fecha_campeonato = $id_fecha_campeonato;
+    public function setFechaCampeonato($fecha_campeonato){
+        $this->fecha_campeonato = $fecha_campeonato;
     }
      
     // Geter y Seter IdCLubLocal
@@ -77,13 +77,12 @@ class Partido{
         $this->rut_persona_arbitro_3 = $rut_persona_arbitro_3;
     }
 
-    // Geter Y Seter IdDireccion
-    public function getIdDireccion(){
-        return $this->id_direccion;
+    public function getNombreEstadio(){
+        return $this->nombre_estadio;
     }
 
-    public function setIdDireccion($id_direccion){
-        $this->id_direccion = $id_direccion;
+    public function setNombreEstadio($nombre_estadio){
+        $this->nombre_estadio = $nombre_estadio;
     }
 
     public function getIdCampeonato(){
@@ -96,22 +95,24 @@ class Partido{
 
     public function obtenerPartidos(){
         $database = Database::connect();
-        $sql = "SELECT * FROM partidos";
+        $sql = "SELECT * FROM partidoS 
+        INNER JOIN campeonato ON partidos.ID_CAMPEONATO_FK = campeonato.ID_CAMPEONATO
+        WHERE campeonato.ID_ESTADO_CAMPEONATO_FK = 2";
         $respuesta = $database->query($sql);
         return $respuesta;
     }
 
     public function obtenerPartidosDeCampeonato(){
         $database = Database::connect();
-        $sql = 'SELECT ID_PARTIDO, FECHA_DATE, FECHA_CAMPEONATO AS FECHA_STRING, CL.NOMBRE_CLUB AS CLUB_LOCAL,  CV.NOMBRE_CLUB AS CLUB_VISITA,
+        $sql = 'SELECT ID_PARTIDO, FECHA_DATE, PA.RUT_PERSONA AS RUT_ARBITRO, FECHA_CAMPEONATO AS FECHA_STRING, CL.NOMBRE_CLUB AS CLUB_LOCAL,  CV.NOMBRE_CLUB AS CLUB_VISITA,
         CONCAT(PT.NOMBRE_1," ",PT.NOMBRE_2," ",PT.APELLIDO_1," ",PT.APELLIDO_2) AS NOMBRE_TURNO,
-        CONCAT(NOMBRE_COMUNA," ", CALLE_PASAJE) AS DIRECCION,
-        NOMBRE_CAMPEONATO from PARTIDOS
+        CONCAT(PA.NOMBRE_1," ",PA.NOMBRE_2," ",PA.APELLIDO_1," ",PA.APELLIDO_2) AS NOMBRE_ARBITRO,
+        ID_ESTADO_CAMPEONATO_FK
+        from PARTIDOS
         INNER JOIN CLUB CL ON (PARTIDOS.ID_CLUB_LOCAL_FK = CL.ID_CLUB)
         INNER JOIN CLUB CV ON (PARTIDOS.ID_CLUB_VISITA_FK = CV.ID_CLUB)
         INNER JOIN PERSONA PT ON (PARTIDOS.RUT_PERSONA_TURNO_FK = PT.RUT_PERSONA)
-        INNER JOIN DIRECCION ON (PARTIDOS.ID_DIRECCION_FK = DIRECCION.ID_DIRECCION)
-        INNER JOIN COMUNA ON (DIRECCION.ID_COMUNA_FK = COMUNA.ID_COMUNA)
+        INNER JOIN PERSONA PA ON (PARTIDOS.RUT_PERSONA_ARBITRO_1 = PA.RUT_PERSONA)
         INNER JOIN CAMPEONATO ON (PARTIDOS.ID_CAMPEONATO_FK = CAMPEONATO.ID_CAMPEONATO)WHERE partidos.ID_CAMPEONATO_FK ='.$this->getIdCampeonato();
         $respuesta = $database->query($sql);
         return $respuesta;
@@ -122,11 +123,23 @@ class Partido{
         $sql = "";
         $resultado = false;
         
-        $sql = "INSERT INTO partidos (FECHA_DATE,FECHA_CAMPEONATO,ID_CLUB_LOCAL_FK,ID_CLUB_VISITA_FK,RUT_PERSONA_TURNO_FK,RUT_PERSONA_ARBITRO_1,ID_DIRECCION_FK,ID_CAMPEONATO_FK) VALUES ()";
+        if($this->getRutArbitro1()>0 && $this->getRutArbitro2()<1 && $this->getRutArbitro3()<1){
+            $sql = 'INSERT INTO partidos (FECHA_DATE,FECHA_CAMPEONATO,ID_CLUB_LOCAL_FK,ID_CLUB_VISITA_FK,RUT_PERSONA_TURNO_FK,RUT_PERSONA_ARBITRO_1,RUT_PERSONA_ARBITRO_2,RUT_PERSONA_ARBITRO_3,NOMBRE_ESTADIO,ID_CAMPEONATO_FK) VALUES 
+            ("'.$this->getFechaDate().'","'.$this->getFechaCampeonato().'",'.$this->getIdCLubLocal().','.$this->getIdCLubVisita().','.$this->getRutTurno().','.$this->getRutArbitro1().',null,null,"'.$this->getNombreEstadio().'",'.$this->getIdCampeonato().')';
+
+        }elseif($this->getRutArbitro1()>0 && $this->getRutArbitro2()>0 && $this->getRutArbitro3()<1){
+            $sql = 'INSERT INTO partidos (FECHA_DATE,FECHA_CAMPEONATO,ID_CLUB_LOCAL_FK,ID_CLUB_VISITA_FK,RUT_PERSONA_TURNO_FK,RUT_PERSONA_ARBITRO_1,RUT_PERSONA_ARBITRO_2,RUT_PERSONA_ARBITRO_3,NOMBRE_ESTADIO,ID_CAMPEONATO_FK) VALUES 
+            ("'.$this->getFechaDate().'","'.$this->getFechaCampeonato().'",'.$this->getIdCLubLocal().','.$this->getIdCLubVisita().','.$this->getRutTurno().','.$this->getRutArbitro1().','.$this->getRutArbitro2().',null,"'.$this->getNombreEstadio().'",'.$this->getIdCampeonato().')';
+
+        }elseif($this->getRutArbitro1()>0 && $this->getRutArbitro2()>0 && $this->getRutArbitro3()>0){
+            $sql = 'INSERT INTO partidos (FECHA_DATE,FECHA_CAMPEONATO,ID_CLUB_LOCAL_FK,ID_CLUB_VISITA_FK,RUT_PERSONA_TURNO_FK,RUT_PERSONA_ARBITRO_1,RUT_PERSONA_ARBITRO_2,RUT_PERSONA_ARBITRO_3,NOMBRE_ESTADIO,ID_CAMPEONATO_FK) VALUES 
+            ("'.$this->getFechaDate().'","'.$this->getFechaCampeonato().'",'.$this->getIdCLubLocal().','.$this->getIdCLubVisita().','.$this->getRutTurno().','.$this->getRutArbitro1().','.$this->getRutArbitro2().','.$this->getRutArbitro3().',"'.$this->getNombreEstadio().'",'.$this->getIdCampeonato().')';
+        }
+
         $respuesta = $database->query($sql);
         if($respuesta){
             $resultado = $respuesta;
         }
-        return  $resultado;
+        return $resultado;
     }
 }

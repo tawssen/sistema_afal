@@ -3,6 +3,7 @@ require_once 'config/parameters.php';
 require_once 'models/campeonato.php';
 require_once 'models/partido.php';
 require_once 'models/persona.php';
+require_once 'models/club.php';
 
 class partidosController{
 
@@ -30,23 +31,52 @@ class partidosController{
 
     public function crear(){
         $partido = new Partido();
-        $partido->setFechaDate($_POST['']);
+        $club = new Club();
+        $partido->setFechaDate($_POST['fechapartido']);
         $partido->setFechaCampeonato($_POST['fechacampeonato']);
         $partido->setIdCLubLocal((int) $_POST['clublocal']);
+        $clubLocal = $club->obtenerUnClub($partido->getIdCLubLocal());
         $partido->setIdCLubVisita((int) $_POST['clubvisita']);
-        $partido->setRutTurno((int) $_POST['']);
+        $partido->setRutTurno((int) $_POST['turnopartido']);
         $partido->setRutArbitro1((int)$_POST['arbitroprincipal']);
         $partido->setRutArbitro2((int)$_POST['segundoarbitro']);
         $partido->setRutArbitro3((int)$_POST['tercerarbitro']);
-        if($fechaCampeonato=="0"){
-            echo 'debe ingresar fecha campeonato';
+        $partido->setNombreEstadio($clubLocal['NOMBRE_ESTADIO']);
+        $partido->setIdCampeonato((int)$_GET['campeonato']);
+
+        if($partido->getFechaCampeonato()=="0"){
+            header('location:'.base_url.'partidos/gestionCrear&error=fechacampeonato&campeonato='.$_GET['campeonato']);
         }
-        elseif($arbitro2<1 && $arbitro3<1){
-
-        }elseif($arbitro2>0 && $arbitro3<1){
-
+        elseif($partido->getIdCLubLocal()<1){
+            echo 'debe ingresar un club local y visitante';
+            header('location:'.base_url.'partidos/gestionCrear&error=clublocal&campeonato='.$_GET['campeonato']);
+        }
+        elseif($partido->getIdCLubVisita()<1){
+            echo 'debe ingresar un club visitante';
+            header('location:'.base_url.'partidos/gestionCrear&error=clubvisita&campeonato='.$_GET['campeonato']);
+        }
+        elseif($partido->getRutTurno()<1){
+            echo 'debe ingresar un turno';
+            header('location:'.base_url.'partidos/gestionCrear&error=rutturno&campeonato='.$_GET['campeonato']);
+        }
+        elseif($partido->getRutArbitro1()<1){
+            header('location:'.base_url.'partidos/gestionCrear&error=arbitroprincipal&campeonato='.$_GET['campeonato']);
+        }
+        elseif($partido->getRutArbitro2()<1 && $partido->getRutArbitro3()<1){
+            $resultado = $partido->crearPartido();
+            if(!$resultado==false){
+                header('location:'.base_url.'partidos/partidos&campeonato='.$_GET['campeonato']);
+            }
+        }elseif($partido->getRutArbitro2()>0 && $partido->getRutArbitro3()<1){
+            $resultado = $partido->crearPartido();
+            if(!$resultado==false){
+                header('location:'.base_url.'partidos/partidos&campeonato='.$_GET['campeonato']);
+            }
         }else{
-
+            $resultado = $partido->crearPartido();
+            if(!$resultado==false){
+                header('location:'.base_url.'partidos/partidos&campeonato='.$_GET['campeonato']);
+            }
         }
     }
 }

@@ -1,6 +1,6 @@
 <div class="container-xl">
 <div class="d-flex justify-content-between ">
-    <a href="<?=base_url?>partidos/gestionCrear&in=crear" class="btn btn-secondary mt-5"> Crear Partido </a>
+    <a href="<?=base_url?>partidos/gestionCrear&in=crear&campeonato=<?=$_GET['campeonato']?>" class="btn btn-secondary mt-5"> Crear Partido </a>
     <button type="button" class="btn btn-danger mt-5 justify-content-end" id="btnCargardatosModal" data-bs-toggle="modal" data-bs-target="#historialPersona">Historial</button>
 </div>
 </div>
@@ -13,7 +13,8 @@
                 <table id="example" class="table table-striped table-bordered" style="width:100%;">
                     <thead>
                         <tr>
-                            <th>FECHA</th>
+                            <th>FECHA CAMPEONATO</th>
+                            <th>FECHA PARTIDO</th>
                             <th>LOCAL</th>
                             <th>VISITANTE</th>
                             <th>ARBITRO</th>
@@ -26,9 +27,10 @@
                     ?>
                        <tr>
                          <td><?php echo $partido['FECHA_STRING'];?></td>
+                         <td><?php echo $partido['FECHA_DATE'];?></td>
                          <td><?php echo $partido['CLUB_LOCAL'];?></td>
                          <td><?php echo $partido['CLUB_VISITA'];?></td>
-                         <td><?php echo $partido['NOMBRE_ARBITRO_1'];?></td>
+                         <td><?php echo $partido['NOMBRE_ARBITRO'];?></td>
                          <td><?php echo $partido['NOMBRE_TURNO'];?></td>
                        </tr>
                     <?php } mysqli_free_result($todosLosPartidos);?> 

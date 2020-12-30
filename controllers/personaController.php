@@ -85,7 +85,7 @@ class personaController{
             $persona->setIdAsociacion($_POST['nombreAsociacion']);
             $persona->setIdPerfil($_POST['perfilPersona']);
     
-            //$respuesta = $persona->ingresarPersona();
+            $respuesta = $persona->ingresarPersona();
 
             /*=============CREAR USUARIO================*/           
             $NombreUsuario = $_POST['rutPersona'].''.$_POST['dvPersona'];
@@ -117,13 +117,13 @@ class personaController{
             $resultado = $auditoria->InsertAuditoria();
             var_dump($resultado);
             /*==============================================================*/      
-            /*
+            
             if($respuesta){
                 header('location:'.base_url.'persona/index');
                 exit;
             }else{
                 header('location:'.base_url.'persona/gestionCrear');
-            }*/
+            }
             
         }else{
             echo '<div class="container mt-5">';

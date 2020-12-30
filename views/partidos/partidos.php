@@ -5,7 +5,8 @@
                 <table id="partidosProximos" class="table table-striped table-bordered" style="width:100%;">
                     <thead>
                         <tr>
-                            <th>FECHA</th>
+                            <th>FECHA CAMPEONATO</th>
+                            <th>FECHA PARTIDO</th>
                             <th>LOCAL</th>
                             <th>VISITANTE</th>
                             <th>ARBITRO</th>
