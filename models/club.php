@@ -152,6 +152,6 @@ class Club{
         $database = Database::connect();
         $sql = "UPDATE club SET ID_TIPO_ESTADO_FK =".$this->getIdTipoEstado()." WHERE ID_CLUB =".$this->getIdClub();
         $respuesta = $database->query($sql);
-        return $sql;
+        return $respuesta;
     }
 }

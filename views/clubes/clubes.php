@@ -82,7 +82,7 @@
         let boton = document.getElementById("btnDarTermino");
         let id = $(this).val();
         boton.removeAttribute("onclick");
-        boton.setAttribute("onclick","document.location.href='<?=base_url?>clubes/eliminar&idclub="+id+"'");
+        boton.setAttribute("onclick","document.location.href='<?=base_url?>clubes/eliminar&idclub="+id+"&user=<?php echo $_SESSION['NombreUsuario'];?>&rutuser=<?php echo $_SESSION['RutUsuario'];?>'");
     });
 </script>
 

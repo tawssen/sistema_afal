@@ -6,7 +6,7 @@ require_once 'models/persona.php';
 require_once 'models/direccion.php';
 require_once 'models/provincia.php';
 require_once 'models/comuna.php';
-
+require_once 'models/auditoria.php';
 class clubesController{
 
     public function index(){
@@ -37,6 +37,8 @@ class clubesController{
         if(isset($_SESSION['identity']) && isset($_SESSION['Dirigente'])|| iseet($_SESSION['Dirigente y D_Tecnico'])){
             $direccion = new Direccion();
             $club = new Club();
+            $auditoria = new Auditoria();              
+
             $direccion->setCallePasaje($_POST['calle']);
             $direccion->setComuna($_POST['comuna']);
             $direccion->setProvincia($_POST['provincia']);
@@ -61,6 +63,21 @@ class clubesController{
             $club->setIdAsociacion($_POST['nombreAsociacion']);
             $ingreso = $club->ingresarClub();
 
+            /*=============INSERTAR TABLA AUDITORIA (ACCION INSERT)=========*/       
+            date_default_timezone_set('America/Santiago');
+            $fechaActual = date('Y-m-d');
+            $horaActual = date("H:i:s");
+
+            $auditoria->setNombreUsuario($_POST['NombreUsuario']);
+            $auditoria->setRutUsuario($_POST['rutUsuario']);
+            $auditoria->setFechaRegistro($fechaActual);
+            $auditoria->setHoraRegistro($horaActual);
+            $auditoria->setModulo('Club');
+            $auditoria->setAccion('INSERTAR');
+            $auditoria->setDescripcion('Se a registrado a '.$_POST['nombreClub'].' Rut: '.$_POST['rutClub'].'-'.$_POST['dvClub']);
+            $auditoria->InsertAuditoria();
+                         
+            /*==============================================================*/ 
             if($ingreso==false){
                 header('location:'.base_url.'clubes/gestionCrear&errorcreate=true');
             }else{
@@ -90,6 +107,8 @@ class clubesController{
         if(isset($_SESSION['identity']) && isset($_SESSION['Dirigente'])|| iseet($_SESSION['Dirigente y D_Tecnico'])){
             $club = new Club();
             $direccion = new Direccion();
+            $auditoria = new Auditoria();    
+
             $direccion->setCallePasaje($_POST['calle']);
             $direccion->setComuna($_POST['comuna']);
             $direccion->setProvincia($_POST['provincia']);
@@ -117,6 +136,23 @@ class clubesController{
             $club->setIdCorreo($_POST['correoClub']);
             $club->setIdAsociacion($_POST['nombreAsociacion']);
             $editar = $club->editarClub();
+            
+            
+            /*=============INSERTAR TABLA AUDITORIA (ACCION UPDATE)=========*/       
+            date_default_timezone_set('America/Santiago');
+            $fechaActual = date('Y-m-d');
+            $horaActual = date("H:i:s");
+
+            $auditoria->setNombreUsuario($_POST['NombreUsuario']);
+            $auditoria->setRutUsuario($_POST['rutUsuario']);
+            $auditoria->setFechaRegistro($fechaActual);
+            $auditoria->setHoraRegistro($horaActual);
+            $auditoria->setModulo('Club');
+            $auditoria->setAccion('MODIFICAR');
+            $auditoria->setDescripcion('Se han modificado los datos del club '.$_POST['nombreClub'].' Rut: '.$_POST['rutClub'].'-'.$_POST['dvClub']);
+            $auditoria->InsertAuditoria();
+                         
+            /*==============================================================*/ 
 
             if($editar==false){
                 echo 'el false: '.$editar;
@@ -133,10 +169,39 @@ class clubesController{
     }
 
     public function eliminar(){
-        $club = new Club();
-        $club->setIdClub($_GET['idclub']);
-        $club->setIdTipoEstado(2);
-        $consulta = $club->eliminar();
-        echo $consulta;
+        if(isset($_SESSION['identity']) && isset($_SESSION['Dirigente'])|| iseet($_SESSION['Dirigente y D_Tecnico'])){
+          $club = new Club();
+          $auditoria = new Auditoria(); 
+
+          $club->setIdClub($_GET['idclub']);
+          $club->setIdTipoEstado(2);
+          $respuesta = $club->eliminar();
+          $datos = $club->obtenerUnClub($_GET['idclub']);
+          $arrayDatos = (array) $datos;
+          $arrayDatos['NOMBRE_CLUB'];
+          $arrayDatos['RUT_CLUB'];
+           /*=============INSERTAR TABLA AUDITORIA (ACCION DELETE)=========*/       
+           date_default_timezone_set('America/Santiago');
+           $fechaActual = date('Y-m-d');
+           $horaActual = date("H:i:s");
+
+           $auditoria->setNombreUsuario($_GET['user']);
+           $auditoria->setRutUsuario($_GET['rutuser']);
+           $auditoria->setFechaRegistro($fechaActual);
+           $auditoria->setHoraRegistro($horaActual);
+           $auditoria->setModulo('Club');
+           $auditoria->setAccion('ELIMINAR');
+           $auditoria->setDescripcion('A deshabilitado al club '.$arrayDatos['NOMBRE_CLUB'].' Rut: '.$arrayDatos['RUT_CLUB'].'-'.$arrayDatos['DV_CLUB']);
+           $auditoria->InsertAuditoria();                       
+           /*==============================================================*/ 
+           if($respuesta){
+              header('location:'.base_url.'clubes/index');            
+            }   
+
+        }else{
+         echo '<div class="container mt-5">';
+         echo '<h1>No tienes permiso para acceder a este apartado del sistema</h1>';
+         echo '</div>';
+        }
     }
 }

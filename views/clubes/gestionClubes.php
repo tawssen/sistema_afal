@@ -24,7 +24,9 @@
                 <input class="form-control" id="idClub" name="idClub" type="hidden" value="<?=$clubSeleccionado['ID_CLUB']?>">
             </div>
             <?php endif; ?>
+            <input class="form-control" id="usuario" name="NombreUsuario" type="hidden" value="<?php echo $_SESSION['NombreUsuario']?>">
 
+            <input class="form-control" id="rut" name="rutUsuario" type="hidden" value="<?php echo $_SESSION['RutUsuario']?>">
             <div class="row">
              <div class="col-8">
                 <label for="rutClub" class="form-label">RUT</label>
@@ -60,6 +62,8 @@
                 </div>
 
                 <div class="mt-3 col-4">
+
+                <?php if(isset($todasLasProvincias)):?>
                     <label for="" class="form-label">PROVINCIA</label>
                     <select id="selectProvincia" class="form-select" name="provincia" aria-label="Default select example" required>
                         <option value="0" selected>Seleccionar Provincia</option>
@@ -67,9 +71,16 @@
                             <option value="<?php echo $provincia['ID_PROVINCIA'];?>"><?php echo $provincia['NOMBRE_PROVINCIA'];?></option>
                         <?php } mysqli_free_result($todasLasProvincias);?>
                     </select>
+                <?php else:?>
+                    <label for="" class="form-label">PROVINCIA</label>
+                    <select id="selectProvincia" class="form-select" name="provincia" aria-label="Default select example" required>
+                        <option value="0" selected>Seleccionar Provincia</option>
+                    </select>
+                <?php endif; ?>                                
                 </div>
 
                 <div class="mt-3 col-4">
+                <?php if(isset($todasLasComunas)):?>
                     <label for="" class="form-label">COMUNA</label>
                     <select id="selectComuna" class="form-select" name="comuna" aria-label="Default select example" required>
                         <option value="0" selected>Seleccionar Comuna</option>
@@ -77,6 +88,12 @@
                             <option value="<?php echo $comuna['ID_COMUNA'];?>"><?php echo $comuna['NOMBRE_COMUNA'];?></option>
                         <?php } mysqli_free_result($todasLasComunas);?>
                     </select>
+                <?php else:?>
+                    <label for="" class="form-label">COMUNA</label>
+                    <select id="selectComuna" class="form-select" name="comuna" aria-label="Default select example" required>
+                        <option value="0" selected>Seleccionar Comuna</option>
+                    </select>
+                <?php endif; ?>   
                 </div>
             </div>
    
@@ -109,7 +126,7 @@
                 <?php if(isset($clubSeleccionado)):?>
                 <input class="btn btn-success" type="submit" value="Actualizar Club">
                 <?php else:?>
-                <input class="btn btn-success" type="submit" value="Crear Campeonato">
+                <input class="btn btn-success" type="submit" value="Crear Club">
                 <?php endif; ?>
             </div>
 
