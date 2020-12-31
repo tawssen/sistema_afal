@@ -23,7 +23,9 @@
                 <input class="form-control" id="idCampeonato" name="idSerie" type="hidden" value="<?=$serieSeleccionada['ID_SERIE'];?>">
             </div>
             <?php endif; ?>
-            
+            <input class="form-control" id="usuario" name="NombreUsuario" type="hidden" value="<?php echo $_SESSION['NombreUsuario']?>">
+
+            <input class="form-control" id="rut" name="rutUsuario" type="hidden" value="<?php echo $_SESSION['RutUsuario']?>">
 
             <?php if(isset($serieSeleccionada)):?>
             <div class="">
@@ -39,11 +41,11 @@
 
 
             <div class="mt-5 d-flex justify-content-end">
-                <a href="<?=base_url?>campeonatos/index" class="btn btn-danger mr-2">Cancelar</a>
+                <a href="<?=base_url?>serie/index" class="btn btn-danger mr-2">Cancelar</a>
                 <?php if(isset($serieSeleccionada)):?>
                 <input class="btn btn-success" type="submit" value="Actualizar Serie">
                 <?php else:?>
-                <input class="btn btn-success" type="submit" value="Crear Campeonato">
+                <input class="btn btn-success" type="submit" value="Crear serie">
                 <?php endif; ?>
             </div>
 

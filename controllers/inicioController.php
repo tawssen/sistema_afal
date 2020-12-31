@@ -2,6 +2,7 @@
 
 require_once 'models/usuario.php';
 require_once 'config/parameters.php';
+require_once 'models/auditoria.php';
 class inicioController{
 
     public function index(){
@@ -12,19 +13,54 @@ class inicioController{
             
         if(isset($_POST)){
             $usuario = new Usuario();
+            $auditoria = new Auditoria();    
+
             $usuario->setNombreUsuario($_POST['usuario']);
             $usuario->setClaveUsuario($_POST['clave']);
             $identity = $usuario->validarUsuario();
-            
+
             $datos = (array) $identity;
-            var_dump($datos);
-            $nombre = $datos['NOMBRE_1'].' '.$datos['NOMBRE_2'].' '.$datos['APELLIDO_1'].' '.$datos['APELLIDO_2'];
+            $nombreUsuario = $datos['NOMBRE_1'].' '.$datos['NOMBRE_2'].' '.$datos['APELLIDO_1'].' '.$datos['APELLIDO_2'];
             $rut = $datos['RUT_PERSONA'];   
+            $perfil = $datos['ID_PERFIL_FK'];
+            $nombrePerfil = '';
+            
+            if($perfil == 1){
+
+                $nombrePerfil = 'dirigente';
+
+            }elseif($perfil == 2){
+
+                $nombrePerfil = 'tecnico';
+
+            }elseif($perfil == 3){
+
+                $nombrePerfil = 'turno';
+            }elseif($perfil == 4){
+
+                $nombrePerfil = 'jugador y tecnico';
+            }
+
+                /*=============INSERTAR TABLA AUDITORIA (ACCION INSERT)=========*/       
+                 date_default_timezone_set('America/Santiago');
+                   $fechaActual = date('Y-m-d');
+                   $horaActual = date("H:i:s");
+       
+                   $auditoria->setNombreUsuario($nombreUsuario);
+                   $auditoria->setRutUsuario($rut);
+                   $auditoria->setFechaRegistro($fechaActual);
+                   $auditoria->setHoraRegistro($horaActual);
+                   $auditoria->setModulo('Login');
+                   $auditoria->setAccion('ACCESO AL SISTEMA');
+                   $auditoria->setDescripcion('A entrado al sistema con perfil de '.$nombrePerfil);
+                   $auditoria->InsertAuditoria();
+                                
+                /*==============================================================*/ 
              
             if($identity && is_object($identity)){
                 
                 $_SESSION['identity'] = $identity;
-                $_SESSION['NombreUsuario'] = $nombre;
+                $_SESSION['NombreUsuario'] = $nombreUsuario;
                 $_SESSION['RutUsuario'] = $rut;
 
                 if($identity->ID_PERFIL_FK == 1){                        
