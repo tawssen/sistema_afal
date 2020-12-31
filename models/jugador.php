@@ -41,7 +41,7 @@ public function agregarJugadorClub(){
 
 public function obtenerJugadorNoAderido(){
     $database = Database::connect();
-    $sql = "SELECT * FROM persona WHERE NOT EXISTS(SELECT NULL FROM persona_club  WHERE persona_club.RUT_PERSONA_FK = persona.RUT_PERSONA ) AND ID_PERFIL_FK = 4 OR ID_PERFIL_FK = 5";
+    $sql = "SELECT * FROM persona WHERE NOT EXISTS(SELECT NULL FROM persona_club  WHERE persona_club.RUT_PERSONA_FK = persona.RUT_PERSONA )AND ID_PERFIL_FK IN (4 , 5)";
     $respuesta = $database->query($sql);
     return $respuesta;
 }
