@@ -69,6 +69,6 @@
         let boton = document.getElementById("btnDarTermino");
         let id = $(this).val();
         boton.removeAttribute("onclick");
-        boton.setAttribute("onclick","document.location.href='<?=base_url?>usuarios/eliminar&idUsuario="+id+"&estado=2'");        
+        boton.setAttribute("onclick","document.location.href='<?=base_url?>usuarios/eliminar&idUsuario="+id+"&estado=2&user=<?php echo $_SESSION['NombreUsuario'];?>&rutuser=<?php echo $_SESSION['RutUsuario'];?>'");        
     });
 </script>

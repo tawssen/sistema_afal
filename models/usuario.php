@@ -145,7 +145,7 @@ class Usuario{
         $resultado = false;
         $database = Database::connect();
 
-        $sql = "UPDATE usuarios SET NOMBRE_USUARIO = '".$this->getNombreUsuario()."', CLAVE_USUARIO = '".$this->getClaveUsuario()."', RUT_PERSONA_FK = ".$this->getRutUsuario().", ID_TIPO_ESTADO_FK = ".$this->getEstadoUsuario()." WHERE ID_USUARIO =".$this->getIdUsuario();
+        $sql = "UPDATE usuarios SET NOMBRE_USUARIO = '".$this->getNombreUsuario()."', CLAVE_USUARIO = '".$this->getClaveUsuario()."', RUT_PERSONA_FK = ".$this->getRutUsuario()." WHERE ID_USUARIO =".$this->getIdUsuario();
         $respuesta = $database->query($sql);
 
         if($respuesta){

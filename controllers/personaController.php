@@ -98,11 +98,7 @@ class personaController{
             $usuario->setRutUsuario($RutUsuario);        
            
             if($_POST['perfilPersona'] == 4  || $_POST['perfilPersona'] == 6 || $_POST['perfilPersona'] == 7){              
-                echo 'No se creó tal por cual el jugador.';
-            }else{
-                $respuesta = $usuario->crearUsuario();
-            }           
-            /*=============INSERTAR TABLA AUDITORIA (ACCION INSERT)=========*/       
+                  /*=============INSERTAR TABLA AUDITORIA (ACCION INSERT)=========*/       
             date_default_timezone_set('America/Santiago');
             $fechaActual = date('Y-m-d');
             $horaActual = date("H:i:s");
@@ -112,11 +108,29 @@ class personaController{
             $auditoria->setFechaRegistro($fechaActual);
             $auditoria->setHoraRegistro($horaActual);
             $auditoria->setModulo('Persona');
-            $auditoria->setAccion('Incersion de datos');
+            $auditoria->setAccion('INSERTAR');
             $auditoria->setDescripcion('Se a registrado a '.$_POST['nombrePersona1'].' '.$_POST['nombrePersona2'].' '.$_POST['apellidoPersona1'].' '.$_POST['apellidoPersona2'].', cuenta con el perfil id='.$_POST['perfilPersona']);
-            $resultado = $auditoria->InsertAuditoria();
-            var_dump($resultado);
-            /*==============================================================*/      
+            $resultado = $auditoria->InsertAuditoria();         
+            /*==============================================================*/     
+               
+            }else{
+                $respuesta = $usuario->crearUsuario();
+             /*=============INSERTAR TABLA AUDITORIA (ACCION INSERT)=========*/       
+                date_default_timezone_set('America/Santiago');
+                $fechaActual = date('Y-m-d');
+                $horaActual = date("H:i:s");
+
+                $auditoria->setNombreUsuario($_POST['NombreUsuario']);
+                $auditoria->setRutUsuario($_POST['rutUsuario']);
+                $auditoria->setFechaRegistro($fechaActual);
+                $auditoria->setHoraRegistro($horaActual);
+                $auditoria->setModulo('Persona');
+                $auditoria->setAccion('INSERTAR');
+                $auditoria->setDescripcion('Se a registrado a '.$_POST['nombrePersona1'].' '.$_POST['nombrePersona2'].' '.$_POST['apellidoPersona1'].' '.$_POST['apellidoPersona2'].', cuenta con el perfil id= '.$_POST['perfilPersona'].' y se a creado un usuario para este' );
+                $resultado = $auditoria->InsertAuditoria();         
+             /*==============================================================*/     
+            }           
+                
             
             if($respuesta){
                 header('location:'.base_url.'persona/index');
@@ -220,7 +234,7 @@ class personaController{
                  $auditoria->setFechaRegistro($fechaActual);
                  $auditoria->setHoraRegistro($horaActual);
                  $auditoria->setModulo('Persona');
-                 $auditoria->setAccion('Modificacion de datos');
+                 $auditoria->setAccion('MODIFICAR');
                  $auditoria->setDescripcion('Se han modificado los datos de '.$_POST['nombrePersona1'].' '.$_POST['nombrePersona2'].' '.$_POST['apellidoPersona1'].' '.$_POST['apellidoPersona2'].', cuenta con el perfil id='.$_POST['perfilPersona']);
                  $auditoria->InsertAuditoria();
                               
@@ -247,38 +261,33 @@ class personaController{
             $persona = new Persona();
             $usuarios = new Usuario();   
             $auditoria = new Auditoria();  
-            if(isset($_GET['rutPersona'])){ //se consulta si existe valor
+            if(isset($_GET['rutPersona'])){ 
                 $persona->setRutPersona($_GET['rutPersona']);               
                 $respuesta = $persona->eliminarPersona();
                 $datos = $persona->obtenerUnPersona();
                 $arraydatos =(array) $datos;
-                //echo 'el usuario es: '.$_GET['user'].'</br>';
-                //echo 'el rut es: '.$_GET['rutuser'].'</br>';
-                //echo 'Se han modificado los datos de '.$arraydatos['NOMBRE_1'].' '.$arraydatos['NOMBRE_2'].' '.$arraydatos['APELLIDO_1'].' '.$arraydatos['APELLIDO_2'].', cuenta con el perfil id='.$arraydatos['ID_PERFIL_FK'];
-                           
-                /*=============INSERTAR TABLA AUDITORIA (ACCION DELETE)=========*/       
-                 
-                 date_default_timezone_set('America/Santiago');
-                 $fechaActual = date('Y-m-d');
-                 $horaActual = date("H:i:s");
-     
-                 $auditoria->setNombreUsuario($_GET['user']);
-                 $auditoria->setRutUsuario($_GET['rutuser']);
-                 $auditoria->setFechaRegistro($fechaActual);
-                 $auditoria->setHoraRegistro($horaActual);
-                 $auditoria->setModulo('Persona');
-                 $auditoria->setAccion('Eliminar dato');
-                 $auditoria->setDescripcion('Se a deshabilitado a '.$arraydatos['NOMBRE_1'].' '.$arraydatos['NOMBRE_2'].' '.$arraydatos['APELLIDO_1'].' '.$arraydatos['APELLIDO_2'].', cuenta con el perfil id='.$arraydatos['ID_PERFIL_FK']);
-                 $auditoria->InsertAuditoria(); 
-                              
-                /*==============================================================*/  
-
+                
                 if($respuesta == true){
 
                     $datos = $persona->obtenerUnPersona($_GET['rutPersona']);
                     $datosUsuario = $usuarios->obtenerUnUsuarioEliminar($_GET['rutPersona']);
                    
                     if($datos['ID_PERFIL_FK'] == 4 || $datos['ID_PERFIL_FK'] == 6 || $datos['ID_PERFIL_FK'] == 7){
+
+                        /*=============INSERTAR TABLA AUDITORIA (ACCION DELETE)=========*/                        
+                        date_default_timezone_set('America/Santiago');
+                        $fechaActual = date('Y-m-d');
+                        $horaActual = date("H:i:s");
+     
+                        $auditoria->setNombreUsuario($_GET['user']);
+                        $auditoria->setRutUsuario($_GET['rutuser']);
+                        $auditoria->setFechaRegistro($fechaActual);
+                        $auditoria->setHoraRegistro($horaActual);
+                        $auditoria->setModulo('Persona');
+                        $auditoria->setAccion('DESHABILITAR');
+                        $auditoria->setDescripcion('Se a deshabilitado a '.$arraydatos['NOMBRE_1'].' '.$arraydatos['NOMBRE_2'].' '.$arraydatos['APELLIDO_1'].' '.$arraydatos['APELLIDO_2'].', cuenta con el perfil id='.$arraydatos['ID_PERFIL_FK']);
+                        $auditoria->InsertAuditoria(); 
+
                         header('location:'.base_url.'persona/index');   
 
                     }else{
@@ -289,7 +298,22 @@ class personaController{
                         if($idEstadoPersona==2 && $idEstadoUsuario == 1){               
                             $usuarios->setRutUsuario($_GET['rutPersona']);                            
                             $usuarios->deshabilitarUsuarioConRut();                  
-                            header('location:'.base_url.'persona/index');  
+
+                            /*=============INSERTAR TABLA AUDITORIA (ACCION DELETE)=========*/                        
+                                date_default_timezone_set('America/Santiago');
+                                $fechaActual = date('Y-m-d');
+                                $horaActual = date("H:i:s");
+                            
+                                $auditoria->setNombreUsuario($_GET['user']);
+                                $auditoria->setRutUsuario($_GET['rutuser']);
+                                $auditoria->setFechaRegistro($fechaActual);
+                                $auditoria->setHoraRegistro($horaActual);
+                                $auditoria->setModulo('Persona');
+                                $auditoria->setAccion('DESHABILITAR');
+                                $auditoria->setDescripcion('Se a deshabilitado a '.$arraydatos['NOMBRE_1'].' '.$arraydatos['NOMBRE_2'].' '.$arraydatos['APELLIDO_1'].' '.$arraydatos['APELLIDO_2'].', cuenta con el perfil id='.$arraydatos['ID_PERFIL_FK'].', tambien se a deshabilitado el usuario con el que contaba');
+                                $auditoria->InsertAuditoria();
+
+                                header('location:'.base_url.'persona/index');  
                         }
                       
                     }                   

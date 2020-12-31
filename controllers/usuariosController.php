@@ -3,6 +3,7 @@ require_once 'models/usuario.php';
 require_once 'models/persona.php';
 require_once 'models/tipo_estado.php';
 require_once 'config/parameters.php';
+require_once 'models/auditoria.php';
 class usuariosController{
 
     public function index(){   
@@ -41,19 +42,39 @@ class usuariosController{
     public function editar(){
         if(isset($_SESSION['identity']) && isset($_SESSION['Dirigente'])|| iseet($_SESSION['Dirigente y D_Tecnico']) ){
             $usuario = new Usuario();
-            $usuario->setIdUsuario($_POST['idUsuario']);
-            $usuario->setNombreUsuario($_POST['nombreUsuario']);
-            $ClaveEncriptada = password_hash($_POST['claveUsuario'], PASSWORD_DEFAULT);
-            $usuario->setClaveUsuario($ClaveEncriptada);
-            $usuario->setRutUsuario($_POST['rutPersona']);
-            $usuario->setEstadoUsuario($_POST['tipoestado']);
+            $auditoria = new Auditoria();  
+
+            echo $usuario->setIdUsuario($_POST['idUsuario']);
+            echo $usuario->setNombreUsuario($_POST['nombreUsuario']);
+            echo $ClaveEncriptada = password_hash($_POST['claveUsuario'], PASSWORD_DEFAULT);
+            echo $usuario->setClaveUsuario($ClaveEncriptada);
+            echo $usuario->setRutUsuario($_POST['rutPersona']);
+           // echo $usuario->setEstadoUsuario($_POST['tipoestado']);
              
             $respuesta = $usuario->editarUsuario();
+
+              /*=============INSERTAR TABLA AUDITORIA (ACCION UPDATE)=========*/       
+                date_default_timezone_set('America/Santiago');
+                $fechaActual = date('Y-m-d');
+                $horaActual = date("H:i:s");
+
+                $auditoria->setNombreUsuario($_POST['NombreUsuario']);
+                $auditoria->setRutUsuario($_POST['rutUsuario']);
+                $auditoria->setFechaRegistro($fechaActual);
+                $auditoria->setHoraRegistro($horaActual);
+                $auditoria->setModulo('Usuario');
+                $auditoria->setAccion('MODIFICAR');
+                $auditoria->setDescripcion('Se a modificado el usuario '.$_POST['nombreUsuario'].', rut: '.$_POST['rutPersona']);
+                $resultado = $auditoria->InsertAuditoria();         
+              /*==============================================================*/  
+
+
             if($respuesta){
                 header('location:'.base_url.'usuarios/index');
                 exit;
             }else{
                 header('location:'.base_url.'usuarios/gestionEditar&id='.$_GET['id']);
+               
             }
         }else{
             echo '<div class="container mt-5">';
@@ -61,17 +82,4 @@ class usuariosController{
             echo '</div>';
         }
     }
-    public function eliminar(){
-        if(isset($_SESSION['identity']) && isset($_SESSION['Dirigente'])|| iseet($_SESSION['Dirigente y D_Tecnico']) ){
-            $usuario = new Usuario();                
-            $usuario->setIdUsuario($_GET['idUsuario']);
-            $usuario->setEstadoUsuario($_GET['estado']);
-            $usuario->deshabilitarUsuario();
-            header('location:'.base_url.'usuarios/index');
-            
-        }else{
-
-        }
-    }
-
 }
