@@ -80,7 +80,7 @@
         let boton = document.getElementById("btnDarTermino");
         let id = $(this).val();
         boton.removeAttribute("onclick");
-        boton.setAttribute("onclick","document.location.href='<?=base_url?>campeonatos/eliminar&idcampeonato="+id+"&estadocampeonato=3'");
+        boton.setAttribute("onclick","document.location.href='<?=base_url?>campeonatos/eliminar&idcampeonato="+id+"&estadocampeonato=3&user=<?php echo $_SESSION['NombreUsuario'];?>&rutuser=<?php echo $_SESSION['RutUsuario'];?>'");
     });
 </script>
 

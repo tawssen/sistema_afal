@@ -29,7 +29,9 @@
                 <input class="form-control" id="idCampeonato" name="idCampeonato" type="hidden" value="">
             </div>
             <?php endif; ?>
-            
+            <input class="form-control" id="usuario" name="NombreUsuario" type="hidden" value="<?php echo $_SESSION['NombreUsuario']?>">
+
+            <input class="form-control" id="rut" name="rutUsuario" type="hidden" value="<?php echo $_SESSION['RutUsuario']?>">
 
             <div class="">
                 <label for="nombreAsociacion" class="form-label">NOMBRE CAMPEONATO</label>

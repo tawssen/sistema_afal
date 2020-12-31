@@ -5,6 +5,7 @@ require_once 'models/asociacion.php';
 require_once 'models/serie.php';
 require_once 'models/estado_campeonato.php';
 require_once 'models/campeonatos_equipos.php';
+require_once 'models/auditoria.php';
 
 class campeonatosController{
 
@@ -42,12 +43,31 @@ class campeonatosController{
     public function crear(){
         if(isset($_SESSION['identity']) && isset($_SESSION['Dirigente'])){
             $campeonato = new Campeonato();
+            $auditoria = new Auditoria();     
+
             $campeonato->setNombreCampeonato($_POST['nombreCampeonato']);
             $campeonato->setFechaInicio($_POST['fechaInicioCampeonato']);
             $campeonato->setIdAsociacion($_POST['nombreAsociacion']);
             $campeonato->setIdSerie($_POST['nombreSerie']);
     
             $respuesta = $campeonato->crearCampeonato();
+            
+              /*=============INSERTAR TABLA AUDITORIA (ACCION INSERT)=========*/       
+              date_default_timezone_set('America/Santiago');
+              $fechaActual = date('Y-m-d');
+              $horaActual = date("H:i:s");
+  
+              $auditoria->setNombreUsuario($_POST['NombreUsuario']);
+              $auditoria->setRutUsuario($_POST['rutUsuario']);
+              $auditoria->setFechaRegistro($fechaActual);
+              $auditoria->setHoraRegistro($horaActual);
+              $auditoria->setModulo('Campeonato');
+              $auditoria->setAccion('INSERTAR');
+              $auditoria->setDescripcion('Se a registrado el '.$_POST['nombreCampeonato'].' con fecha de inicio: '.$_POST['fechaInicioCampeonato']);
+              $auditoria->InsertAuditoria();
+                           
+              /*==============================================================*/ 
+
             if($respuesta){
                 header('location:'.base_url.'campeonatos/index');
                 exit;
@@ -88,15 +108,42 @@ class campeonatosController{
     public function editar(){
         if(isset($_SESSION['identity']) && isset($_SESSION['Dirigente'])){
             $campeonato = new Campeonato();
-        
+            $auditoria = new Auditoria();  
+
             $campeonato->setIdCampeonato($_POST['idCampeonato']);
             $campeonato->setNombreCampeonato($_POST['nombreCampeonato']);
             $campeonato->setFechaInicio($_POST['fechaInicioCampeonato']);
             $campeonato->setIdAsociacion($_POST['nombreAsociacion']);
             $campeonato->setIdSerie($_POST['nombreSerie']);
             $campeonato->setIdEstadoCampeonato($_POST['estadoCampeonato']);
-    
+            
+            $nombreEstado = '';
+            if($_POST['estadoCampeonato'] == 1){
+                $nombreEstado = 'Creacion';
+            }elseif($_POST['estadoCampeonato'] == 2){
+                $nombreEstado = 'Vigente';
+            }elseif($_POST['estadoCampeonato'] == 3){
+                $nombreEstado = 'Terminado';
+            }
             $respuesta = $campeonato->editarCampeonato();
+
+                /*=============INSERTAR TABLA AUDITORIA (ACCION INSERT)=========*/       
+                date_default_timezone_set('America/Santiago');
+                $fechaActual = date('Y-m-d');
+                $horaActual = date("H:i:s");
+    
+                $auditoria->setNombreUsuario($_POST['NombreUsuario']);
+                $auditoria->setRutUsuario($_POST['rutUsuario']);
+                $auditoria->setFechaRegistro($fechaActual);
+                $auditoria->setHoraRegistro($horaActual);
+                $auditoria->setModulo('Campeonato');
+                $auditoria->setAccion('MODIFICAR');
+                $auditoria->setDescripcion('Se a modificado el '.$_POST['nombreCampeonato'].' con fecha de inicio: '.$_POST['fechaInicioCampeonato'].' y cuenta con un estado de campeonato en '.$nombreEstado );
+                $auditoria->InsertAuditoria();
+                             
+                /*==============================================================*/ 
+
+
             if($respuesta){
                 header('location:'.base_url.'campeonatos/index');
                 exit;
@@ -112,10 +159,44 @@ class campeonatosController{
 
     public function eliminar(){
         $campeonato = new Campeonato();
+        $auditoria = new Auditoria();  
+
         $campeonato->setIdCampeonato($_GET['idcampeonato']);
         $campeonato->setIdEstadoCampeonato($_GET['estadocampeonato']);
         $respuesta = $campeonato->deshabilitarCampeonato();
-        header('location:'.base_url.'campeonatos/index');
+
+        $datos = $campeonato->obtenerUnCampeonato();
+        $arrayDatos = (array) $datos;        
+
+        $nombreCampeonato = $arrayDatos['NOMBRE_CAMPEONATO'];
+        $fechaCampeonato = $arrayDatos['FECHA_INICIO'];
+        $nombreEstadoCampeonato = $arrayDatos['NOMBRE_ESTADO_CAMPEONATO'];
+
+           /*=============INSERTAR TABLA AUDITORIA (ACCION DELETE)=========*/       
+           date_default_timezone_set('America/Santiago');
+           $fechaActual = date('Y-m-d');
+           $horaActual = date("H:i:s");
+
+         
+           $auditoria->setNombreUsuario($_GET['user']);
+           $auditoria->setRutUsuario($_GET['rutuser']);
+           $auditoria->setFechaRegistro($fechaActual);
+           $auditoria->setHoraRegistro($horaActual);
+           $auditoria->setModulo('Campeonato');
+           $auditoria->setAccion('ELIMINAR');
+           $auditoria->setDescripcion('Se a deshabilitado el '.$nombreCampeonato.' con fecha de inicio: '.$fechaCampeonato.' y cuenta con un estado de campeonato en '.$nombreEstadoCampeonato );
+           $resultado = $auditoria->InsertAuditoria();
+                        
+           /*==============================================================*/ 
+        if($respuesta){
+           
+           header('location:'.base_url.'campeonatos/index');
+
+        }else{
+           
+        } 
+        
+        
     }
 
     public function gestionarParticipantes(){
