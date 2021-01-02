@@ -142,4 +142,11 @@ class Partido{
         }
         return $resultado;
     }
+    
+    public function obtenerPartidosTurno(){
+        $database = Database::connect();
+        $sql = "SELECT * FROM partidos WHERE RUT_PERSONA_TURNO_FK =".$this->getRutTurno();
+        $respuesta = $database->query($sql);
+        return $respuesta;
+    }
 }
