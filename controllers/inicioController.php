@@ -58,24 +58,10 @@ class inicioController{
                 /*==============================================================*/ 
              
             if($identity && is_object($identity)){
-                
                 $_SESSION['identity'] = $identity;
                 $_SESSION['NombreUsuario'] = $nombreUsuario;
                 $_SESSION['RutUsuario'] = $rut;
-
-                if($identity->ID_PERFIL_FK == 1){                        
-                    $_SESSION['Dirigente'] = true;                        
-                    header("Location:".base_url);
-                }elseif($identity->ID_PERFIL_FK == 2){
-                    $_SESSION['D_Tecnico'] = true;
-                    header("Location:".base_url);
-                }elseif($identity->ID_PERFIL_FK == 3){
-                    $_SESSION['Turno'] = true;
-                    header("Location:".base_url);
-                }elseif($identity->ID_PERFIL_FK == 4){
-                    $_SESSION['Dirigente y D_Tecnico'] = true;
-                    header("Location:".base_url);
-                }
+                header("Location:".base_url);
             }else{
                 $_SESSION['Error_InicioSesion'] = 'No se han encontrado datos';
                 echo 'No se han encontrado sus datos';

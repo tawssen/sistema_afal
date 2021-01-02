@@ -10,7 +10,8 @@ require_once 'models/auditoria.php';
 class campeonatosController{
 
     public function index(){
-        if(isset($_SESSION['identity']) && isset($_SESSION['Dirigente'])){
+        $identity = $_SESSION['identity'];
+        if(isset($_SESSION['identity']) && $identity->ID_PERFIL_FK=="1"){
             $campeonato = new Campeonato();
             $todosLosCampeonatos = $campeonato->obtenerCampeonatos();
             require_once 'views/campeonatos/campeonatos.php';
@@ -22,7 +23,8 @@ class campeonatosController{
     }
 
     public function gestionCrear(){
-        if(isset($_SESSION['identity']) && isset($_SESSION['Dirigente'])){
+        $identity = $_SESSION['identity'];
+        if(isset($_SESSION['identity']) && $identity->ID_PERFIL_FK=="1"){
             if(!isset($_GET['in'])){
                 $_SESSION['mensajeError'] = true;
             }else{
@@ -41,7 +43,8 @@ class campeonatosController{
     }
 
     public function crear(){
-        if(isset($_SESSION['identity']) && isset($_SESSION['Dirigente'])){
+        $identity = $_SESSION['identity'];
+        if(isset($_SESSION['identity']) && $identity->ID_PERFIL_FK=="1"){
             $campeonato = new Campeonato();
             $auditoria = new Auditoria();     
 
@@ -82,7 +85,8 @@ class campeonatosController{
     }
 
     public function gestionEditar(){
-        if(isset($_SESSION['identity']) && isset($_SESSION['Dirigente'])){
+        $identity = $_SESSION['identity'];
+        if(isset($_SESSION['identity']) && $identity->ID_PERFIL_FK=="1"){
             if(!isset($_GET['in'])){
                 $_SESSION['mensajeError'] = true;
             }else{
@@ -106,7 +110,8 @@ class campeonatosController{
     }
 
     public function editar(){
-        if(isset($_SESSION['identity']) && isset($_SESSION['Dirigente'])){
+        $identity = $_SESSION['identity'];
+        if(isset($_SESSION['identity']) && $identity->ID_PERFIL_FK=="1"){
             $campeonato = new Campeonato();
             $auditoria = new Auditoria();  
 
@@ -200,7 +205,8 @@ class campeonatosController{
     }
 
     public function gestionarParticipantes(){
-        if(isset($_SESSION['identity']) && isset($_SESSION['Dirigente'])){
+        $identity = $_SESSION['identity'];
+        if(isset($_SESSION['identity']) && $identity->ID_PERFIL_FK=="1"){
             $clubesParticipantes = new ClubesParticipantes();
             $clubesParticipantes->setIdCampeonato($_GET['idcampeonato']);
             $participantes = $clubesParticipantes->obtenerClubesParticipantes();
@@ -217,7 +223,8 @@ class campeonatosController{
     }
 
     public function agregarParticipante(){
-        if(isset($_SESSION['identity']) && isset($_SESSION['Dirigente'])){
+        $identity = $_SESSION['identity'];
+        if(isset($_SESSION['identity']) && $identity->ID_PERFIL_FK=="1"){
             $participante = new ClubesParticipantes();
             $participante->setIdClub($_GET['idclub']);
             $participante->setIdCampeonato($_GET['idcampeonato']);

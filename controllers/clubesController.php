@@ -10,7 +10,8 @@ require_once 'models/auditoria.php';
 class clubesController{
 
     public function index(){
-        if(isset($_SESSION['identity']) && isset($_SESSION['Dirigente'])|| isset($_SESSION['Dirigente y D_Tecnico'])){
+        $identity = $_SESSION['identity'];
+        if(isset($_SESSION['identity']) && $identity->ID_PERFIL_FK=="1"){
             $club = new Club();
             $todoslosClubes = $club->obtenerClubes();
             include_once 'views/clubes/clubes.php';
@@ -22,7 +23,8 @@ class clubesController{
     }
 
     public function gestionCrear(){
-        if(isset($_SESSION['identity']) && isset($_SESSION['Dirigente'])){  
+        $identity = $_SESSION['identity'];
+        if(isset($_SESSION['identity']) && $identity->ID_PERFIL_FK=="1"){
             $asociacion = new Asociacion();
             $todasLasAsociaciones = $asociacion->obtenerAsociaciones();        
             require_once 'views/clubes/gestionClubes.php';
@@ -34,7 +36,8 @@ class clubesController{
     }
 
     public function crear(){
-        if(isset($_SESSION['identity']) && isset($_SESSION['Dirigente'])|| iseet($_SESSION['Dirigente y D_Tecnico'])){
+        $identity = $_SESSION['identity'];
+        if(isset($_SESSION['identity']) && $identity->ID_PERFIL_FK=="1"){
             $direccion = new Direccion();
             $club = new Club();
             $auditoria = new Auditoria();              
@@ -104,7 +107,8 @@ class clubesController{
     }
 
     public function editar(){
-        if(isset($_SESSION['identity']) && isset($_SESSION['Dirigente'])|| iseet($_SESSION['Dirigente y D_Tecnico'])){
+        $identity = $_SESSION['identity'];
+        if(isset($_SESSION['identity']) && $identity->ID_PERFIL_FK=="1"){
             $club = new Club();
             $direccion = new Direccion();
             $auditoria = new Auditoria();    
@@ -169,7 +173,8 @@ class clubesController{
     }
 
     public function eliminar(){
-        if(isset($_SESSION['identity']) && isset($_SESSION['Dirigente'])|| iseet($_SESSION['Dirigente y D_Tecnico'])){
+        $identity = $_SESSION['identity'];
+        if(isset($_SESSION['identity']) && $identity->ID_PERFIL_FK=="1"){
           $club = new Club();
           $auditoria = new Auditoria(); 
 

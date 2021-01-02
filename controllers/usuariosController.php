@@ -7,8 +7,8 @@ require_once 'models/auditoria.php';
 class usuariosController{
 
     public function index(){   
-
-        if(isset($_SESSION['identity']) && isset($_SESSION['Dirigente'])|| iseet($_SESSION['Dirigente y D_Tecnico']) ){
+        $identity = $_SESSION['identity'];
+        if(isset($_SESSION['identity']) && $identity->ID_PERFIL_FK=="1"){
             $usuario = new Usuario();
             $todosLosUsuarios = $usuario->obtenerUsuarios();
             include_once 'views/usuarios/usuarios.php';
@@ -20,7 +20,8 @@ class usuariosController{
         
     }
     public function gestionEditar(){
-        if(isset($_SESSION['identity']) && isset($_SESSION['Dirigente'])|| iseet($_SESSION['Dirigente y D_Tecnico']) ){
+        $identity = $_SESSION['identity'];
+        if(isset($_SESSION['identity']) && $identity->ID_PERFIL_FK=="1"){
             if(!isset($_GET['in'])){
                 $_SESSION['mensajeError'] = true;
             }else{
@@ -40,7 +41,8 @@ class usuariosController{
         }
     }
     public function editar(){
-        if(isset($_SESSION['identity']) && isset($_SESSION['Dirigente'])|| iseet($_SESSION['Dirigente y D_Tecnico']) ){
+        $identity = $_SESSION['identity'];
+        if(isset($_SESSION['identity']) && $identity->ID_PERFIL_FK=="1"){
             $usuario = new Usuario();
             $auditoria = new Auditoria();  
 

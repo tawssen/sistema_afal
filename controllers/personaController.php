@@ -12,8 +12,8 @@ require_once 'models/auditoria.php';
 class personaController{
 
     public function index(){
-
-        if(isset($_SESSION['identity']) && isset($_SESSION['Dirigente'])|| iseet($_SESSION['Dirigente y D_Tecnico']) ){
+        $identity = $_SESSION['identity'];
+        if(isset($_SESSION['identity']) && $identity->ID_PERFIL_FK=="1"){
             if(!isset($_GET['in'])){
                 $_SESSION['mensajeError'] = true;
             }else{
@@ -30,8 +30,8 @@ class personaController{
     }
 
     public function gestionCrear(){
-
-        if(isset($_SESSION['identity']) && isset($_SESSION['Dirigente'])|| iseet($_SESSION['Dirigente y D_Tecnico']) ){
+        $identity = $_SESSION['identity'];
+        if(isset($_SESSION['identity']) && $identity->ID_PERFIL_FK=="1"){
               if(!isset($_GET['in'])){
                 $_SESSION['mensajeError'] = true;
             }else{
@@ -52,7 +52,8 @@ class personaController{
     }
     
     public function crear(){
-        if(isset($_SESSION['identity']) && isset($_SESSION['Dirigente'])){
+        $identity = $_SESSION['identity'];
+        if(isset($_SESSION['identity']) && $identity->ID_PERFIL_FK=="1"){
 
             $direccion = new Direccion();
             $persona = new Persona();            
@@ -148,7 +149,8 @@ class personaController{
     }
     
     public function gestionEditar(){
-        if(isset($_SESSION['identity']) && isset($_SESSION['Dirigente']) || iseet($_SESSION['Dirigente y D_Tecnico'])){
+        $identity = $_SESSION['identity'];
+        if(isset($_SESSION['identity']) && $identity->ID_PERFIL_FK=="1"){
             if(!isset($_GET['in'])){
                 $_SESSION['mensajeError'] = true;
             }else{
@@ -179,7 +181,8 @@ class personaController{
     }
     
     public function editar(){
-        if(isset($_SESSION['identity']) && isset($_SESSION['Dirigente']) || iseet($_SESSION['Dirigente y D_Tecnico'])){
+        $identity = $_SESSION['identity'];
+        if(isset($_SESSION['identity']) && $identity->ID_PERFIL_FK=="1"){
             $direccion = new Direccion();
             $persona = new Persona();                
             $auditoria = new Auditoria();  
@@ -256,7 +259,8 @@ class personaController{
     }
 
     public function eliminar(){
-        if(isset($_SESSION['identity']) && isset($_SESSION['Dirigente']) || iseet($_SESSION['Dirigente y D_Tecnico'])){                        
+        $identity = $_SESSION['identity'];
+        if(isset($_SESSION['identity']) && $identity->ID_PERFIL_FK=="1"){                        
             echo 'paso1: Entra al controlador';
             $persona = new Persona();
             $usuarios = new Usuario();   
@@ -368,21 +372,33 @@ class personaController{
             }
 
         }else{
-
+            echo '<div class="container mt-5">';
+            echo '<h1>No tienes permiso para acceder a este apartado del sistema</h1>';
+            echo '</div>';
         }
        
     }
 
     public function arbitros(){
-        $arbitros = new Persona();
-        $todosLosArbitros = $arbitros->obtenerArbitros();
-        require_once 'views/persona/arbitros.php';
+        $identity = $_SESSION['identity'];
+        if(isset($_SESSION['identity']) && $identity->ID_PERFIL_FK=="1"){
+            $arbitros = new Persona();
+            $todosLosArbitros = $arbitros->obtenerArbitros();
+            require_once 'views/persona/arbitros.php';
+        }
     }
 
     public function eliminarArbitro(){
-        $persona = new Persona();
-        $persona->setRutPersona($_GET['rut']);
-        $respuesta = $persona->eliminarArbitro();
-        header('location:'.base_url.'persona/arbitros');
+        $identity = $_SESSION['identity'];
+        if(isset($_SESSION['identity']) && $identity->ID_PERFIL_FK=="1"){
+            $persona = new Persona();
+            $persona->setRutPersona($_GET['rut']);
+            $respuesta = $persona->eliminarArbitro();
+            header('location:'.base_url.'persona/arbitros');
+        }else{
+            echo '<div class="container mt-5">';
+            echo '<h1>No tienes permiso para acceder a este apartado del sistema</h1>';
+            echo '</div>';
+        }
     }
 }

@@ -5,23 +5,36 @@ require_once 'models/jugador.php';
 class jugadoresController{
     
     public function index(){
-        $club = new Club();
-        $todosLosClubes = $club->obtenerClubes();
-        require_once 'views/jugadores/jugadores.php';
+        $identity = $_SESSION['identity'];
+        if(isset($_SESSION['identity']) && $identity->ID_PERFIL_FK=="1"){
+            $club = new Club();
+            $todosLosClubes = $club->obtenerClubes();
+            require_once 'views/jugadores/jugadores.php';
+        }else{
+            echo '<div class="container mt-5">';
+            echo '<h1>No tienes permiso para acceder a este apartado del sistema</h1>';
+            echo '</div>';
+        }
     }
     
     public function gestionjugador(){
-        $jugador = new Jugador();
-        $club = new Club();
-        $jugador->setidClub($_GET['id']);
-        $unClub = $club->obtenerUnClub($_GET['id']);
-        $jugadorNoAderido = $jugador->obtenerJugadorNoAderido();
-        $todosLosJugadoresPorClub = $jugador->obtenerJugadoresPorClub();
-        require_once 'views/jugadores/gestionjugadores.php';
+        $identity = $_SESSION['identity'];
+        if(isset($_SESSION['identity']) && $identity->ID_PERFIL_FK=="1"){
+            $jugador = new Jugador();
+            $club = new Club();
+            $jugador->setidClub($_GET['id']);
+            $unClub = $club->obtenerUnClub($_GET['id']);
+            $jugadorNoAderido = $jugador->obtenerJugadorNoAderido();
+            $todosLosJugadoresPorClub = $jugador->obtenerJugadoresPorClub();
+            require_once 'views/jugadores/gestionjugadores.php';
+        }else{
+            echo '<div class="container mt-5">';
+            echo '<h1>No tienes permiso para acceder a este apartado del sistema</h1>';
+            echo '</div>';
+        }
     }
 
-    public function aderirJugadorClub()
-    {   
+    public function aderirJugadorClub(){   
         $id = $_POST['id'];
         $jugador = new Jugador();     
         if(isset($_POST['jugador']) & isset($_POST['id'])){
@@ -37,10 +50,10 @@ class jugadoresController{
             }
             
         }else{
-            echo '<div class="container"> Error Pajero <div>';
-            header('location:'.base_url.'jugadores/gestionjugador&id='.$_GET['id']);
+            echo '<div class="container mt-5">';
+            echo '<h1>No tienes permiso para acceder a este apartado del sistema</h1>';
+            echo '</div>';
         }
-           
     }
 
     public function desincribirJugador(){
