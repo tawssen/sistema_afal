@@ -10,7 +10,6 @@ class turnoController{
         $partidos = new Partido();
         $partidos->setRutTurno($identity->RUT_PERSONA_FK);
         $partidosTurno = $partidos->obtenerPartidosTurno();
-        var_dump($partidosTurno);
         require_once 'views/turno/inicio.php';
     }
 }
