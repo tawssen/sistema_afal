@@ -31,8 +31,12 @@
         <div class="col-lg-3 ml-5 border-left border-right pl-4 pr-4 text-center" style="max-height: 200px;">
             <h4 class="text-center pb-3">Agregar Jugador</h4><!-- Debo rescatar los valores y setearlos aquí-->
             <form id="inscribirClub" action="<?=base_url?>jugadores/aderirJugadorClub" method="POST">
-                <div class="row d-flex justify-content-center">
-                <input type="hidden" name="id" value="<?php echo $unClub['ID_CLUB']?>"/>
+                <div>
+                    <input type="hidden" name="id" value="<?php echo $unClub['ID_CLUB']?>"/>
+                    <input class="form-control" id="usuario" name="NombreUsuario" type="hidden" value="<?php echo $_SESSION['NombreUsuario']?>">
+                    <input class="form-control" id="rut" name="rutUsuario" type="hidden" value="<?php echo $_SESSION['RutUsuario']?>">
+                </div>
+                <div class="row d-flex justify-content-center">                
                     <label for="" class="form-label mr-2">Jugadores</label>
                     <select name="jugador" id="" class="col-8">
                     <option value="0" selected>Seleccionar Jugador</option>
@@ -81,6 +85,6 @@
         let boton = document.getElementById("EliminarJugador");
         let id = $(this).val();
         boton.removeAttribute("onclick");
-        boton.setAttribute("onclick","document.location.href='<?=base_url?>jugadores/desincribirJugador&rut="+id+"&idclub=<?php echo $unClub['ID_CLUB']?>'");        
+        boton.setAttribute("onclick","document.location.href='<?=base_url?>jugadores/desincribirJugador&rut="+id+"&idclub=<?php echo $unClub['ID_CLUB']?>&user=<?php echo $_SESSION['NombreUsuario'];?>&rutuser=<?php echo $_SESSION['RutUsuario'];?>'");        
     });
 </script>
