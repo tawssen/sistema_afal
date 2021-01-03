@@ -13,9 +13,8 @@ class turnoController{
         require_once 'views/turno/inicio.php';
     }
 
-    public function gestionPartidos (){
-
+    public function gestionPartidos(){
+        
         require_once 'views/turno/gestionPartidos.php';
-
     }
 }

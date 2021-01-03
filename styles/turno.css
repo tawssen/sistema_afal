@@ -1,0 +1,47 @@
+.menu-container{
+    margin-top: 20px;
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+}
+
+.body-container{
+    margin-top: 15px;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+
+.izq{
+    margin-right: 5px;
+    width: 100%;
+}
+.der{
+    width: 100%;
+}
+
+.arriba{
+    width: 100%;
+    border: 1px solid #ccc;
+}
+
+.datos{
+    text-align: center;
+}
+
+.jugadores{
+    text-align: center;
+    overflow-y: scroll;
+    max-height: 290px;
+}
+
+.abajo{
+    margin-top: 5px;
+}
+
+.sucesos{
+    text-align: center;
+    overflow-y: scroll;
+    max-height: 120px;
+    background-color: tomato;
+}

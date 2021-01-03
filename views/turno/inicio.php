@@ -21,7 +21,7 @@
                        <td><?php echo $partido['CLUB_VISITA'] ?></td>
                        <td><?php echo $partido['NOMBRE_ARBITRO'] ?></td>
                        <td>
-                       <button class="btn btn-primary btn-comenzar" data-bs-toggle="modal" data-bs-target="#comenzarPartido">Comenzar</button>                
+                       <button class="btn btn-primary btn-comenzar" value="<?php echo $partido['ID_PARTIDO']?>" data-bs-toggle="modal" data-bs-target="#comenzarPartido">Comenzar</button>                
                        </td>
                        </tr>
                     <?php }?>    
@@ -69,6 +69,6 @@
         let boton = document.getElementById("comenzarPartido");
         let id = $(this).val();
         boton.removeAttribute("onclick");
-        boton.setAttribute("onclick","document.location.href='<?=base_url?>turno/gestionPartidos'");        
+        boton.setAttribute("onclick","document.location.href='<?=base_url?>turno/gestionPartidos&campeonato="+id  +"'");        
     });
 </script>

@@ -16,6 +16,7 @@
     <link rel="stylesheet" href="<?=base_url?>datatables/DataTables-1.10.22/css/dataTables.bootstrap4.min.css">
     <link href="<?=base_url?>styles/carousel.css" rel="stylesheet">
     <link href="<?=base_url?>styles/aside.css" rel="stylesheet">
+    <link rel="stylesheet" href="<?=base_url?>styles/turno.css">
 
     <style>
       .bd-placeholder-img {
