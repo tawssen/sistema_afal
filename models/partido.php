@@ -124,16 +124,16 @@ class Partido{
         $resultado = false;
         
         if($this->getRutArbitro1()>0 && $this->getRutArbitro2()<1 && $this->getRutArbitro3()<1){
-            $sql = 'INSERT INTO partidos (FECHA_DATE,FECHA_CAMPEONATO,ID_CLUB_LOCAL_FK,ID_CLUB_VISITA_FK,RUT_PERSONA_TURNO_FK,RUT_PERSONA_ARBITRO_1,RUT_PERSONA_ARBITRO_2,RUT_PERSONA_ARBITRO_3,NOMBRE_ESTADIO,ID_CAMPEONATO_FK) VALUES 
-            ("'.$this->getFechaDate().'","'.$this->getFechaCampeonato().'",'.$this->getIdCLubLocal().','.$this->getIdCLubVisita().','.$this->getRutTurno().','.$this->getRutArbitro1().',null,null,"'.$this->getNombreEstadio().'",'.$this->getIdCampeonato().')';
+            $sql = 'INSERT INTO partidos (FECHA_DATE,FECHA_CAMPEONATO,ID_CLUB_LOCAL_FK,ID_CLUB_VISITA_FK,RUT_PERSONA_TURNO_FK,RUT_PERSONA_ARBITRO_1,RUT_PERSONA_ARBITRO_2,RUT_PERSONA_ARBITRO_3,NOMBRE_ESTADIO,ID_CAMPEONATO_FK,ID_ESTADO_PARTIDO_FK) VALUES 
+            ("'.$this->getFechaDate().'","'.$this->getFechaCampeonato().'",'.$this->getIdCLubLocal().','.$this->getIdCLubVisita().','.$this->getRutTurno().','.$this->getRutArbitro1().',null,null,"'.$this->getNombreEstadio().'",'.$this->getIdCampeonato().',DEFAULT)';
 
         }elseif($this->getRutArbitro1()>0 && $this->getRutArbitro2()>0 && $this->getRutArbitro3()<1){
-            $sql = 'INSERT INTO partidos (FECHA_DATE,FECHA_CAMPEONATO,ID_CLUB_LOCAL_FK,ID_CLUB_VISITA_FK,RUT_PERSONA_TURNO_FK,RUT_PERSONA_ARBITRO_1,RUT_PERSONA_ARBITRO_2,RUT_PERSONA_ARBITRO_3,NOMBRE_ESTADIO,ID_CAMPEONATO_FK) VALUES 
-            ("'.$this->getFechaDate().'","'.$this->getFechaCampeonato().'",'.$this->getIdCLubLocal().','.$this->getIdCLubVisita().','.$this->getRutTurno().','.$this->getRutArbitro1().','.$this->getRutArbitro2().',null,"'.$this->getNombreEstadio().'",'.$this->getIdCampeonato().')';
+            $sql = 'INSERT INTO partidos (FECHA_DATE,FECHA_CAMPEONATO,ID_CLUB_LOCAL_FK,ID_CLUB_VISITA_FK,RUT_PERSONA_TURNO_FK,RUT_PERSONA_ARBITRO_1,RUT_PERSONA_ARBITRO_2,RUT_PERSONA_ARBITRO_3,NOMBRE_ESTADIO,ID_CAMPEONATO_FK,ID_ESTADO_PARTIDO_FK) VALUES 
+            ("'.$this->getFechaDate().'","'.$this->getFechaCampeonato().'",'.$this->getIdCLubLocal().','.$this->getIdCLubVisita().','.$this->getRutTurno().','.$this->getRutArbitro1().','.$this->getRutArbitro2().',null,"'.$this->getNombreEstadio().'",'.$this->getIdCampeonato().',DEFAULT)';
 
         }elseif($this->getRutArbitro1()>0 && $this->getRutArbitro2()>0 && $this->getRutArbitro3()>0){
-            $sql = 'INSERT INTO partidos (FECHA_DATE,FECHA_CAMPEONATO,ID_CLUB_LOCAL_FK,ID_CLUB_VISITA_FK,RUT_PERSONA_TURNO_FK,RUT_PERSONA_ARBITRO_1,RUT_PERSONA_ARBITRO_2,RUT_PERSONA_ARBITRO_3,NOMBRE_ESTADIO,ID_CAMPEONATO_FK) VALUES 
-            ("'.$this->getFechaDate().'","'.$this->getFechaCampeonato().'",'.$this->getIdCLubLocal().','.$this->getIdCLubVisita().','.$this->getRutTurno().','.$this->getRutArbitro1().','.$this->getRutArbitro2().','.$this->getRutArbitro3().',"'.$this->getNombreEstadio().'",'.$this->getIdCampeonato().')';
+            $sql = 'INSERT INTO partidos (FECHA_DATE,FECHA_CAMPEONATO,ID_CLUB_LOCAL_FK,ID_CLUB_VISITA_FK,RUT_PERSONA_TURNO_FK,RUT_PERSONA_ARBITRO_1,RUT_PERSONA_ARBITRO_2,RUT_PERSONA_ARBITRO_3,NOMBRE_ESTADIO,ID_CAMPEONATO_FK,ID_ESTADO_PARTIDO_FK) VALUES 
+            ("'.$this->getFechaDate().'","'.$this->getFechaCampeonato().'",'.$this->getIdCLubLocal().','.$this->getIdCLubVisita().','.$this->getRutTurno().','.$this->getRutArbitro1().','.$this->getRutArbitro2().','.$this->getRutArbitro3().',"'.$this->getNombreEstadio().'",'.$this->getIdCampeonato().',DEFAULT)';
         }
 
         $respuesta = $database->query($sql);

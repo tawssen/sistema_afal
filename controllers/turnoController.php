@@ -12,4 +12,10 @@ class turnoController{
         $partidosTurno = $partidos->obtenerPartidosTurno();
         require_once 'views/turno/inicio.php';
     }
+
+    public function gestionPartidos (){
+
+        require_once 'views/turno/gestionPartidos.php';
+
+    }
 }
