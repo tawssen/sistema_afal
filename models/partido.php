@@ -165,4 +165,11 @@ class Partido{
         $respuesta = $database->query($sql);
         return $respuesta;
     }
+
+    public function obtenerPartidosTecnico(){
+        $database = Database::connect();
+        $sql = '';
+        $respuesta = $database->query($sql);
+        return $respuesta;
+    }
 }

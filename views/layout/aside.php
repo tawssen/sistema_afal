@@ -24,7 +24,8 @@ if(isset($_SESSION['identity'])){
         <li><a href="<?=base_url?>tecnico/index"><i class="fas fa-gavel"></i>Tecnicos</a></li>       
         <li><a href="<?=base_url?>usuarios/index"><i class="fas fa-user"></i>Usuarios</a></li>
       <?php elseif(isset($_SESSION['identity']) && $identity->ID_PERFIL_FK=="2"):?>
-
+        <li><img src="<?=base_url?>images/escudo_linares.png" class="logo"></li>
+        <li><a href="<?=base_url?>tecnico/inicioTecnico"><i class="fas fa-futbol"></i>Partidos</a></li>
       <?php elseif(isset($_SESSION['identity']) && $identity->ID_PERFIL_FK=="3"):?>
         <li><img src="<?=base_url?>images/escudo_linares.png" class="logo"></li>
         <li><a href="<?=base_url?>turno/index"><i class="fas fa-futbol"></i>Partidos</a></li>

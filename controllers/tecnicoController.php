@@ -104,6 +104,14 @@ class tecnicoController{
            echo 'No Funciona';
         }
    
-       }
+    }
+
+    public function inicioTecnico(){
+        echo '<h1>Este es el inicio del tecnico</h1>';
+    }
+
+    public function cargarJugadores(){
+
+    }
 
 }
