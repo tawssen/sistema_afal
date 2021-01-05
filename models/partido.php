@@ -158,4 +158,11 @@ class Partido{
         $respuesta = $database->query($sql);
         return $respuesta;
     }
+
+    public function obtenerUnPartido(){
+        $database = Database::connect();
+        $sql = '';
+        $respuesta = $database->query($sql);
+        return $respuesta;
+    }
 }

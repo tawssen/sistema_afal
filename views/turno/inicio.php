@@ -69,6 +69,6 @@
         let boton = document.getElementById("comenzarPartido");
         let id = $(this).val();
         boton.removeAttribute("onclick");
-        boton.setAttribute("onclick","document.location.href='<?=base_url?>turno/gestionPartidos&campeonato="+id  +"'");        
+        boton.setAttribute("onclick","document.location.href='<?=base_url?>turno/gestionPartidos&partido="+id+"'");        
     });
 </script>
