@@ -82,4 +82,28 @@ class Tecnico{
         $respuesta = $datos->fetch_object();
         return $respuesta;
     }
+
+    public function obtenerPartidosTecnico($serie){
+        $database = Database::connect();
+        $sql = 'SELECT ID_PARTIDO, FECHA_DATE, PA.RUT_PERSONA AS RUT_ARBITRO, FECHA_CAMPEONATO AS FECHA_STRING, CL.NOMBRE_CLUB AS CLUB_LOCAL,  CV.NOMBRE_CLUB AS CLUB_VISITA,
+        CONCAT(PT.NOMBRE_1," ",PT.NOMBRE_2," ",PT.APELLIDO_1," ",PT.APELLIDO_2) AS NOMBRE_TURNO,
+        CONCAT(PA.NOMBRE_1," ",PA.NOMBRE_2," ",PA.APELLIDO_1," ",PA.APELLIDO_2) AS NOMBRE_ARBITRO,
+        CL.NOMBRE_ESTADIO AS ESTADIO,
+        ID_CAMPEONATO_FK AS CAMPEONATO
+        from PARTIDOS
+        INNER JOIN CLUB CL ON (PARTIDOS.ID_CLUB_LOCAL_FK = CL.ID_CLUB)
+        INNER JOIN CLUB CV ON (PARTIDOS.ID_CLUB_VISITA_FK = CV.ID_CLUB)
+        INNER JOIN PERSONA PT ON (PARTIDOS.RUT_PERSONA_TURNO_FK = PT.RUT_PERSONA)
+        INNER JOIN PERSONA PA ON (PARTIDOS.RUT_PERSONA_ARBITRO_1 = PA.RUT_PERSONA)
+        INNER JOIN CAMPEONATO ON (PARTIDOS.ID_CAMPEONATO_FK = CAMPEONATO.ID_CAMPEONATO)  WHERE campeonato.ID_SERIE_FK ='.$serie.' AND ID_CLUB_VISITA_FK ='.$this->getidClub().' OR ID_CLUB_LOCAL_FK = '.$this->getidClub().' AND ID_ESTADO_PARTIDO_FK = 1';
+        $respuesta = $database->query($sql);
+        return $respuesta->fetch_object();
+    }
+
+    public function obtenerSerieDeTecnico(){
+        $database = Database::connect();
+        $sql = 'SELECT * FROM tecnico_serie WHERE ID_PERSONA_TECNICO_FK ='.$this->getIdPersonaTecnico();
+        $respuesta = $database->query($sql);
+        return $respuesta->fetch_object();
+    }
 }

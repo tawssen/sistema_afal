@@ -103,15 +103,22 @@ class tecnicoController{
         }else{
            echo 'No Funciona';
         }
-   
     }
 
     public function inicioTecnico(){
         echo '<h1>Este es el inicio del tecnico</h1>';
+        $tecnico = new Tecnico();
+        $identity = $_SESSION['identity'];
+        $tecnico->setrutPersona($identity->RUT_PERSONA_FK);
+        $datos = $tecnico->obtenerDatosTecnicos();
+        $tecnico->setidClub($datos->ID_CLUB_FK);
+        $tecnico->setIdPersonaTecnico($datos->ID_PERSONA_TECNICO);
+        $serie = $tecnico->obtenerSerieDeTecnico();
+        $partidos = $tecnico->obtenerPartidosTecnico($serie->ID_SERIE_FK);
+        var_dump($partidos);
     }
 
     public function cargarJugadores(){
 
     }
-
 }
