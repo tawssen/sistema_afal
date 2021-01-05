@@ -31,7 +31,7 @@
                          <td><?php echo $tecnico['NOMBRE_COMUNA'].', '.$tecnico['CALLE_PASAJE'] ?></td>                    
                          <td><?php echo $tecnico['NOMBRE_ASOCIACION'] ?></td>
                          <td class="text-center">
-                                <button class="btn btn-success" onclick="document.location.href='<?=base_url?>persona/gestionEditar&id=<?=$tecnico['RUT_PERSONA'];?>&in=arbitro'">Editar</button>
+                                <button class="btn btn-success" onclick="document.location.href='<?=base_url?>persona/gestionEditar&id=<?=$tecnico['RUT_PERSONA'];?>&tec=tecnico'">Editar</button>
                                 <button class="btn btn-danger btn-eliminar" data-bs-toggle="modal" data-bs-target="#eliminarTecnico" value="<?=$tecnico['RUT_PERSONA'];?>">Deshabilitar</button>                                       
                                 <button class="btn btn-primary btn-valueT" value="<?php echo $tecnico['RUT_PERSONA']?>" data-bs-toggle="modal" data-bs-target="#aderirTecnico" data-toggle="tooltip" data-placement="top" title="ADERIR A UN CLUB">Aderir</button>
                          </td>

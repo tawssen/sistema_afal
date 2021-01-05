@@ -67,8 +67,10 @@ class Tecnico{
 
     public function obtenerTecnicosPorClub(){
         $database = Database::connect();
-        $sql = "SELECT * FROM PERSONA_TECNICO PT 
-        INNER JOIN PERSONA P ON (PT.RUT_PERSONA_FK = P.RUT_PERSONA) WHERE ID_CLUB_FK =".$this->getidClub();
+        $sql = "SELECT * FROM TECNICO_SERIE TS
+        INNER JOIN SERIE S ON (TS.ID_SERIE_FK = S.ID_SERIE)
+        INNER JOIN PERSONA_TECNICO PT ON (TS.ID_PERSONA_TECNICO_FK = PT.ID_PERSONA_TECNICO)
+        INNER JOIN PERSONA P ON (PT.RUT_PERSONA_FK = P.RUT_PERSONA)  WHERE ID_CLUB_FK =".$this->getidClub();
         $respuesta = $database->query($sql);
         return $respuesta;
     }

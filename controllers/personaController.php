@@ -246,6 +246,8 @@ class personaController{
 
             if($respuesta && isset($_GET['in'])){         
                 header('location:'.base_url.'persona/arbitros');
+            }elseif($respuesta && isset($_GET['tec'])){         
+                header('location:'.base_url.'tecnico/index');
             }else if($respuesta){
                 header('location:'.base_url.'persona/index');
             }else if($_GET['in']=="crear"){                

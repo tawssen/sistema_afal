@@ -3,14 +3,15 @@
     <h1><?php echo $unClub['NOMBRE_CLUB'] ?></h1>                   
     
     <div class="row">
-        <div class="col-lg-8">
+        <div class="">
             <div class="table-responsive">
                 <table id="example" class="table table-striped table-bordered text-center">
                     <thead>
                         <tr>
                             <th>RUT</th>
-                            <th>JUGADOR</th>
+                            <th>TECNICO</th>
                             <th>FECHA NACIMIENTO</th>
+                            <th>SERIE</th>
                             <th class="text-center">DESINSCRIBIR</th>
                         </tr>
                     </thead>
@@ -20,6 +21,7 @@
                             <td><?php echo $tecnicos['RUT_PERSONA'] ?></td>
                             <td><?php  echo $tecnicos['NOMBRE_1'].' '.$tecnicos['NOMBRE_2'].' '.$tecnicos['APELLIDO_1'].' '.$tecnicos['APELLIDO_2'] ?></td>
                             <td><?php echo $tecnicos['FECHA_NACIMIENTO'] ?></td>
+                            <td><?php echo $tecnicos['NOMBRE_SERIE'] ?></td>
                             <td><button class="btn btn-danger btn-eliminar" data-bs-toggle="modal" data-bs-target="#eliminarTecnico" value="<?=$tecnicos['RUT_PERSONA'];?>">Desinscribir</button></td>
                         </tr>
                     <?php } mysqli_free_result($todosLosTecnico);?>                                 

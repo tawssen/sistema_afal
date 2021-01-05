@@ -3,6 +3,8 @@
 
         <?php if(isset($datosdeunaPersona) && isset($_GET['in']) && $_GET['in']=="arbitro"):?>
         <form action="<?=base_url?>persona/editar&in=<?=$_GET['in'];?>" method="POST" class="border p-5">
+        <?php elseif(isset($datosdeunaPersona) && isset($_GET['tec']) && $_GET['tec']=="tecnico"):?>
+        <form action="<?=base_url?>persona/editar&tec=<?=$_GET['tec'];?>" method="POST" class="border p-5">
         <?php elseif(isset($datosdeunaPersona)):?>
         <form action="<?=base_url?>persona/editar" method="POST" class="border p-5">
         <?php else:?>
@@ -11,13 +13,15 @@
         
             <?php if(isset($_GET['in']) && $_GET['in']=="arbitro"):?>
             <h1 class="pb-3">Editar Arbitro</h1>
+            <?php elseif(isset($_GET['tec']) && $_GET['tec']=="tecnico"):?>
+            <h1 class="pb-3">Editar Tecnico</h1>
             <?php elseif(isset($datosdeunaPersona)):?>
             <h1 class="pb-3">Editar Persona</h1>
             <?php else: ?>
                 <h1 class="pb-3">Crear Persona</h1>
             <?php endif; ?>
             
-            <?php if(isset($_SESSION['mensajeError'])):?>
+            <?php if(isset($_SESSION['  '])):?>
                 <p class="alert alert-danger">La acción no se ha podido llevar a cabo. Vuelva a intentarlo por favor.</p>
             <?php endif; ?>
 
