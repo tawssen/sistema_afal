@@ -21,6 +21,7 @@ if(isset($_SESSION['identity'])){
         <li><a href="<?=base_url?>persona/index"><i class="fas fa-male"></i>Personas</a></li>
         <li><a href="<?=base_url?>jugadores/index"><i class="fas fa-users"></i>Jugadores</a></li>
         <li><a href="<?=base_url?>persona/arbitros"><i class="fas fa-gavel"></i>Arbitros</a></li>
+        <li><a href="<?=base_url?>tecnico/index"><i class="fas fa-gavel"></i>Tecnicos</a></li>       
         <li><a href="<?=base_url?>usuarios/index"><i class="fas fa-user"></i>Usuarios</a></li>
       <?php elseif(isset($_SESSION['identity']) && $identity->ID_PERFIL_FK=="2"):?>
 

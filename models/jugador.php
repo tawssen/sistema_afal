@@ -33,7 +33,7 @@ public function setidClub($id_club){
 
 public function agregarJugadorClub(){
  $database = Database::connect();
- $sql = "INSERT INTO persona_club (RUT_PERSONA_FK,ID_CLUB_FK) VALUES (".$this->getrutPersona().",".$this->getidClub().")";
+ $sql = "INSERT INTO PERSONA_JUGADOR (RUT_PERSONA_FK,ID_CLUB_FK) VALUES (".$this->getrutPersona().",".$this->getidClub().")";
  $respuesta = $database->query($sql);
  return $respuesta;
         
@@ -41,22 +41,22 @@ public function agregarJugadorClub(){
 
 public function obtenerJugadorNoAderido(){
     $database = Database::connect();
-    $sql = "SELECT * FROM persona WHERE NOT EXISTS(SELECT NULL FROM persona_club  WHERE persona_club.RUT_PERSONA_FK = persona.RUT_PERSONA )AND ID_PERFIL_FK IN (4 , 5)";
+    $sql = "SELECT * FROM persona WHERE NOT EXISTS(SELECT NULL FROM PERSONA_JUGADOR  WHERE PERSONA_JUGADOR.RUT_PERSONA_FK = persona.RUT_PERSONA )AND ID_PERFIL_FK IN (4 , 5)";
     $respuesta = $database->query($sql);
     return $respuesta;
 }
 
 public function obtenerJugadoresPorClub(){
     $database = Database::connect();
-    $sql = "SELECT * FROM PERSONA_CLUB PC 
-    INNER JOIN PERSONA P ON (PC.RUT_PERSONA_FK = P.RUT_PERSONA) WHERE ID_CLUB_FK =".$this->getidClub();
+    $sql = "SELECT * FROM PERSONA_JUGADOR PJ 
+    INNER JOIN PERSONA P ON (PJ.RUT_PERSONA_FK = P.RUT_PERSONA) WHERE ID_CLUB_FK =".$this->getidClub();
     $respuesta = $database->query($sql);
     return $respuesta;
 }
 
 public function eliminarJugador(){
     $database = Database::connect();
-    $sql = "DELETE FROM persona_club WHERE RUT_PERSONA_FK =".$this->getrutPersona();
+    $sql = "DELETE FROM PERSONA_JUGADOR WHERE RUT_PERSONA_FK =".$this->getrutPersona();
     $respuesta = $database->query($sql);
     return $respuesta;
 }

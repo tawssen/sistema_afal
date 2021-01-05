@@ -221,7 +221,7 @@ class Persona{
 
             return $resultado;
         }
-
+        
         public function eliminarArbitro(){
             $database = Database::connect();
             $sql = "UPDATE persona SET ID_PERFIL_FK ="." 7 ".", ID_TIPO_ESTADO_FK_PERSONA ="." 2 "."WHERE RUT_PERSONA = ".$this->getRutPersona();       
