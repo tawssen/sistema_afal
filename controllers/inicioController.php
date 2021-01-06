@@ -19,53 +19,65 @@ class inicioController{
             $usuario->setClaveUsuario($_POST['clave']);
             $identity = $usuario->validarUsuario();
 
-            $datos = (array) $identity;
-            $nombreUsuario = $datos['NOMBRE_1'].' '.$datos['NOMBRE_2'].' '.$datos['APELLIDO_1'].' '.$datos['APELLIDO_2'];
-            $rut = $datos['RUT_PERSONA'];   
-            $perfil = $datos['ID_PERFIL_FK'];
-            $nombrePerfil = '';
-            
-            if($perfil == 1){
+            if(!$identity == false){
+                $datos = (array) $identity;
+                $nombreUsuario = $datos['NOMBRE_1'].' '.$datos['NOMBRE_2'].' '.$datos['APELLIDO_1'].' '.$datos['APELLIDO_2'];
+                $rut = $datos['RUT_PERSONA'];   
+                $perfil = $datos['ID_PERFIL_FK'];
+                $nombrePerfil = '';
+                
+                if($perfil == 1){
+    
+                    $nombrePerfil = 'dirigente';
+    
+                }elseif($perfil == 2){
+    
+                    $nombrePerfil = 'tecnico';
+    
+                }elseif($perfil == 3){
+    
+                    $nombrePerfil = 'turno';
+                }elseif($perfil == 4){
+    
+                    $nombrePerfil = 'jugador y tecnico';
+                }
 
-                $nombrePerfil = 'dirigente';
-
-            }elseif($perfil == 2){
-
-                $nombrePerfil = 'tecnico';
-
-            }elseif($perfil == 3){
-
-                $nombrePerfil = 'turno';
-            }elseif($perfil == 4){
-
-                $nombrePerfil = 'jugador y tecnico';
-            }
-
-                /*=============INSERTAR TABLA AUDITORIA (ACCION INSERT)=========*/       
-                 date_default_timezone_set('America/Santiago');
-                   $fechaActual = date('Y-m-d');
-                   $horaActual = date("H:i:s");
-       
-                   $auditoria->setNombreUsuario($nombreUsuario);
-                   $auditoria->setRutUsuario($rut);
-                   $auditoria->setFechaRegistro($fechaActual);
-                   $auditoria->setHoraRegistro($horaActual);
-                   $auditoria->setModulo('Login');
-                   $auditoria->setAccion('ACCESO AL SISTEMA');
-                   $auditoria->setDescripcion('A entrado al sistema con perfil de '.$nombrePerfil);
-                   $auditoria->InsertAuditoria();
-                                
-                /*==============================================================*/ 
-             
-            if($identity && is_object($identity)){
-                $_SESSION['identity'] = $identity;
-                $_SESSION['NombreUsuario'] = $nombreUsuario;
-                $_SESSION['RutUsuario'] = $rut;
-                header("Location:".base_url);
+                  /*=============INSERTAR TABLA AUDITORIA (ACCION INSERT)=========*/       
+                  date_default_timezone_set('America/Santiago');
+                  $fechaActual = date('Y-m-d');
+                  $horaActual = date("H:i:s");
+      
+                  $auditoria->setNombreUsuario($nombreUsuario);
+                  $auditoria->setRutUsuario($rut);
+                  $auditoria->setFechaRegistro($fechaActual);
+                  $auditoria->setHoraRegistro($horaActual);
+                  $auditoria->setModulo('Login');
+                  $auditoria->setAccion('ACCESO AL SISTEMA');
+                  $auditoria->setDescripcion('A entrado al sistema con perfil de '.$nombrePerfil);
+                  $auditoria->InsertAuditoria();
+                               
+               /*==============================================================*/ 
+                if($identity && is_object($identity)){
+                 $_SESSION['identity'] = $identity;
+                 $_SESSION['NombreUsuario'] = $nombreUsuario;
+                 $_SESSION['RutUsuario'] = $rut;
+                 header("Location:".base_url);
+                 }else{
+                           
+                }
             }else{
-                $_SESSION['Error_InicioSesion'] = 'No se han encontrado datos';
-                echo 'No se han encontrado sus datos';
-            }
+              echo '<div class="container text-center mt-5">'
+              .'<h1>No se han encontrado datos</h1>'.
+              '<h2>Error 400</h3>'.
+              '<a class="btn btn-danger" href="index">Volver Atras</a>'.
+              '</div>';
+
+            } 
+           // '<div class="container">'
+           // '</div>'
+              
+             
+          
         }                                    
     }
 

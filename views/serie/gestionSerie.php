@@ -2,16 +2,18 @@
     <div class="container mt-5 col-6">
 
         <?php if($_GET['in']=="editar"):?>
-        <form action="<?=base_url?>serie/editar&idserie=<?=$_GET['idserie']?>&in=<?=$_GET['in']?>" method="POST" class="border p-5">
+        <form action="<?=base_url?>serie/editar&idserie=<?=$_GET['idserie']?>&in=<?=$_GET['in']?>" method="POST"  class="border p-5 needs-validation" novalidate>
 
         <?php elseif($_GET['in']=="crear"):?>
-        <form action="<?=base_url?>serie/crear&in=<?=$_GET['in']?>" method="POST" class="border p-5">
+        <form action="<?=base_url?>serie/crear&in=<?=$_GET['in']?>" method="POST"  class="border p-5 needs-validation" novalidate>
         <?php endif; ?>
 
             <?php if(isset($serieSeleccionada)):?>
             <h1 class="pb-3">Editar Serie</h1>
+            <p id="mensajealerta" class="alert alert-success ">Verificar los datos.</p>
             <?php else:?>
             <h1 class="pb-3">Crear Serie</h1>
+            <p id="mensajealerta" class="alert alert-success">El campo es obligatorio.</p>
             <?php endif; ?>
             
             <?php if(isset($_GET['error']) && $_GET['error']=="crear"):?>
@@ -35,7 +37,9 @@
             <?php else: ?>
             <div class="">
                 <label for="nombreAsociacion" class="form-label">NOMBRE SERIE</label>
-                <input class="form-control" id="nombreAsociacion" name="nombreSerie" type="text" value="Serie" required>
+                <input class="form-control" id="nombreAsociacion" name="nombreSerie" type="text" value="" placeholder="Serie" required>
+                <div class="valid-feedback">Correcto.</div>
+                <div class="invalid-feedback">Por favor ingrese un nombre para la serie.</div>
             </div>
             <?php endif; ?>
 
@@ -56,3 +60,25 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.5.4/umd/popper.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="<?=base_url?>javascript/main.js"></script>
+
+<script>
+// Disable form submissions if there are invalid fields
+(function() {
+  'use strict';
+  window.addEventListener('load', function() {
+    // Get the forms we want to add validation styles to
+    var forms = document.getElementsByClassName('needs-validation');
+    // Loop over them and prevent submission
+    var validation = Array.prototype.filter.call(forms, function(form) {
+      form.addEventListener('submit', function(event) {
+        if (form.checkValidity() === false) {
+          event.preventDefault();
+          event.stopPropagation();
+          $('#mensajealerta').removeClass('alert-success').addClass('alert-danger');
+        }
+        form.classList.add('was-validated');
+      }, false);
+    });
+  }, false);
+})();
+</script>
