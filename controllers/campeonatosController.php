@@ -23,13 +23,19 @@ class campeonatosController{
     }
 
     public function gestionCrear(){
+        unset($_SESSION['mensajErrorFecha']);
+
         $identity = $_SESSION['identity'];
         if(isset($_SESSION['identity']) && $identity->ID_PERFIL_FK=="1"){
-            if(!isset($_GET['in'])){
+            
+            if(isset($_GET['error']) && $_GET['error']=="fechainiciocampeonato"){                
+                unset($_SESSION['mensajeError']);
+            }elseif(isset($_GET['error'])){
                 $_SESSION['mensajeError'] = true;
             }else{
                 unset($_SESSION['mensajeError']);
             }
+            
             $asociacion = new Asociacion();
             $serie = new Serie();
             $todasLasAsociaciones = $asociacion->obtenerAsociaciones();
@@ -44,39 +50,47 @@ class campeonatosController{
 
     public function crear(){
         $identity = $_SESSION['identity'];
+
+      
+
         if(isset($_SESSION['identity']) && $identity->ID_PERFIL_FK=="1"){
             $campeonato = new Campeonato();
             $auditoria = new Auditoria();     
 
-            $campeonato->setNombreCampeonato($_POST['nombreCampeonato']);
-            $campeonato->setFechaInicio($_POST['fechaInicioCampeonato']);
-            $campeonato->setIdAsociacion($_POST['nombreAsociacion']);
-            $campeonato->setIdSerie($_POST['nombreSerie']);
-    
-            $respuesta = $campeonato->crearCampeonato();
-            
-              /*=============INSERTAR TABLA AUDITORIA (ACCION INSERT)=========*/       
-              date_default_timezone_set('America/Santiago');
-              $fechaActual = date('Y-m-d');
-              $horaActual = date("H:i:s");
-  
-              $auditoria->setNombreUsuario($_POST['NombreUsuario']);
-              $auditoria->setRutUsuario($_POST['rutUsuario']);
-              $auditoria->setFechaRegistro($fechaActual);
-              $auditoria->setHoraRegistro($horaActual);
-              $auditoria->setModulo('Campeonato');
-              $auditoria->setAccion('INSERTAR');
-              $auditoria->setDescripcion('Se a registrado el '.$_POST['nombreCampeonato'].' con fecha de inicio: '.$_POST['fechaInicioCampeonato']);
-              $auditoria->InsertAuditoria();
-                           
-              /*==============================================================*/ 
+            date_default_timezone_set('America/Santiago');
+            $fechaActual = date('Y-m-d');
+            $horaActual = date("H:i:s");    
 
-            if($respuesta){
-                header('location:'.base_url.'campeonatos/index');
-                exit;
+            if($_POST['fechaInicioCampeonato'] >= $fechaActual){
+                echo 'la fecha de incio de campeonato es mayor a la actual';
+
+                $campeonato->setNombreCampeonato($_POST['nombreCampeonato']);
+                $campeonato->setFechaInicio($_POST['fechaInicioCampeonato']);
+                $campeonato->setIdAsociacion($_POST['nombreAsociacion']);
+                $campeonato->setIdSerie($_POST['nombreSerie']);
+
+                //$respuesta = $campeonato->crearCampeonato();    
+                /*=============INSERTAR TABLA AUDITORIA (ACCION INSERT)=========*/                     
+                    $auditoria->setNombreUsuario($_POST['NombreUsuario']);
+                    $auditoria->setRutUsuario($_POST['rutUsuario']);
+                    $auditoria->setFechaRegistro($fechaActual);
+                    $auditoria->setHoraRegistro($horaActual);
+                    $auditoria->setModulo('Campeonato');
+                    $auditoria->setAccion('INSERTAR');
+                    $auditoria->setDescripcion('Se a registrado el '.$_POST['nombreCampeonato'].' con fecha de inicio: '.$_POST['fechaInicioCampeonato']);
+                  //7  $auditoria->InsertAuditoria();                       
+               /*==============================================================*/ 
+               if($respuesta){
+                   // header('location:'.base_url.'campeonatos/index');
+                    exit;
+                }else{
+                    //header('location:'.base_url.'campeonatos/gestionCrear');
+                }
             }else{
-                header('location:'.base_url.'campeonatos/gestionCrear');
-            }
+                echo 'la fecha de incio de campeonato es menor a la actual';
+               
+                header('location:'.base_url.'campeonatos/gestionCrear&error=fechainiciocampeonato');
+            }                                              
         }else{
             echo '<div class="container mt-5">';
             echo '<h1>No tienes permiso para acceder a este apartado del sistema</h1>';

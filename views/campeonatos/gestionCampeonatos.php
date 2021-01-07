@@ -25,7 +25,10 @@
             <?php if(isset($_SESSION['mensajeError'])):?>
                 <p class="alert alert-danger">La acción no se ha podido llevar a cabo. Vuelva a intentarlo por favor.</p>
             <?php endif; ?>
-
+            <?php if(isset($_GET['error']) && $_GET['error']=="fechainiciocampeonato"):?>
+                <p class="alert alert-danger">La acción no se ha podido llevar a cabo. Verifique que la fecha sea mayor o igual a la actual.</p>
+            <?php endif; ?>
+            
             <?php if(isset($campeonatoSeleccionado)):?>
             <div class="">
                 <input class="form-control" id="idCampeonato" name="idCampeonato" type="hidden" value="">
