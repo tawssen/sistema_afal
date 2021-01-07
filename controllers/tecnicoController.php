@@ -3,6 +3,7 @@ require_once 'models/tecnico.php';
 require_once 'models/club.php';
 require_once 'models/serie.php';
 require_once 'models/tecnico_serie.php';
+require_once 'models/jugador.php';
 class tecnicoController{
 
     public function index(){
@@ -101,12 +102,11 @@ class tecnicoController{
         if($res){
             header('location:'.base_url.'tecnico/index');
         }else{
-           echo 'No Funciona';
+            echo 'No Funciona';
         }
     }
 
     public function inicioTecnico(){
-        echo '<h1>Este es el inicio del tecnico</h1>';
         $tecnico = new Tecnico();
         $identity = $_SESSION['identity'];
         $tecnico->setrutPersona($identity->RUT_PERSONA_FK);
@@ -115,10 +115,16 @@ class tecnicoController{
         $tecnico->setIdPersonaTecnico($datos->ID_PERSONA_TECNICO);
         $serie = $tecnico->obtenerSerieDeTecnico();
         $partidos = $tecnico->obtenerPartidosTecnico($serie->ID_SERIE_FK);
-        var_dump($partidos);
+        require_once 'views/Tecnico/inicioTécnico.php';
     }
 
     public function cargarJugadores(){
-
+        $jugador = new Jugador();
+        $jugador->setidClub($_GET['club']);
+        $jugadores = $jugador->cargarJugadoresTecnico();
+        
+        require_once 'views/Tecnico/cargarJugadores.php';
     }
+
+
 }

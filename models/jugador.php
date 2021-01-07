@@ -61,4 +61,11 @@ public function eliminarJugador(){
     return $respuesta;
 }
 
+public function cargarJugadoresTecnico(){
+    $database = Database::connect();
+    $sql = 'SELECT * FROM persona_jugador INNER JOIN persona ON persona_jugador.RUT_PERSONA_FK = persona.RUT_PERSONA WHERE ID_CLUB_FK='.$this->getidClub();
+    $respuesta = $database->query($sql);
+    return $respuesta;
+}
+
 }

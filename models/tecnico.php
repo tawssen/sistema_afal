@@ -97,7 +97,7 @@ class Tecnico{
         INNER JOIN PERSONA PA ON (PARTIDOS.RUT_PERSONA_ARBITRO_1 = PA.RUT_PERSONA)
         INNER JOIN CAMPEONATO ON (PARTIDOS.ID_CAMPEONATO_FK = CAMPEONATO.ID_CAMPEONATO)  WHERE campeonato.ID_SERIE_FK ='.$serie.' AND ID_CLUB_VISITA_FK ='.$this->getidClub().' OR ID_CLUB_LOCAL_FK = '.$this->getidClub().' AND ID_ESTADO_PARTIDO_FK = 1';
         $respuesta = $database->query($sql);
-        return $respuesta->fetch_object();
+        return $respuesta;
     }
 
     public function obtenerSerieDeTecnico(){
@@ -105,5 +105,16 @@ class Tecnico{
         $sql = 'SELECT * FROM tecnico_serie WHERE ID_PERSONA_TECNICO_FK ='.$this->getIdPersonaTecnico();
         $respuesta = $database->query($sql);
         return $respuesta->fetch_object();
+    }
+
+    public function calculaEdad($fechanacimiento){
+        list($ano,$mes,$dia) = explode("-",$fechanacimiento);
+        $ano_diferencia  = date("Y") - $ano;
+        $mes_diferencia = date("m") - $mes;
+        $dia_diferencia   = date("d") - $dia;
+        if ($dia_diferencia < 0 || $mes_diferencia < 0)
+          $ano_diferencia--;
+          
+        return $ano_diferencia;
     }
 }
