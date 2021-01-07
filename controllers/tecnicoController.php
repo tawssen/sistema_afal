@@ -120,6 +120,7 @@ class tecnicoController{
 
     public function cargarJugadores(){
         $jugador = new Jugador();
+        $tecnico = new Tecnico();
         $jugador->setidClub($_GET['club']);
         $jugadores = $jugador->cargarJugadoresTecnico();
         
