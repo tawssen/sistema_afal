@@ -103,9 +103,6 @@ class jugadoresController{
         $persona = new Persona();
         $club = new Club();
 
-        $datos = $persona->obtenerUnPersona();
-        $datosClub = $club->obtenerUnClub($id);
-
         if(isset($_GET['rut'])){
           $jugador->setrutPersona($_GET['rut']);
           $persona->setRutPersona($_GET['rut']);
@@ -113,32 +110,46 @@ class jugadoresController{
           $datos = $persona->obtenerUnPersona();
           $datosClub = $club->obtenerUnClub($id);
 
-          if($datos && $datosClub){
+            if($datos && $datosClub){     
+              $arraydatos =(array) $datos;
+              $arrayDatosClub = (array) $datosClub;
+                  
+                if($arraydatos['ID_PERFIL_FK'] == 5){                                  
 
-                $arraydatos =(array) $datos;
-                var_dump($arraydatos);
-
-                $arrayDatosClub = (array) $datosClub;
-                var_dump($arrayDatosClub); 
-            
-            
-                /*=============INSERTAR TABLA AUDITORIA (ACCION INSERT)=========*/       
-                    date_default_timezone_set('America/Santiago');
-                    $fechaActual = date('Y-m-d');
-                    $horaActual = date("H:i:s");
-         
-                    $auditoria->setNombreUsuario($_GET['user']);
-                    $auditoria->setRutUsuario($_GET['rutuser']);
-                    $auditoria->setFechaRegistro($fechaActual);
-                    $auditoria->setHoraRegistro($horaActual);
-                    $auditoria->setModulo('Jugador');
-                    $auditoria->setAccion('ELIMINAR');
-                    $auditoria->setDescripcion('Se a eliminado el jugador '.$arraydatos['NOMBRE_1'].' '.$arraydatos['NOMBRE_2'].' '.$arraydatos['APELLIDO_1'].' '.$arraydatos['APELLIDO_2'].', del club '.$arrayDatosClub['NOMBRE_CLUB']);
-                    $resultado = $auditoria->InsertAuditoria();         
-                /*==============================================================*/   
+                   $jugador->EliminarPerfilJugador();
+                    /*=============INSERTAR TABLA AUDITORIA (ACCION INSERT)=========*/       
+                     date_default_timezone_set('America/Santiago');
+                     $fechaActual = date('Y-m-d');
+                     $horaActual = date("H:i:s");
+                     $auditoria->setNombreUsuario($_GET['user']);
+                     $auditoria->setRutUsuario($_GET['rutuser']);
+                     $auditoria->setFechaRegistro($fechaActual);
+                     $auditoria->setHoraRegistro($horaActual);
+                     $auditoria->setModulo('Jugador');
+                     $auditoria->setAccion('ELIMINAR');
+                     $auditoria->setDescripcion('Se a eliminado el jugador '.$arraydatos['NOMBRE_1'].' '.$arraydatos['NOMBRE_2'].' '.$arraydatos['APELLIDO_1'].' '.$arraydatos['APELLIDO_2'].', del club '.$arrayDatosClub['NOMBRE_CLUB']);
+                     $resultado = $auditoria->InsertAuditoria();         
+                    /*==============================================================*/   
+                }else{
+                    /*=============INSERTAR TABLA AUDITORIA (ACCION INSERT)=========*/       
+                     date_default_timezone_set('America/Santiago');
+                     $fechaActual = date('Y-m-d');
+                     $horaActual = date("H:i:s");
+                     $auditoria->setNombreUsuario($_GET['user']);
+                     $auditoria->setRutUsuario($_GET['rutuser']);
+                     $auditoria->setFechaRegistro($fechaActual);
+                     $auditoria->setHoraRegistro($horaActual);
+                     $auditoria->setModulo('Jugador');
+                     $auditoria->setAccion('ELIMINAR');
+                     $auditoria->setDescripcion('Se a eliminado el jugador '.$arraydatos['NOMBRE_1'].' '.$arraydatos['NOMBRE_2'].' '.$arraydatos['APELLIDO_1'].' '.$arraydatos['APELLIDO_2'].', del club '.$arrayDatosClub['NOMBRE_CLUB']);
+                     $resultado = $auditoria->InsertAuditoria();         
+                  /*==============================================================*/  
+                }                           
+            }else{
+                echo 'No se han encontrado Datos';
             }
-          $jugador->eliminarJugador();
-          header('location:'.base_url.'jugadores/gestionjugador&id='.$id);
+         $jugador->eliminarJugador();
+         header('location:'.base_url.'jugadores/gestionjugador&id='.$id);
         }else{
             echo ' []No resive EL rut';
         }

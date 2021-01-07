@@ -68,4 +68,11 @@ public function cargarJugadoresTecnico(){
     return $respuesta;
 }
 
+public function EliminarPerfilJugador(){
+    $database = Database::connect();
+    $sql = "UPDATE persona SET ID_PERFIL_FK = 2 WHERE RUT_PERSONA =".$this->getrutPersona();
+    $respuesta = $database->query($sql);
+    return $respuesta;
+}
+
 }

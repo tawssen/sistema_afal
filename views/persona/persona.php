@@ -32,7 +32,7 @@
                          <td><?php echo $persona['RUT_PERSONA'].'-'.$persona['DV'] ?></td>
                          <td><?php echo $persona['NOMBRE_1'].' '.$persona['NOMBRE_2'].' '.$persona['APELLIDO_1'].' '.$persona['APELLIDO_2'] ?></td>
                          <td><?php echo $persona['FECHA_NACIMIENTO'] ?></td>
-                         <td><?php echo $persona['NUMERO_TELEFONO'] ?></td>
+                         <td><?php echo $persona['NUMERO_TELEFONO_PERSONA'] ?></td>
                          <td><?php echo $persona['CORREO_ELECTRONICO'] ?></td>
                          <td><?php echo $persona['NOMBRE_COMUNA'].', '.$persona['CALLE_PASAJE'] ?></td>                    
                          <td><?php echo $persona['NOMBRE_ASOCIACION'] ?></td>
