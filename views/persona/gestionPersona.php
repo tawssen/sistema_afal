@@ -38,8 +38,19 @@
             <input class="form-control" id="usuario" name="NombreUsuario" type="hidden" value="<?php echo $_SESSION['NombreUsuario']?>">
 
             <input class="form-control" id="rut" name="rutUsuario" type="hidden" value="<?php echo $_SESSION['RutUsuario']?>">
+            <div class=" form-group mt-3">
+                <label for="rutPersona" class="form-label">RUT</label>
+                <input class="form-control" type="text" name="rut" placeholder="Ingrese un RUT" maxlength="12" minlength="12" onkeypress="return isNumber(event)" oninput="checkRut(this)" required />      
+                <div id="alerta" class="fade show " >
+                    <span id="mensaje">
+            
+                    </span>
+                </div>  
 
-            <div class="row mt-3">
+                <div class="valid-feedback">Correcto.</div>
+                <div class="invalid-feedback">Por favor ingrese su rut.</div>                
+            </div>
+           <!-- <div class="row mt-3">
              <div class="form-group col-8">
                 <label for="rutPersona" class="form-label">RUT</label>
                 <input class="form-control" id="rutPersona" name="rutPersona" type="numeric" placeholder="12345678" required> 
@@ -52,7 +63,7 @@
                 <div class="valid-feedback">Correcto.</div>
                 <div class="invalid-feedback">Por favor ingrese su dv.</div>
              </div>
-            </div>
+            </div>-->
             
             <div class="row mt-3">
              <div class="col-6">
@@ -215,6 +226,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="<?=base_url?>javascript/main.js"></script>
 <script src="<?=base_url?>javascript/cargarInfo.js"></script>
+<script src="<?=base_url?>javascript/validarRut.js"></script>
 <script src="<?=base_url?>ajax/javascript/obtenerRegiones.js"></script>
 
 <script>
@@ -230,7 +242,8 @@
         if (form.checkValidity() === false) {
           event.preventDefault();
           event.stopPropagation();
-          $('#mensajealerta').removeClass('alert-success').addClass('alert-danger');
+          $('#mensajealerta').removeClass('alert-success').addClass('alert-danger');          
+          $('#mensaje').empty();
         }
         form.classList.add('was-validated');
       }, false);

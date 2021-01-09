@@ -54,11 +54,19 @@ class personaController{
     public function crear(){
         $identity = $_SESSION['identity'];
         if(isset($_SESSION['identity']) && $identity->ID_PERFIL_FK=="1"){
-
+                 
             $direccion = new Direccion();
             $persona = new Persona();            
             $usuario = new Usuario();
             $auditoria = new Auditoria();  
+
+            /*Resivir rut y formatearlo y separarlo*/
+            $rutnoformateado = $_POST['rut'];
+            $cadena = trim(str_replace(array('-','.'), '', $rutnoformateado));
+
+            $rutprimeraparte = substr($cadena,0,-1);    
+            $rutultimaparte = substr($cadena,-1,1);
+
 
             $direccion->setCallePasaje($_POST['callePasaje']);
             $direccion->setComuna($_POST['comuna']);
@@ -74,8 +82,8 @@ class personaController{
                 $resultado = $direccion->obtenerDireccion();                
                 $persona->setIdDireccion($resultado['ID_DIRECCION']);
             }
-           $persona->setRutPersona($_POST['rutPersona']);
-            $persona->setDvpersona($_POST['dvPersona']);
+           $persona->setRutPersona($rutprimeraparte);
+            $persona->setDvpersona($rutultimaparte);
             $persona->setNombre1($_POST['nombrePersona1']);
             $persona->setNombre2($_POST['nombrePersona2']);
             $persona->setApellido1($_POST['apellidoPersona1']);
@@ -89,9 +97,9 @@ class personaController{
             $respuesta = $persona->ingresarPersona();
 
             /*=============CREAR USUARIO================*/           
-            $NombreUsuario = $_POST['rutPersona'].''.$_POST['dvPersona'];
-            $ContraseñaUsuario = substr($_POST['rutPersona'], 0, 4); 
-            $RutUsuario = $_POST['rutPersona'];
+            $NombreUsuario = $rutprimeraparte.''.$rutultimaparte;
+            $ContraseñaUsuario = substr($rutprimeraparte, 0, 4); 
+            $RutUsuario = $rutprimeraparte;
 
             $usuario->setNombreUsuario($NombreUsuario);
             $ClaveEncriptada = password_hash($ContraseñaUsuario, PASSWORD_DEFAULT);
