@@ -144,7 +144,7 @@ class Persona{
             $perf = $this->getIdPerfil();
             $t_estado = 1;                       
 
-            $sql = "INSERT INTO persona (RUT_PERSONA,DV,NOMBRE_1,NOMBRE_2,APELLIDO_1,APELLIDO_2,FECHA_NACIMIENTO,NUMERO_TELEFONO,CORREO_ELECTRONICO,ID_DIRECCION_FK,ID_ASOCIACION_FK,ID_PERFIL_FK,ID_TIPO_ESTADO_FK_PERSONA) 
+            $sql = "INSERT INTO persona (RUT_PERSONA,DV,NOMBRE_1,NOMBRE_2,APELLIDO_1,APELLIDO_2,FECHA_NACIMIENTO,NUMERO_TELEFONO_PERSONA,CORREO_ELECTRONICO,ID_DIRECCION_FK,ID_ASOCIACION_FK,ID_PERFIL_FK,ID_TIPO_ESTADO_FK_PERSONA) 
             VALUES ($rut,'$dv','$nom_1','$nom_2','$ape_1','$ape_2','$fechaN',$num_tel,'$correo',$direc,$asoc,$perf,$t_estado)";
             $respuesta = $database->query($sql);
             if($respuesta){

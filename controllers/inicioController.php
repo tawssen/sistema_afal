@@ -72,12 +72,7 @@ class inicioController{
               '<a class="btn btn-danger" href="index">Volver Atras</a>'.
               '</div>';
 
-            } 
-           // '<div class="container">'
-           // '</div>'
-              
-             
-          
+            }                                             
         }                                    
     }
 

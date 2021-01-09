@@ -69,7 +69,7 @@ class campeonatosController{
                 $campeonato->setIdAsociacion($_POST['nombreAsociacion']);
                 $campeonato->setIdSerie($_POST['nombreSerie']);
 
-                //$respuesta = $campeonato->crearCampeonato();    
+                $respuesta = $campeonato->crearCampeonato();    
                 /*=============INSERTAR TABLA AUDITORIA (ACCION INSERT)=========*/                     
                     $auditoria->setNombreUsuario($_POST['NombreUsuario']);
                     $auditoria->setRutUsuario($_POST['rutUsuario']);
@@ -78,13 +78,13 @@ class campeonatosController{
                     $auditoria->setModulo('Campeonato');
                     $auditoria->setAccion('INSERTAR');
                     $auditoria->setDescripcion('Se a registrado el '.$_POST['nombreCampeonato'].' con fecha de inicio: '.$_POST['fechaInicioCampeonato']);
-                  //7  $auditoria->InsertAuditoria();                       
+                    $auditoria->InsertAuditoria();                       
                /*==============================================================*/ 
                if($respuesta){
-                   // header('location:'.base_url.'campeonatos/index');
+                    header('location:'.base_url.'campeonatos/index');
                     exit;
                 }else{
-                    //header('location:'.base_url.'campeonatos/gestionCrear');
+                    header('location:'.base_url.'campeonatos/gestionCrear');
                 }
             }else{
                 echo 'la fecha de incio de campeonato es menor a la actual';

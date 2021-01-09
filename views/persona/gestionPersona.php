@@ -250,7 +250,7 @@ if(isset($datosdeunaPersona)){
     echo "cargarInfo('#apellidoPersona1','".$datosdeunaPersona['APELLIDO_1']."');";
     echo "cargarInfo('#apellidoPersona2','".$datosdeunaPersona['APELLIDO_2']."');";    
     echo "cargarInfo('#fechaNacimiento','".$datosdeunaPersona['FECHA_NACIMIENTO']."');";
-    echo "cargarInfo('#numeroTelefono','".$datosdeunaPersona['NUMERO_TELEFONO']."');";    
+    echo "cargarInfo('#numeroTelefono','".$datosdeunaPersona['NUMERO_TELEFONO_PERSONA']."');";    
     echo "cargarInfo('#correoElectronico','".$datosdeunaPersona['CORREO_ELECTRONICO']."');";
     echo "cargarInfo('#selectRegion',".$datosdeunaPersona['ID_REGION_FK'].");";
     echo "cargarInfo('#selectProvincia','".$datosdeunaPersona['ID_PROVINCIA_FK']."');";
