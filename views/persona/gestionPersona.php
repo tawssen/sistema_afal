@@ -245,8 +245,12 @@
         echo '<script>
         toastr.error("El rut ingresado, se encuentra registrado")                    
         </script>';
-    } else {
-                   
+    }elseif(isset($_GET['errorRut'])){
+        echo '<script>
+        toastr.error("El rut ingresado no es correcto.")                    
+        </script>';
+    }else{
+
     }
 ?>
 
