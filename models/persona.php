@@ -242,4 +242,17 @@ class Persona{
 
             return $resultado;
         }
-}
+
+        public function obtenerRutPersonas(){
+            $resultado = false;
+            $database = Database::connect();
+            $rut = $this->getRutPersona();
+            $sql = "SELECT * FROM persona WHERE RUT_PERSONA = $rut";       
+            $datosobtenido = $database->query($sql);
+            if($datosobtenido && $datosobtenido->num_rows > 0){
+                $resultado = $datosobtenido->fetch_assoc();
+         
+            }
+            return $resultado;
+        }
+}     

@@ -17,6 +17,8 @@
     <link href="<?=base_url?>styles/carousel.css" rel="stylesheet">
     <link href="<?=base_url?>styles/aside.css" rel="stylesheet">
     <link rel="stylesheet" href="<?=base_url?>styles/turno.css">
+    <link rel="stylesheet" href="<?=base_url?>styles/toastr.css">
+
 
     <style>
       .bd-placeholder-img {

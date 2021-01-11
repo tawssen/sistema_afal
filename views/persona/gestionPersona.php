@@ -27,7 +27,7 @@
             
             <?php if(isset($_SESSION[' '])):?>
                 <p class="alert alert-danger">La acción no se ha podido llevar a cabo. Vuelva a intentarlo por favor.</p>
-            <?php endif; ?>
+            <?php endif; ?>          
 
             <?php if(isset($datosdeunaPersona)):?>
             <div class="">
@@ -50,20 +50,7 @@
                 <div class="valid-feedback">Correcto.</div>
                 <div class="invalid-feedback">Por favor ingrese su rut.</div>                
             </div>
-           <!-- <div class="row mt-3">
-             <div class="form-group col-8">
-                <label for="rutPersona" class="form-label">RUT</label>
-                <input class="form-control" id="rutPersona" name="rutPersona" type="numeric" placeholder="12345678" required> 
-                <div class="valid-feedback">Correcto.</div>
-                <div class="invalid-feedback">Por favor ingrese su rut sin Dv.</div>
-             </div>
-             <div class="col-4">
-                <label for="dvPersona" class="form-label">DV</label>
-                <input class="form-control" id="dvPersona" name="dvPersona" type="text" placeholder="k o 1-9" required>
-                <div class="valid-feedback">Correcto.</div>
-                <div class="invalid-feedback">Por favor ingrese su dv.</div>
-             </div>
-            </div>-->
+
             
             <div class="row mt-3">
              <div class="col-6">
@@ -227,6 +214,7 @@
 <script src="<?=base_url?>javascript/main.js"></script>
 <script src="<?=base_url?>javascript/cargarInfo.js"></script>
 <script src="<?=base_url?>javascript/validarRut.js"></script>
+<script src="<?=base_url?>javascript/toastr.js"></script>
 <script src="<?=base_url?>ajax/javascript/obtenerRegiones.js"></script>
 
 <script>
@@ -253,7 +241,17 @@
 </script>
 
 <?php 
-if(isset($datosdeunaPersona)){
+    if (isset($_GET['errorExiste'])){
+        echo '<script>
+        toastr.error("El rut ingresado, se encuentra registrado")                    
+        </script>';
+    } else {
+                   
+    }
+?>
+
+
+<?php if(isset($datosdeunaPersona)){
     echo '<script>';
     echo '$(document).ready(function(){';
     echo "cargarInfo('#rutPersona','".$datosdeunaPersona['RUT_PERSONA']."');";

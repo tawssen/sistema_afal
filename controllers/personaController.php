@@ -66,88 +66,97 @@ class personaController{
 
             $rutprimeraparte = substr($cadena,0,-1);    
             $rutultimaparte = substr($cadena,-1,1);
+            
+            $persona->setRutPersona($rutprimeraparte);
+            $todasLasPersonas = $persona->obtenerRutPersonas();            
+            $datos = $todasLasPersonas;
+            var_dump($datos);
+            var_dump($rutprimeraparte);
 
+            if($datos == false ){
+                $direccion->setCallePasaje($_POST['callePasaje']);
+                $direccion->setComuna($_POST['comuna']);
+                $direccion->setProvincia($_POST['provincia']);
+                $direccion->setRegion($_POST['region']);
+        
+                $verificarDireccion = $direccion->verificarDireccion();
+                if($verificarDireccion<1){
+                    $ingresar = $direccion->ingresarDireccion();
+                    $resultado = $direccion->obtenerDireccion();
+                    $persona->setIdDireccion($resultado['ID_DIRECCION']);
+                }else{
+                    $resultado = $direccion->obtenerDireccion();                
+                    $persona->setIdDireccion($resultado['ID_DIRECCION']);
+                }
+              //$persona->setRutPersona($rutprimeraparte);
+                $persona->setDvpersona($rutultimaparte);
+                $persona->setNombre1($_POST['nombrePersona1']);
+                $persona->setNombre2($_POST['nombrePersona2']);
+                $persona->setApellido1($_POST['apellidoPersona1']);
+                $persona->setApellido2($_POST['apellidoPersona2']);
+                $persona->setFechaNacimiento($_POST['fechaNacimiento']);
+                $persona->setNumeroTelefono($_POST['numeroTelefono']);
+                $persona->setCorreo($_POST['correoElectronico']);
+                $persona->setIdAsociacion($_POST['nombreAsociacion']);
+                $persona->setIdPerfil($_POST['perfilPersona']);
+        
+                $respuesta = $persona->ingresarPersona();
+                /*=============CREAR USUARIO================*/           
+                $NombreUsuario = $rutprimeraparte.''.$rutultimaparte;
+                $ContraseñaUsuario = substr($rutprimeraparte, 0, 4); 
+                $RutUsuario = $rutprimeraparte;
 
-            $direccion->setCallePasaje($_POST['callePasaje']);
-            $direccion->setComuna($_POST['comuna']);
-            $direccion->setProvincia($_POST['provincia']);
-            $direccion->setRegion($_POST['region']);
-    
-            $verificarDireccion = $direccion->verificarDireccion();
-            if($verificarDireccion<1){
-                $ingresar = $direccion->ingresarDireccion();
-                $resultado = $direccion->obtenerDireccion();
-                $persona->setIdDireccion($resultado['ID_DIRECCION']);
-            }else{
-                $resultado = $direccion->obtenerDireccion();                
-                $persona->setIdDireccion($resultado['ID_DIRECCION']);
-            }
-           $persona->setRutPersona($rutprimeraparte);
-            $persona->setDvpersona($rutultimaparte);
-            $persona->setNombre1($_POST['nombrePersona1']);
-            $persona->setNombre2($_POST['nombrePersona2']);
-            $persona->setApellido1($_POST['apellidoPersona1']);
-            $persona->setApellido2($_POST['apellidoPersona2']);
-            $persona->setFechaNacimiento($_POST['fechaNacimiento']);
-            $persona->setNumeroTelefono($_POST['numeroTelefono']);
-            $persona->setCorreo($_POST['correoElectronico']);
-            $persona->setIdAsociacion($_POST['nombreAsociacion']);
-            $persona->setIdPerfil($_POST['perfilPersona']);
-    
-            $respuesta = $persona->ingresarPersona();
+                $usuario->setNombreUsuario($NombreUsuario);
+                $ClaveEncriptada = password_hash($ContraseñaUsuario, PASSWORD_DEFAULT);
+                $usuario->setClaveUsuario($ClaveEncriptada);
+                $usuario->setRutUsuario($RutUsuario);        
+         
+             if($_POST['perfilPersona'] == 4  || $_POST['perfilPersona'] == 6 || $_POST['perfilPersona'] == 7){              
+              /*=============INSERTAR TABLA AUDITORIA (ACCION INSERT)=========*/       
+              date_default_timezone_set('America/Santiago');
+              $fechaActual = date('Y-m-d');
+              $horaActual = date("H:i:s");
 
-            /*=============CREAR USUARIO================*/           
-            $NombreUsuario = $rutprimeraparte.''.$rutultimaparte;
-            $ContraseñaUsuario = substr($rutprimeraparte, 0, 4); 
-            $RutUsuario = $rutprimeraparte;
+              $auditoria->setNombreUsuario($_POST['NombreUsuario']);
+              $auditoria->setRutUsuario($_POST['rutUsuario']);
+              $auditoria->setFechaRegistro($fechaActual);
+              $auditoria->setHoraRegistro($horaActual);
+              $auditoria->setModulo('Persona');
+              $auditoria->setAccion('INSERTAR');
+              $auditoria->setDescripcion('Se a registrado a '.$_POST['nombrePersona1'].' '.$_POST['nombrePersona2'].' '.$_POST['apellidoPersona1'].' '.$_POST['apellidoPersona2'].', cuenta con el perfil id='.$_POST['perfilPersona']);
+              $resultado = $auditoria->InsertAuditoria();         
+              /*==============================================================*/     
+             
+              }else{
+              $respuesta = $usuario->crearUsuario();
+              /*=============INSERTAR TABLA AUDITORIA (ACCION INSERT)=========*/       
+ 
+              $fechaActual = date('Y-m-d');
+              $horaActual = date("H:i:s");
 
-            $usuario->setNombreUsuario($NombreUsuario);
-            $ClaveEncriptada = password_hash($ContraseñaUsuario, PASSWORD_DEFAULT);
-            $usuario->setClaveUsuario($ClaveEncriptada);
-            $usuario->setRutUsuario($RutUsuario);        
-           
-            if($_POST['perfilPersona'] == 4  || $_POST['perfilPersona'] == 6 || $_POST['perfilPersona'] == 7){              
-                  /*=============INSERTAR TABLA AUDITORIA (ACCION INSERT)=========*/       
-            date_default_timezone_set('America/Santiago');
-            $fechaActual = date('Y-m-d');
-            $horaActual = date("H:i:s");
-
-            $auditoria->setNombreUsuario($_POST['NombreUsuario']);
-            $auditoria->setRutUsuario($_POST['rutUsuario']);
-            $auditoria->setFechaRegistro($fechaActual);
-            $auditoria->setHoraRegistro($horaActual);
-            $auditoria->setModulo('Persona');
-            $auditoria->setAccion('INSERTAR');
-            $auditoria->setDescripcion('Se a registrado a '.$_POST['nombrePersona1'].' '.$_POST['nombrePersona2'].' '.$_POST['apellidoPersona1'].' '.$_POST['apellidoPersona2'].', cuenta con el perfil id='.$_POST['perfilPersona']);
-            $resultado = $auditoria->InsertAuditoria();         
-            /*==============================================================*/     
-               
-            }else{
-                $respuesta = $usuario->crearUsuario();
-             /*=============INSERTAR TABLA AUDITORIA (ACCION INSERT)=========*/       
-                date_default_timezone_set('America/Santiago');
-                $fechaActual = date('Y-m-d');
-                $horaActual = date("H:i:s");
-
-                $auditoria->setNombreUsuario($_POST['NombreUsuario']);
-                $auditoria->setRutUsuario($_POST['rutUsuario']);
-                $auditoria->setFechaRegistro($fechaActual);
-                $auditoria->setHoraRegistro($horaActual);
-                $auditoria->setModulo('Persona');
-                $auditoria->setAccion('INSERTAR');
-                $auditoria->setDescripcion('Se a registrado a '.$_POST['nombrePersona1'].' '.$_POST['nombrePersona2'].' '.$_POST['apellidoPersona1'].' '.$_POST['apellidoPersona2'].', cuenta con el perfil id= '.$_POST['perfilPersona'].' y se a creado un usuario para este' );
-                $resultado = $auditoria->InsertAuditoria();         
-             /*==============================================================*/     
-            }           
+              $auditoria->setNombreUsuario($_POST['NombreUsuario']);
+              $auditoria->setRutUsuario($_POST['rutUsuario']);
+              $auditoria->setFechaRegistro($fechaActual);
+              $auditoria->setHoraRegistro($horaActual);
+              $auditoria->setModulo('Persona');
+              $auditoria->setAccion('INSERTAR');
+              $auditoria->setDescripcion('Se a registrado a '.$_POST['nombrePersona1'].' '.$_POST['nombrePersona2'].' '.$_POST['apellidoPersona1'].' '.$_POST['apellidoPersona2'].', cuenta con el perfil id= '.$_POST['perfilPersona'].' y se a creado un usuario para este' );
+              $resultado = $auditoria->InsertAuditoria();         
+              /*==============================================================*/     
+              }  
+                if($respuesta){
+                    echo 'Encontro respuesta';
+                    header('location:'.base_url.'persona/index');                    
+                }else{
+                    echo 'NO encontro respuesta';
+                    header('location:'.base_url.'persona/gestionCrear');
+                }                           
+            }elseif($rutprimeraparte == $datos['RUT_PERSONA']){
                 
-            
-            if($respuesta){
-                header('location:'.base_url.'persona/index');
-                exit;
-            }else{
-                header('location:'.base_url.'persona/gestionCrear');
-            }
-            
+               header('location:'.base_url.'persona/gestionCrear&errorExiste=1');
+   
+            }             
+                                      
         }else{
             echo '<div class="container mt-5">';
             echo '<h1>No tienes permiso para acceder a este apartado del sistema</h1>';
