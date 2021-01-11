@@ -76,7 +76,7 @@ class personaController{
             $datos = $todasLasPersonas;                        
 
             if($datos == false ){
-                if($validar->validar_rut($rutInt,$dvInt)){
+                if($validar->verifica_RUT($rutnoformateado)==0){
                     $direccion->setCallePasaje($_POST['callePasaje']);
                     $direccion->setComuna($_POST['comuna']);
                     $direccion->setProvincia($_POST['provincia']);

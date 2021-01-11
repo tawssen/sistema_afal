@@ -201,7 +201,7 @@
                 <?php if(isset($datosdeunaPersona)):?>
                 <input class="btn btn-success" type="submit" value="Actualizar Persona">
                 <?php else:?>
-                <input class="btn btn-success" type="submit" value="Crear Persona">
+                <input class="btn btn-success" type="submit" value="Crear Persona" id="btn-crear">
                 <?php endif; ?>
             </div>
 
