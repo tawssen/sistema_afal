@@ -15,35 +15,20 @@
             <div class="izq">
                 <div class="arriba">
                     <div class="datos">
-                        <h4>Unión San Luis (LOCAL)</h4>
-                        <p>Director Técnico: César Muñoz</p>
+                        <h4><?=$datosClubTecnico->CLUB_LOCAL?> (LOCAL)</h4>
+                        <p>Director Técnico: <?=$datosClubTecnico->NOMBRE_TECNICO_LOCAL?></p>
                     </div>
                     <div class="jugadores">
                         <ul class="list-group">
-                            <li class="list-group-item">Dapibus ac facilisis in</li>
-                            <li class="list-group-item ">A simple primary list group item</li>
-                            <li class="list-group-item">A simple secondary list group item</li>
-                            <li class="list-group-item">A simple success list group item</li>
-                            <li class="list-group-item">A simple danger list group item</li>
-                            <li class="list-group-item">A simple warning list group item</li>
-                            <li class="list-group-item ">A simple info list group item</li>
-                            <li class="list-group-item">A simple light list group item</li>
-                            <li class="list-group-item">A simple dark list group item</li>
-                            <li class="list-group-item">A simple light list group item</li>
-                            <li class="list-group-item">A simple dark list group item</li>
-                            <li class="list-group-item">A simple light list group item</li>
-                            <li class="list-group-item">A simple dark list group item</li>
+                          <?php while($jugadorLocal = mysqli_fetch_assoc($jugadoresLocal)){?>
+                              <li class="list-group-item"><?php echo $jugadorLocal['NOMBRE_1'].' '.$jugadorLocal['APELLIDO_1'].' '.$jugadorLocal['APELLIDO_2'];?></li>
+                          <?php }?>    
                         </ul>
                     </div>
                 </div>
                 <div class="abajo">
                     <div class="sucesos">
-                            <li class="list-group-item">A simple secondary list group item</li>
-                            <li class="list-group-item">A simple success list group item</li>
-                            <li class="list-group-item">A simple danger list group item</li>
-                            <li class="list-group-item">A simple warning list group item</li>
-                            <li class="list-group-item">A simple info list group item</li>
-                            <li class="list-group-item">A simple light list group item</li>
+
                     </div>
                 </div>
             </div>
@@ -51,34 +36,20 @@
             <div class="der">
                 <div class="arriba">
                     <div class="datos">
-                        <h4>Unión Yungay (VISITA)</h4>
-                        <p>Director Técnico: Diego Faúndez</p>
+                      <h4><?=$datosClubTecnico->CLUB_VISITA?> (VISITA)</h4>
+                      <p>Director Técnico: <?=$datosClubTecnico->NOMBRE_TECNICO_VISITA?></p>
                     </div>
                     <div class="jugadores">
                         <ul class="list-group">
-                            <li class="list-group-item">Dapibus ac facilisis in</li>
-                            <li class="list-group-item ">A simple primary list group item</li>
-                            <li class="list-group-item">A simple secondary list group item</li>
-                            <li class="list-group-item">A simple success list group item</li>
-                            <li class="list-group-item">A simple danger list group item</li>
-                            <li class="list-group-item">A simple warning list group item</li>
-                            <li class="list-group-item ">A simple info list group item</li>
-                            <li class="list-group-item">A simple light list group item</li>
-                            <li class="list-group-item">A simple dark list group item</li>
-                            <li class="list-group-item">A simple light list group item</li>
-                            <li class="list-group-item">A simple dark list group item</li>
-                            <li class="list-group-item">A simple light list group item</li>
-                            <li class="list-group-item">A simple dark list group item</li>
+                          <?php while($jugadorVisita = mysqli_fetch_assoc($jugadoresVisita)){?>
+                              <li class="list-group-item"><?php echo $jugadorVisita['NOMBRE_1'].' '.$jugadorVisita['APELLIDO_1'].' '.$jugadorVisita['APELLIDO_2'];?></li>
+                          <?php }?>    
                         </ul>
                     </div>
                 </div>
                 <div class="abajo">
                     <div class="sucesos">
-                            <li class="list-group-item">A simple success list group item</li>
-                            <li class="list-group-item">A simple danger list group item</li>
-                            <li class="list-group-item">A simple warning list group item</li>
-                            <li class="list-group-item">A simple info list group item</li>
-                            <li class="list-group-item">A simple light list group item</li>
+                    
                     </div>
                 </div>
             </div>

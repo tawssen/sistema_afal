@@ -56,7 +56,6 @@ table tbody::-webkit-scrollbar-thumb:active {
                         <tr>
                             <th>RUT</th>
                             <th>NOMBRE</th>
-                            <th class="text-center">DORSAL</th>
                             <TH class="text-center">CONVOCATORIA</TH>
                         </tr>
                     </thead>
@@ -70,29 +69,25 @@ table tbody::-webkit-scrollbar-thumb:active {
                         <tr>
                             <td><?php echo $jugador['RUT_PERSONA'].'-'.$jugador['DV']?></td>
                             <td><?php echo $jugador['NOMBRE_1'].' '.$jugador['APELLIDO_1'].' '.$jugador['APELLIDO_2']?></td>
-                            <td class="d-flex justify-content-center"><input type="text" class="form-control text-center w-25 dorsal" disabled></td>
-                            <td><input type="checkbox" id="<?=$jugador['RUT_PERSONA_FK']?>" value="<?=$jugador['RUT_PERSONA_FK']?>" class="input-group radiobtn"></td>
+                            <td><input type="checkbox" id="<?=$jugador['RUT_PERSONA_FK']?>" value="<?=$jugador['ID_PERSONA_JUGADOR']?>" class="input-group radiobtn"></td>
                         </tr>
                     <?php elseif(((int)$_GET['serie']==2) && ($edad>=45)):?>
                         <tr>
                             <td><?php echo $jugador['RUT_PERSONA'].'-'.$jugador['DV']?></td>
                             <td><?php echo $jugador['NOMBRE_1'].' '.$jugador['APELLIDO_1'].' '.$jugador['APELLIDO_2']?></td>
-                            <td class="d-flex justify-content-center"><input type="text" class="form-control text-center w-25 dorsal" disabled></td>
-                            <td><input type="checkbox" id="<?=$jugador['RUT_PERSONA_FK']?>" value="<?=$jugador['RUT_PERSONA_FK']?>" class="input-group radiobtn"></td>
+                            <td><input type="checkbox" id="<?=$jugador['RUT_PERSONA_FK']?>" value="<?=$jugador['ID_PERSONA_JUGADOR']?>" class="input-group radiobtn"></td>
                         </tr>
                     <?php elseif(((int)$_GET['serie']==3) && ($edad>=35)):?>
                         <tr>
                             <td><?php echo $jugador['RUT_PERSONA'].'-'.$jugador['DV']?></td>
                             <td><?php echo $jugador['NOMBRE_1'].' '.$jugador['APELLIDO_1'].' '.$jugador['APELLIDO_2']?></td>
-                            <td class="d-flex justify-content-center"><input type="text" class="form-control text-center w-25 dorsal" disabled></td>
-                            <td><input type="checkbox" id="<?=$jugador['RUT_PERSONA_FK']?>" value="<?=$jugador['RUT_PERSONA_FK']?>" class="input-group radiobtn"></td>
+                            <td><input type="checkbox" id="<?=$jugador['RUT_PERSONA_FK']?>" value="<?=$jugador['ID_PERSONA_JUGADOR']?>" class="input-group radiobtn"></td>
                         </tr>
                     <?php elseif(((int)$_GET['serie']==4) || ((int)$_GET['serie']==5) && ($edad>=16)):?>
                         <tr>
                             <td><?php echo $jugador['RUT_PERSONA'].'-'.$jugador['DV']?></td>
                             <td><?php echo $jugador['NOMBRE_1'].' '.$jugador['APELLIDO_1'].' '.$jugador['APELLIDO_2']?></td>
-                            <td class="d-flex justify-content-center"><input type="text" class="form-control text-center w-25 dorsal" disabled></td>
-                            <td><input type="checkbox" id="<?=$jugador['RUT_PERSONA_FK']?>" value="<?=$jugador['RUT_PERSONA_FK']?>" class="input-group radiobtn"></td>
+                            <td><input type="checkbox" id="<?=$jugador['RUT_PERSONA_FK']?>" value="<?=$jugador['ID_PERSONA_JUGADOR']?>" class="input-group radiobtn"></td>
                         </tr>
                     <?php endif;?>
 
@@ -160,18 +155,11 @@ table tbody::-webkit-scrollbar-thumb:active {
     var listaDeJugadores = [];
 
     $('.radiobtn').click(function(){
-        let tdPadre = $(this).parent(); //Se captura el TD del checkbox
-        let tdHermanos = $(tdPadre).siblings(); //Se capturan los hermanos del TD anteriormente capturado
-        let tdInput = tdHermanos[2];// De los hermanos capturados, seleccionamos el hermano en la posicion 2
-        let objetoInput = $(tdInput).children(); //Al TD hermano, le extraemos su hijo, esto devuelve un array de una sola posicion, que es el input
-        let input = objetoInput[0]; //Y por ultimo, sacamos el input del array y lo guardamos en una variable para trabajarlo
-
-        if(document.getElementById(this.value).checked == true){
-            $(input).prop("disabled",false);
+        if($(this).prop('checked') == true){
             let jugador = {
-                rut: parseInt($(this).val()),
-                dorsal: 0
+                rut: parseInt($(this).val())
             }
+            console.log(jugador);
             listaDeJugadores.push(jugador);
             if(listaDeJugadores.length>=18){
                 $('#tablaJugadores > tbody  > tr > td > .radiobtn').each(function(index, checkbox) { 
@@ -181,7 +169,6 @@ table tbody::-webkit-scrollbar-thumb:active {
                 });
             }
         }else{
-            $(input).prop("disabled",true);
             listaDeJugadores.forEach( (jugador,i) =>{
                 if(jugador.rut==$(this).val()){
                     listaDeJugadores.splice(i,1);
@@ -198,52 +185,28 @@ table tbody::-webkit-scrollbar-thumb:active {
     })
 
     $('#enviarNomina').click(function(){
-        console.log("==========================================================");  
-        let listaDeDorsales = [];
-
-        $('#tablaJugadores > tbody  > tr > td > .radiobtn').each(function(index, rbtn) {
-            if(rbtn.checked==true){
-                let tdPadre = $(rbtn).parent();
-                let tdHermanos = $(tdPadre).siblings();
-                let tdDorsal = tdHermanos[2];
-                let inputDorsal = $(tdDorsal).children();
-                let dorsal = parseInt(inputDorsal[0].value);
-                let rut = parseInt($(this).val());
-
-                if(listaDeDorsales.length<1){
-                    listaDeDorsales.push(dorsal);
-                    listaDeJugadores.forEach( jugador => {
-                        if(jugador.rut == rut){
-                            jugador.dorsal = dorsal;
-                        }
-                    })
-                }else{
-                    let respuesta = listaDeDorsales.indexOf(dorsal);
-                    if(respuesta==-1){
-                        listaDeDorsales.push(dorsal);
-                        listaDeJugadores.forEach( jugador => {
-                            if(jugador.rut == rut){
-                                jugador.dorsal = dorsal;
-                            }
-                        })
+        if(listaDeJugadores.length<7){
+            $('#mensajeError').html("");
+            let mensajeError = "<p class='alert alert-danger'>Debe ingresar al menos 7 jugadores para presentarse</p>";
+            $('#mensajeError').append(mensajeError);
+        }else{
+            //implementar AJAX que envíe el objeto y haga los registros en la base de datos
+            $('#mensajeError').html("");
+            alert("Enviando lista");
+            $.ajax({
+                url: "../ajax/php/cargarJugadoresPartido.php",
+                type: "POST",
+                data: {partido: <?=$_GET['partido']?>,jugadores: JSON.stringify(listaDeJugadores)},
+                dataType: "json",
+                success: function(respuesta){  
+                    if(respuesta==1){
+                        document.location.href='<?=base_url?>tecnico/inicioTecnico';
                     }
+                },
+                error: function(){
+
                 }
-            }
-        });
-
-        let dorsalRepetido = false;
-        $('#mensajeError').html("");
-        listaDeJugadores.forEach( jugador =>{
-            if(jugador.dorsal==0){
-                let alerta = '<p class="alert alert-danger mt-3 mr-1"> El jugador con el rut: '+jugador.rut+' tiene un dorsal repetido </p>';
-                $('#mensajeError').append(alerta);
-                dorsalRepetido = true;
-            }
-        })
-
-        if(listaDeJugadores.length<8){
-            let alerta = '<p class="alert alert-danger mt-3 mr-1"> Debe seleccionar un mínimo de 8 jugadores</p>';
-                $('#mensajeError').append(alerta);
+            })
         }
     })
 

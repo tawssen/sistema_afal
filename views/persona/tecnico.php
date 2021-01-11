@@ -26,7 +26,7 @@
                        <tr>
                          <td><?php echo $tecnico['RUT_PERSONA'].'-'.$tecnico['DV'] ?></td>
                          <td><?php echo $tecnico['NOMBRE_1'].' '.$tecnico['NOMBRE_2'].' '.$tecnico['APELLIDO_1'].' '.$tecnico['APELLIDO_2'] ?></td>
-                         <td><?php echo $tecnico['NUMERO_TELEFONO'] ?></td>
+                         <td><?php echo $tecnico['NUMERO_TELEFONO_PERSONA'] ?></td>
                          <td><?php echo $tecnico['CORREO_ELECTRONICO'] ?></td>
                          <td><?php echo $tecnico['NOMBRE_COMUNA'].', '.$tecnico['CALLE_PASAJE'] ?></td>                    
                          <td><?php echo $tecnico['NOMBRE_ASOCIACION'] ?></td>
@@ -65,8 +65,6 @@
     </div>
   </div>
 </div>
-
-
 
 <!--Modal Aderir Tecnico a Club-->
 <!-- Modal -->

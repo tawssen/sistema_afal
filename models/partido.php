@@ -15,6 +15,14 @@ class Partido{
     private $nombre_estadio;
     private $id_campeonato;
     
+    public function getIdPartido(){
+        return $this->id_partido;
+    }
+
+    public function setIdPartido($idPartido){
+        $this->id_partido = $idPartido;
+    }
+
     // Geter y Seter FechaDate
     public function getFechaDate(){
         return $this->fecha_date;
@@ -148,21 +156,38 @@ class Partido{
         $sql = 'SELECT ID_PARTIDO, FECHA_DATE, PA.RUT_PERSONA AS RUT_ARBITRO, FECHA_CAMPEONATO AS FECHA_STRING, CL.NOMBRE_CLUB AS CLUB_LOCAL,  CV.NOMBRE_CLUB AS CLUB_VISITA,
         PT.RUT_PERSONA AS RUT_TURNO,
         CONCAT(PA.NOMBRE_1," ",PA.NOMBRE_2," ",PA.APELLIDO_1," ",PA.APELLIDO_2) AS NOMBRE_ARBITRO,
-        ID_ESTADO_CAMPEONATO_FK
+        ID_ESTADO_CAMPEONATO_FK, ID_ESTADO_PARTIDO_FK
         from PARTIDOS
         INNER JOIN CLUB CL ON (PARTIDOS.ID_CLUB_LOCAL_FK = CL.ID_CLUB)
         INNER JOIN CLUB CV ON (PARTIDOS.ID_CLUB_VISITA_FK = CV.ID_CLUB)
         INNER JOIN PERSONA PT ON (PARTIDOS.RUT_PERSONA_TURNO_FK = PT.RUT_PERSONA)
         INNER JOIN PERSONA PA ON (PARTIDOS.RUT_PERSONA_ARBITRO_1 = PA.RUT_PERSONA)
-        INNER JOIN CAMPEONATO ON (PARTIDOS.ID_CAMPEONATO_FK = CAMPEONATO.ID_CAMPEONATO) WHERE PT.RUT_PERSONA ='.$this->getRutTurno();
+        INNER JOIN CAMPEONATO ON (PARTIDOS.ID_CAMPEONATO_FK = CAMPEONATO.ID_CAMPEONATO) WHERE PT.RUT_PERSONA = '.$this->getRutTurno().' AND NOT ID_ESTADO_PARTIDO_FK = 4';
         $respuesta = $database->query($sql);
         return $respuesta;
     }
 
     public function obtenerUnPartido(){
         $database = Database::connect();
-        $sql = '';
+        $sql = 'SELECT * FROM partidos INNER JOIN campeonato ON partidos.ID_CAMPEONATO_FK = campeonato.ID_CAMPEONATO WHERE ID_PARTIDO='.$this->getIdPartido();
         $respuesta = $database->query($sql);
-        return $respuesta;
+        return $respuesta->fetch_object();
     }
+
+    public function datosDeUnPartido(){
+        $database = Database::connect();
+        $sql = 'SELECT ID_PARTIDO, FECHA_DATE, PA.RUT_PERSONA AS RUT_ARBITRO, FECHA_CAMPEONATO AS FECHA_STRING, CL.NOMBRE_CLUB AS CLUB_LOCAL,  CV.NOMBRE_CLUB AS CLUB_VISITA,
+        CONCAT(PT.NOMBRE_1," ",PT.NOMBRE_2," ",PT.APELLIDO_1," ",PT.APELLIDO_2) AS NOMBRE_TURNO,
+        CONCAT(PA.NOMBRE_1," ",PA.NOMBRE_2," ",PA.APELLIDO_1," ",PA.APELLIDO_2) AS NOMBRE_ARBITRO,
+        ID_ESTADO_CAMPEONATO_FK
+        from PARTIDOS
+        INNER JOIN CLUB CL ON (PARTIDOS.ID_CLUB_LOCAL_FK = CL.ID_CLUB)
+        INNER JOIN CLUB CV ON (PARTIDOS.ID_CLUB_VISITA_FK = CV.ID_CLUB)
+        INNER JOIN PERSONA PT ON (PARTIDOS.RUT_PERSONA_TURNO_FK = PT.RUT_PERSONA)
+        INNER JOIN PERSONA PA ON (PARTIDOS.RUT_PERSONA_ARBITRO_1 = PA.RUT_PERSONA)
+        INNER JOIN CAMPEONATO ON (PARTIDOS.ID_CAMPEONATO_FK = CAMPEONATO.ID_CAMPEONATO)';
+        $respuesta = $database->query($sql);
+        return $respuesta->fetch_object();
+    }
+
 }
