@@ -4,7 +4,7 @@ require_once '../../config/database.php';
 
 $resultado = false;
 $database = Database::connect();
-$sql = "SELECT * FROM club";
+$sql = "SELECT ID_CLUB, NOMBRE_CLUB FROM campeonato_equipos cp INNER JOIN club  c ON (cp.id_club_fk = c.id_club)";
 
 $respuesta = $database->query($sql);
 

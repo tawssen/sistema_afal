@@ -4,8 +4,8 @@ require_once '../../config/database.php';
 
 $resultado = false;
 $database = Database::connect();
-$sql = "SELECT * FROM club WHERE not ID_CLUB =".$_POST['id'];
-
+//$sql = "SELECT * FROM club WHERE not ID_CLUB =".$_POST['id'];
+$sql = "SELECT ID_CLUB, NOMBRE_CLUB FROM campeonato_equipos cp INNER JOIN club  c ON (cp.id_club_fk = c.id_club) WHERE not ID_CLUB =".$_POST['id'];
 $respuesta = $database->query($sql);
 
 if($respuesta){
