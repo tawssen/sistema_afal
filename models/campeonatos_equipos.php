@@ -66,4 +66,12 @@ class ClubesParticipantes{
         $respuesta = $database->query($sql);
         return $respuesta;
     }
+
+    public function obtenerIdClubCampeonato(){
+        $database = Database::connect();
+        $sql = "SELECT * FROM campeonato_equipos WHERE ID_CAMPEONATO_EQUIPOS = ".$this->getIdClubesParticipantes();
+        $respuesta = $database->query($sql);
+        return $respuesta->fetch_object();
+
+    }
 }

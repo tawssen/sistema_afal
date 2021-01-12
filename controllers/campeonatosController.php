@@ -6,6 +6,7 @@ require_once 'models/serie.php';
 require_once 'models/estado_campeonato.php';
 require_once 'models/campeonatos_equipos.php';
 require_once 'models/auditoria.php';
+require_once 'models/tabla_posiciones.php';
 
 class campeonatosController{
 
@@ -240,10 +241,30 @@ class campeonatosController{
         $identity = $_SESSION['identity'];
         if(isset($_SESSION['identity']) && $identity->ID_PERFIL_FK=="1"){
             $participante = new ClubesParticipantes();
-            $participante->setIdClub($_GET['idclub']);
-            $participante->setIdCampeonato($_GET['idcampeonato']);
-            $respuesta = $participante->inscribirClub();
-            header('location:'.base_url.'campeonatos/gestionarParticipantes&idcampeonato='.$_GET['idcampeonato']);
+            $tablaposiciones = new Tabla_Posiciones();
+            if(isset($_GET['idclub']) && isset($_GET['idcampeonato'])){
+
+                $participante->setIdClub($_GET['idclub']);
+                $participante->setIdCampeonato($_GET['idcampeonato']);
+                $tablaposiciones->setidClubFk($_GET['idclub']);
+                $tablaposiciones->setidCampeonatoFk($_GET['idcampeonato']);
+
+                $respuesta = $participante->inscribirClub();
+                $resultado = $tablaposiciones->IngresarTablaPosiciones();
+
+                if($respuesta &&  $resultado){
+
+                    header('location:'.base_url.'campeonatos/gestionarParticipantes&idcampeonato='.$_GET['idcampeonato']);                    
+                }else{
+                    echo '<div class="container text-center mt-5"><h2>No a ingresado uno de los INSERT!!</h2></div>';                
+                }
+
+            }else{
+                
+                echo 'No encontro valores por GET!!';
+
+            }                       
+            
         }else{
             echo '<div class="container mt-5">';
             echo '<h1>No tienes permiso para acceder a este apartado del sistema</h1>';
@@ -252,9 +273,25 @@ class campeonatosController{
     }
 
     public function eliminarInscripcion(){
-        $participante = new ClubesParticipantes();
-        $participante->setIdClubesParticipantes($_GET['id']);
-        $participante->eliminarInscripcion();
-        header('location:'.base_url.'campeonatos/gestionarParticipantes&idcampeonato='.$_GET['idcampeonato']);
+        $identity = $_SESSION['identity'];
+        if(isset($_SESSION['identity']) && $identity->ID_PERFIL_FK=="1"){
+
+            $participante = new ClubesParticipantes();
+            $tablaposiciones = new Tabla_Posiciones();
+
+            $participante->setIdClubesParticipantes($_GET['id']);
+            $id_club = $participante->obtenerIdClubCampeonato();
+            
+            $tablaposiciones->setidClubFk($id_club->ID_CLUB_FK);
+            $resp = $tablaposiciones->BorrarDeTablaPosiciones();
+            $participante->eliminarInscripcion();
+           
+            header('location:'.base_url.'campeonatos/gestionarParticipantes&idcampeonato='.$_GET['idcampeonato']);
+
+        }else{
+            echo '<div class="container mt-5">';
+            echo '<h1>No tienes permiso para acceder a este apartado del sistema</h1>';
+            echo '</div>';
+        }
     }
 }
