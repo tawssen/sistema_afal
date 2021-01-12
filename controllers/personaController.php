@@ -69,7 +69,8 @@ class personaController{
             $rutultimaparte = substr($cadena,-1,1);
             
             $rutInt = (int)$rutprimeraparte;
-            $dvInt = (int)$rutultimaparte;
+            $dvInt = (int)$rutultimaparte;            
+            /*===================================*/
 
             $persona->setRutPersona($rutprimeraparte);
             $todasLasPersonas = $persona->obtenerRutPersonas();            
@@ -235,10 +236,20 @@ class personaController{
                $_SESSION['mensajeErrorDireccion'] = true;
             }
 
+            /*Resivir rut y formatearlo y separarlo*/
+               $rutnoformateado = $_POST['rut'];
+               $cadena = trim(str_replace(array('-','.'), '', $rutnoformateado));
+   
+               $rutprimeraparte = substr($cadena,0,-1);    
+               $rutultimaparte = substr($cadena,-1,1);
+               
+               $rutInt = (int)$rutprimeraparte;
+               $dvInt = (int)$rutultimaparte;            
+            /*===================================*/
            
             
-            $persona->setRutPersona($_POST['rutPersona']);
-            $persona->setDvpersona($_POST['dvPersona']);
+            $persona->setRutPersona( $rutprimeraparte );
+            $persona->setDvpersona( $rutultimaparte);
             $persona->setNombre1($_POST['nombrePersona1']);
             $persona->setNombre2($_POST['nombrePersona2']);
             $persona->setApellido1($_POST['apellidoPersona1']);
@@ -275,7 +286,7 @@ class personaController{
             }else if($respuesta){
                 header('location:'.base_url.'persona/index');
             }else if($_GET['in']=="crear"){                
-                header('location:'.base_url.'persona/gestionEditar&id='.$_POST['rutPersona']);
+                header('location:'.base_url.'persona/gestionEditar&id='.$rutprimeraparte);
             }
         }else{
             echo '<div class="container mt-5">';

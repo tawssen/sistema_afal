@@ -36,21 +36,20 @@
             <?php endif; ?>
             
             <input class="form-control" id="usuario" name="NombreUsuario" type="hidden" value="<?php echo $_SESSION['NombreUsuario']?>">
-
             <input class="form-control" id="rut" name="rutUsuario" type="hidden" value="<?php echo $_SESSION['RutUsuario']?>">
+                       
             <div class=" form-group mt-3">
                 <label for="rutPersona" class="form-label">RUT</label>
-                <input class="form-control" type="text" name="rut" placeholder="Ingrese un RUT" maxlength="12" minlength="12" onkeypress="return isNumber(event)" oninput="checkRut(this)" required />      
+                <input class="form-control" type="text" id="rutPersona" name="rut" placeholder="Ingrese un RUT" maxlength="12" minlength="12" onkeypress="return isNumber(event)" oninput="checkRut(this)" required />      
                 <div id="alerta" class="fade show " >
                     <span id="mensaje">
             
                     </span>
                 </div>  
-
                 <div class="valid-feedback">Correcto.</div>
                 <div class="invalid-feedback">Por favor ingrese su rut.</div>                
             </div>
-
+      
             
             <div class="row mt-3">
              <div class="col-6">
@@ -258,8 +257,8 @@
 <?php if(isset($datosdeunaPersona)){
     echo '<script>';
     echo '$(document).ready(function(){';
-    echo "cargarInfo('#rutPersona','".$datosdeunaPersona['RUT_PERSONA']."');";
-    echo "cargarInfo('#dvPersona','".$datosdeunaPersona['DV']."');";
+    echo "cargarInfo('#rutPersona','".$datosdeunaPersona['RUT_PERSONA']."".$datosdeunaPersona['DV']."');";
+    //echo "cargarInfo('#dvPersona','".$datosdeunaPersona['DV']."');";
     echo "cargarInfo('#nombrePersona1','".$datosdeunaPersona['NOMBRE_1']."');";
     echo "cargarInfo('#nombrePersona2','".$datosdeunaPersona['NOMBRE_2']."');";
     echo "cargarInfo('#apellidoPersona1','".$datosdeunaPersona['APELLIDO_1']."');";
