@@ -6,11 +6,15 @@ require_once 'models/partido_jugadores.php';
 require_once 'models/tipo_gol.php';
 require_once 'models/tipo_falta.php';
 require_once 'models/tipo_tarjeta.php';
+require_once 'models/estado_partido.php';
+
 class turnoController{
 
     public function index(){
         $identity = $_SESSION['identity'];
         $partidos = new Partido();
+        $estados = new Estado_Partido();
+        $estadoPartidos = $estados->obtenerEstados();
         $partidos->setRutTurno($identity->RUT_PERSONA_FK);
         $partidosTurno = $partidos->obtenerPartidosTurno();
         require_once 'views/turno/inicio.php';

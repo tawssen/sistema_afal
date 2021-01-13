@@ -21,7 +21,12 @@
                        <td><?php echo $partido['CLUB_VISITA'] ?></td>
                        <td><?php echo $partido['NOMBRE_ARBITRO'] ?></td>
                        <td>
-                       <button class="btn btn-primary btn-comenzar" value="<?php echo $partido['ID_PARTIDO']?>" data-bs-toggle="modal" data-bs-target="#comenzarPartido">Comenzar</button>                
+                       <button class="btn btn-primary btn-comenzar" value="<?php echo $partido['ID_PARTIDO']?>" data-bs-toggle="modal" data-bs-target="#comenzarPartido">Comenzar</button>
+                       <select name="" id="selectEstadoPartido" class="form-select mt-1">
+                       <?php while($estado=mysqli_fetch_assoc($estadoPartidos)){?>
+                        <option value="<?=$estado['ID_ESTADO_PARTIDO']?>"<?php if($partido['ID_ESTADO_PARTIDO_FK']==$estado['ID_ESTADO_PARTIDO']){echo 'selected';}?>><?php echo $estado['NOMBRE_ESTADO_PARTIDO']?></option>
+                       <?php }?>   
+                       </select>
                        </td>
                        </tr>
                     <?php }?>    
@@ -71,4 +76,25 @@
         boton.removeAttribute("onclick");
         boton.setAttribute("onclick","document.location.href='<?=base_url?>turno/gestionPartidos&partido="+id+"'");        
     });
+</script>
+
+<script>
+$('#selectEstadoPartido').change(function(){
+  let estadoPartido = parseInt($(this).val());
+  let hermano = $(this).siblings();
+  let hijosHermano = hermano[0];
+  let idPartido = parseInt($(hijosHermano).val());
+  $.ajax({
+        url: "../ajax/php/cambiarEstadoPartido.php",
+        type: "POST",
+        data: {estado: estadoPartido,partido: idPartido},
+        dataType: "json",
+        success: function(respuesta){  
+          alert("funciona");
+        },
+        error: function(){
+
+        }
+    })
+})
 </script>

@@ -22,4 +22,13 @@ class Estado_Partido{
     public function setNombreEstadoPartido($nombre_estado_partido){
         $this->nombre_estado_partido = $nombre_estado_partido;
     }
+
+    public function obtenerEstados(){
+        $resultado = false;
+        $database = Database::connect();
+        $sql = "SELECT * FROM estado_partido";       
+        $respuesta = $database->query($sql);
+
+        return $respuesta;
+    }
 }
