@@ -199,6 +199,20 @@ class Usuario{
         return $resultado;
     }
 
+    public function obtenerUnUsuariosConRut(){
+        $resultado = false;
+        $database = Database::connect();
+        $sql = "SELECT * FROM USUARIOS WHERE RUT_PERSONA_FK =".$this->getRutUsuario();
+      
+        $datosObtenidosUsuarios = $database->query($sql);
+        if($datosObtenidosUsuarios && $datosObtenidosUsuarios->num_rows > 0){
+           $resultado = $datosObtenidosUsuarios->fetch_assoc();
+
+        }
+
+        return $resultado;
+    }
+
 }
 
 ?>

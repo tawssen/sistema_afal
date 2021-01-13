@@ -211,6 +211,7 @@ class personaController{
             $direccion = new Direccion();
             $persona = new Persona();                
             $auditoria = new Auditoria();  
+            $usuario = new Usuario();
             if(isset($_POST['callePasaje']) && isset($_POST['comuna']) && isset($_POST['provincia']) && isset($_POST['region'])){
 
                 unset($_SESSION['mensajeErrorDireccion']);
@@ -261,33 +262,64 @@ class personaController{
             $persona->setIdPerfil($_POST['perfilPersona']);
             $persona->setIdTipoEstado($_POST['tipoestado']);
             $respuesta = $persona->editarPersona();
-           
-                /*=============INSERTAR TABLA AUDITORIA (ACCION UPDATE)=========*/       
-                 date_default_timezone_set('America/Santiago');
-                 $fechaActual = date('Y-m-d');
-                 $horaActual = date("H:i:s");
+            
+
+            /*=============CREAR USUARIO================*/           
+            $NombreUsuario = $rutprimeraparte.''.$rutultimaparte;
+            $ContraseñaUsuario = substr($rutprimeraparte, 0, 4); 
+            $RutUsuario = $rutprimeraparte;
+
+            $usuario->setNombreUsuario($NombreUsuario);
+            $ClaveEncriptada = password_hash($ContraseñaUsuario, PASSWORD_DEFAULT);
+            $usuario->setClaveUsuario($ClaveEncriptada);
+            $usuario->setRutUsuario($RutUsuario);
+            
+            $datos = $usuario->obtenerUnUsuariosConRut();
+            
+
+                if($datos == false){                                                                  
+
+                    $usuario->crearUsuario();
+
+                }elseif($rutprimeraparte == $datos['RUT_PERSONA_FK'] && $_POST['perfilPersona'] == 4 || $_POST['perfilPersona'] == 6 || $_POST['perfilPersona'] == 7){
+                   
+                    $usuario->deshabilitarUsuarioConRut();
+
+                }elseif($rutprimeraparte == $datos['RUT_PERSONA_FK'] && $datos['ID_TIPO_ESTADO_FK'] == 2 && $_POST['perfilPersona'] == 1 || $_POST['perfilPersona'] == 2 || $_POST['perfilPersona'] == 3 || $_POST['perfilPersona'] == 5){
+
+                    $usuario->habilitarUsuarioConRut();
+
+                }else{
+
+                    echo 'YA VALI VERGA';
+
+                }
+
+            /*=============INSERTAR TABLA AUDITORIA (ACCION UPDATE)=========*/       
+            date_default_timezone_set('America/Santiago');
+            $fechaActual = date('Y-m-d');
+            $horaActual = date("H:i:s");
      
-                 $auditoria->setNombreUsuario($_POST['NombreUsuario']);
-                 $auditoria->setRutUsuario($_POST['rutUsuario']);
-                 $auditoria->setFechaRegistro($fechaActual);
-                 $auditoria->setHoraRegistro($horaActual);
-                 $auditoria->setModulo('Persona');
-                 $auditoria->setAccion('MODIFICAR');
-                 $auditoria->setDescripcion('Se han modificado los datos de '.$_POST['nombrePersona1'].' '.$_POST['nombrePersona2'].' '.$_POST['apellidoPersona1'].' '.$_POST['apellidoPersona2'].', cuenta con el perfil id='.$_POST['perfilPersona']);
-                 $auditoria->InsertAuditoria();
-                              
-                /*==============================================================*/  
+            $auditoria->setNombreUsuario($_POST['NombreUsuario']);
+            $auditoria->setRutUsuario($_POST['rutUsuario']);
+            $auditoria->setFechaRegistro($fechaActual);
+            $auditoria->setHoraRegistro($horaActual);
+            $auditoria->setModulo('Persona');
+            $auditoria->setAccion('MODIFICAR');
+            $auditoria->setDescripcion('Se han modificado los datos de '.$_POST['nombrePersona1'].' '.$_POST['nombrePersona2'].' '.$_POST['apellidoPersona1'].' '.$_POST['apellidoPersona2'].', cuenta con el perfil id='.$_POST['perfilPersona']);
+            $auditoria->InsertAuditoria();                              
+            /*==============================================================*/  
+            
 
-
-            if($respuesta && isset($_GET['in'])){         
-                header('location:'.base_url.'persona/arbitros');
-            }elseif($respuesta && isset($_GET['tec'])){         
-                header('location:'.base_url.'tecnico/index');
-            }else if($respuesta){
-                header('location:'.base_url.'persona/index');
-            }else if($_GET['in']=="crear"){                
-                header('location:'.base_url.'persona/gestionEditar&id='.$rutprimeraparte);
-            }
+                if($respuesta && isset($_GET['in'])){         
+                     header('location:'.base_url.'persona/arbitros');
+                }elseif($respuesta && isset($_GET['tec'])){         
+                    header('location:'.base_url.'tecnico/index');
+                }else if($respuesta){
+                    header('location:'.base_url.'persona/index');
+                }else if($_GET['in']=="crear"){                
+                    header('location:'.base_url.'persona/gestionEditar&id='.$rutprimeraparte);
+                } 
         }else{
             echo '<div class="container mt-5">';
             echo '<h1>No tienes permiso para acceder a este apartado del sistema</h1>';
