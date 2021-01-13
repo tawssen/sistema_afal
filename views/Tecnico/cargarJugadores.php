@@ -56,6 +56,7 @@ table tbody::-webkit-scrollbar-thumb:active {
                         <tr>
                             <th>RUT</th>
                             <th>NOMBRE</th>
+                            <th>DORSAL</th>
                             <TH class="text-center">CONVOCATORIA</TH>
                         </tr>
                     </thead>
@@ -69,24 +70,28 @@ table tbody::-webkit-scrollbar-thumb:active {
                         <tr>
                             <td><?php echo $jugador['RUT_PERSONA'].'-'.$jugador['DV']?></td>
                             <td><?php echo $jugador['NOMBRE_1'].' '.$jugador['APELLIDO_1'].' '.$jugador['APELLIDO_2']?></td>
+                            <td><input type="text" class="form-control" disabled></td>
                             <td><input type="checkbox" id="<?=$jugador['RUT_PERSONA_FK']?>" value="<?=$jugador['ID_PERSONA_JUGADOR']?>" class="input-group radiobtn"></td>
                         </tr>
                     <?php elseif(((int)$_GET['serie']==2) && ($edad>=45)):?>
                         <tr>
                             <td><?php echo $jugador['RUT_PERSONA'].'-'.$jugador['DV']?></td>
                             <td><?php echo $jugador['NOMBRE_1'].' '.$jugador['APELLIDO_1'].' '.$jugador['APELLIDO_2']?></td>
+                            <td><input type="text" class="form-control"></td>
                             <td><input type="checkbox" id="<?=$jugador['RUT_PERSONA_FK']?>" value="<?=$jugador['ID_PERSONA_JUGADOR']?>" class="input-group radiobtn"></td>
                         </tr>
                     <?php elseif(((int)$_GET['serie']==3) && ($edad>=35)):?>
                         <tr>
                             <td><?php echo $jugador['RUT_PERSONA'].'-'.$jugador['DV']?></td>
                             <td><?php echo $jugador['NOMBRE_1'].' '.$jugador['APELLIDO_1'].' '.$jugador['APELLIDO_2']?></td>
+                            <td><input type="text" class="form-control"></td>
                             <td><input type="checkbox" id="<?=$jugador['RUT_PERSONA_FK']?>" value="<?=$jugador['ID_PERSONA_JUGADOR']?>" class="input-group radiobtn"></td>
                         </tr>
                     <?php elseif(((int)$_GET['serie']==4) || ((int)$_GET['serie']==5) && ($edad>=16)):?>
                         <tr>
                             <td><?php echo $jugador['RUT_PERSONA'].'-'.$jugador['DV']?></td>
                             <td><?php echo $jugador['NOMBRE_1'].' '.$jugador['APELLIDO_1'].' '.$jugador['APELLIDO_2']?></td>
+                            <td><input type="text" class="form-control" disabled></td>
                             <td><input type="checkbox" id="<?=$jugador['RUT_PERSONA_FK']?>" value="<?=$jugador['ID_PERSONA_JUGADOR']?>" class="input-group radiobtn"></td>
                         </tr>
                     <?php endif;?>
@@ -153,13 +158,22 @@ table tbody::-webkit-scrollbar-thumb:active {
 
 <script>
     var listaDeJugadores = [];
+    var listaDeDorsales = [];
+    var listaDeJugadoresFinal = [];
+    var verificacion = true;
 
     $('.radiobtn').click(function(){
+        let tdPadre = $(this).parent(); //Se captura el TD del checkbox
+        let tdHermanos = $(tdPadre).siblings(); //Se capturan los hermanos del TD anteriormente capturado
+        let tdInput = tdHermanos[2];// De los hermanos capturados, seleccionamos el hermano en la posicion 2
+        let objetoInput = $(tdInput).children(); //Al TD hermano, le extraemos su hijo, esto devuelve un array de una sola posicion, que es el input
+        let input = objetoInput[0]; //Y por ultimo, sacamos el input del array y lo guardamos en una variable para trabajarlo
+
         if($(this).prop('checked') == true){
+            $(input).prop("disabled",false);
             let jugador = {
                 rut: parseInt($(this).val())
             }
-            console.log(jugador);
             listaDeJugadores.push(jugador);
             if(listaDeJugadores.length>=18){
                 $('#tablaJugadores > tbody  > tr > td > .radiobtn').each(function(index, checkbox) { 
@@ -169,6 +183,7 @@ table tbody::-webkit-scrollbar-thumb:active {
                 });
             }
         }else{
+            $(input).prop("disabled",true);
             listaDeJugadores.forEach( (jugador,i) =>{
                 if(jugador.rut==$(this).val()){
                     listaDeJugadores.splice(i,1);
@@ -190,25 +205,98 @@ table tbody::-webkit-scrollbar-thumb:active {
             let mensajeError = "<p class='alert alert-danger'>Debe ingresar al menos 7 jugadores para presentarse</p>";
             $('#mensajeError').append(mensajeError);
         }else{
-            //implementar AJAX que envíe el objeto y haga los registros en la base de datos
             $('#mensajeError').html("");
-            alert("Enviando lista");
-            $.ajax({
-                url: "../ajax/php/cargarJugadoresPartido.php",
-                type: "POST",
-                data: {partido: <?=$_GET['partido']?>,jugadores: JSON.stringify(listaDeJugadores)},
-                dataType: "json",
-                success: function(respuesta){  
-                    if(respuesta==1){
-                        document.location.href='<?=base_url?>tecnico/inicioTecnico';
-                    }
-                },
-                error: function(){
+            listaDeDorsales = [];
+            $('#tablaJugadores > tbody  > tr').each(function(index, tr) { 
+                let hijosTr = $(tr).children();
 
+                let tdInput = hijosTr[2];
+                let hijoTd = $(tdInput).children();
+                let imput = hijoTd[0];
+                let dorsal = parseInt($(imput).val());
+
+                let tdCheck = hijosTr[3];
+                let hijoTdCheck = $(tdCheck).children();
+                let check = hijoTdCheck[0];
+
+                if(($(check).prop('checked')) && (!isNaN(dorsal))){
+                    listaDeDorsales.push(parseInt($(imput).val()));
+                }else{
+                    return false;
                 }
             })
+
+            if(listaDeJugadores.length==listaDeDorsales.length){
+                $('#tablaJugadores > tbody  > tr').each(function(index, tr) { 
+                    let hijosTr = $(tr).children();
+                    let tdInput = hijosTr[2];
+                    let hijoTd = $(tdInput).children();;
+                    let imput = hijoTd[0];
+
+                    let dorsal = parseInt($(imput).val());
+
+                    if(!isNaN(dorsal)){
+                        const result = listaDeDorsales.filter(numero => numero==dorsal);
+                        if(result.length>1){
+                            verificacion = false;
+                            return false;
+                        }else{
+                            verificacion = true;
+                        }
+                    }else{
+                        return false;
+                    }
+                })
+
+                if(verificacion){
+                    //recorro tabla y creo objeto con rut y dorsal para ser enviado
+                    $('#tablaJugadores > tbody  > tr').each(function(index, tr) { 
+                        let hijosTr = $(tr).children();
+
+                        let tdInput = hijosTr[2];
+                        let hijoTd = $(tdInput).children();
+                        let imput = hijoTd[0];
+
+                        let tdCheck = hijosTr[3];
+                        let hijoTdCheck = $(tdCheck).children();
+                        let check = hijoTdCheck[0];
+
+                        let dorsal = parseInt($(imput).val());
+                        let idJugador = parseInt($(check).val());
+
+                        if(($(check).prop('checked'))){
+                            let jugador = {
+                                rut: idJugador,
+                                dorsal: dorsal
+                            }
+                            listaDeJugadoresFinal.push(jugador);
+                        }
+                    });
+                    $('#mensajeError').html("");
+                    alert("Enviando lista");
+                    $.ajax({
+                        url: "../ajax/php/cargarJugadoresPartido.php",
+                        type: "POST",
+                        data: {partido: <?=$_GET['partido']?>,jugadores: JSON.stringify(listaDeJugadoresFinal)},
+                        dataType: "json",
+                        success: function(respuesta){  
+                            if(respuesta==1){
+                                document.location.href='<?=base_url?>tecnico/inicioTecnico';
+                            }
+                        },
+                        error: function(){
+
+                        }
+                    })
+                }else{ 
+                    //quiere decir que un número se repite
+                    console.log("Un número se repite");
+                }
+            }else{
+                //Mensaje que debe ingresar números en todos los jugadores seleccionados
+                console.log("Las listas tienen diferentes cantidades. Rebobinar por faor.");
+            }
         }
     })
-
 </script>
 

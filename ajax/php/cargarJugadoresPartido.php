@@ -12,7 +12,7 @@ $respuesta = false;
 
 foreach ($jugadores as $jugador){
     $rut = $jugador["rut"];
-    $sql = 'INSERT INTO partido_jugadores (ID_PERSONA_JUGADOR_FK,ID_PARTIDO_FK,NUMERO_JUGADOR) VALUES ('.$rut.','.$partido.',null)';
+    $sql = 'INSERT INTO partido_jugadores (ID_PERSONA_JUGADOR_FK,ID_PARTIDO_FK,NUMERO_JUGADOR) VALUES ('.$rut.','.$partido.','.$jugador['dorsal'].')';
     $respuesta = $database->query($sql);
     if($respuesta){
         $contador++;
