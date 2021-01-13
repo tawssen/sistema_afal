@@ -22,4 +22,16 @@ class Tipo_Gol{
     public function setNombreTipoGol($nombre_tipo_gol){
         $this->nombre_tipo_gol = $nombre_tipo_gol;
     }
+
+    
+    public function obtenerTiposGoles(){
+        $resultado = false;
+        $database = Database::connect();
+        $sql = "SELECT * FROM TIPO_GOL";
+        $respuesta = $database->query($sql);
+        if($respuesta){
+            $resultado = $respuesta;
+        }
+        return  $resultado;
+    }
 }

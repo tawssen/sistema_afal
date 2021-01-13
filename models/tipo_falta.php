@@ -22,4 +22,15 @@ class Tipo_Falta{
     public function setNombreTipoFalta($nombre_tipo_falta){
         $this->nombre_tipo_falta = $nombre_tipo_falta;
     }
+
+    public function obtenerTiposFaltas(){
+        $resultado = false;
+        $database = Database::connect();
+        $sql = "SELECT * FROM TIPO_FALTA";
+        $respuesta = $database->query($sql);
+        if($respuesta){
+            $resultado = $respuesta;
+        }
+        return  $resultado;
+    }
 }

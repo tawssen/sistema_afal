@@ -151,13 +151,15 @@
           <div class="row">
             <div class="col-5">
                 <label for="">CLUB</label>
-                <select name="" id="" class="form-select">
-                    <option value="">Seleccionar Club</option>
+                <select name="" id="selectClub" class="form-select">
+                    <option value="0">Seleccionar Club</option>
+                    <option value="<?=$datosPartido->ID_CLUB_LOCAL_FK?>"><?=$datosClubTecnico->CLUB_LOCAL?></option>                     
+                    <option value="<?=$datosPartido->ID_CLUB_VISITA_FK?>"><?=$datosClubTecnico->CLUB_VISITA?></option> 
                 </select>
             </div>
             <div class="col-7">
                 <label for="">JUGADOR</label>
-                <select name="" id="" class="form-select">
+                <select name="" id="selectJugadores" class="form-select" >
                     <option value="">Seleccionar Jugador</option>
                 </select>
             </div>
@@ -166,16 +168,14 @@
           <div class="row mt-2">
             <div class="col-5">
                 <label for="">TIPO GOL</label>
-                <select name="" id="" class="form-select">
+                <select name="" id="" class="form-select">                  
                     <option value="">Seleccionar Tipo</option>
+                    <?php while($goles = mysqli_fetch_assoc($todosLosTiposGoles)){?>
+                    <option value="<?php echo $goles['ID_TIPO_GOL'];?>"><?php echo $goles['NOMBRE_TIPO_GOL'];?></option>
+                    <?php } mysqli_free_result($todosLosTiposGoles);?>
+                    <?php ?>
                 </select>
-            </div>
-            <div class="col-7">
-                <label for="">TIEMPO</label>
-                <select name="" id="" class="form-select">
-                    <option value="">Seleccionar Tiempo</option>
-                </select>
-            </div>
+            </div>            
           </div>
 
       </div>
@@ -199,13 +199,15 @@
         <div class="row">
             <div class="col-5">
                 <label for="">CLUB</label>
-                <select name="" id="" class="form-select">
-                    <option value="">Seleccionar Club</option>
+                <select name="" id="selectClubAmonestaciones" class="form-select">
+                    <option value="0">Seleccionar Club</option>
+                    <option value="<?=$datosPartido->ID_CLUB_LOCAL_FK?>"><?=$datosClubTecnico->CLUB_LOCAL?></option>                     
+                    <option value="<?=$datosPartido->ID_CLUB_VISITA_FK?>"><?=$datosClubTecnico->CLUB_VISITA?></option> 
                 </select>
             </div>
             <div class="col-7">
-                <label for="">JUGADOR</label>
-                <select name="" id="" class="form-select">
+                <label for="">JUGADOR</label> 
+                <select name="" id="selectJugadoresAmonestaciones" class="form-select" >
                     <option value="">Seleccionar Jugador</option>
                 </select>
             </div>
@@ -215,20 +217,20 @@
                 <label for="">TIPO TARJETA</label>
                 <select name="" id="" class="form-select">
                     <option value="">Seleccionar Tipo</option>
+                  <?php while($tarjeta = mysqli_fetch_assoc($todosLosTiposTarjeta)){?>                
+                    <option value="<?php echo $tarjeta['ID_TIPO_TARJETA'];?>"><?php echo $tarjeta['NOMBRE_TIPO_TARJETA'];?></option>
+                  <?php } mysqli_free_result($todosLosTiposTarjeta);?>
                 </select>
             </div>
             <div class="col-4">
                 <label for="">TIPO FALTA</label>
                 <select name="" id="" class="form-select">
-                    <option value="">Seleccionar Tiempo</option>
+                    <option value="">Seleccionar Falta</option>
+                    <?php while($falta = mysqli_fetch_assoc($todosLosTiposFalta)){?>                
+                    <option value="<?php echo $falta['ID_TIPO_FALTA'];?>"><?php echo $falta['NOMBRE_TIPO_FALTA'];?></option>
+                  <?php } mysqli_free_result($todosLosTiposFalta);?>
                 </select>
-            </div>
-            <div class="col-4">
-                <label for="">TIEMPO</label>
-                <select name="" id="" class="form-select">
-                    <option value="">Seleccionar Tiempo</option>
-                </select>
-            </div>
+            </div>           
           </div>
       </div>
       <div class="modal-footer">
@@ -249,6 +251,41 @@
       </div>
       <div class="modal-body">
 
+       <div class="row">  
+         <div class="col-12">
+            <label for="">CLUB</label>
+            <select name="" id="selectclubsustituciones" class="form-select">
+              <option value="0">Seleccionar Club</option>
+              <option value="<?=$datosPartido->ID_CLUB_LOCAL_FK?>"><?=$datosClubTecnico->CLUB_LOCAL?></option>                     
+              <option value="<?=$datosPartido->ID_CLUB_VISITA_FK?>"><?=$datosClubTecnico->CLUB_VISITA?></option> 
+            </select>
+          </div>
+        </div>
+
+        <div class="row">               
+          <div class="col-6">
+            <label for="">JUGADOR SALIENTE</label> 
+            <select name="" id="selectjugadorSale" class="form-select" >
+              <option value="">Seleccionar Jugador Salienete</option>
+            </select>
+          </div>
+          <div class="col-6">
+           <label for="">JUGADOR ENTRANTE</label> 
+            <select name="" id="selectjugadorEntra" class="form-select" >
+             <option value="">Seleccionar Jugador Entrante</option>
+           </select>
+          </div>          
+        </div>
+        <div class="row">
+          <div class="col-12">
+            <label for="">TIEMPO</label>
+            <select name="" id="" class="form-select">
+              <option value="0">Seleccionar Tiempo</option>
+              <option value="1">Primer Tiempo</option>
+              <option value="2">Segundo Tiempo</option>
+            </select>
+          </div>
+        </div>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -260,14 +297,17 @@
 
 <!-- Modal Observaciones -->
 <div class="modal fade" id="modalObserciones" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
+  <div class="modal-dialog modal-lg">
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title" id="exampleModalLabel">Observaciones del Partido</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        ...
+       <div class="col-12">
+          <label for="" class="form-label">OBSERVACION</label>
+          <textarea class="form-control" id="" rows="5"  maxlength="255"></textarea>
+        </div>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -337,5 +377,125 @@
     h= 0; m=0; s=0; mls=0;
     btnStart.addEventListener("click",start);
   }
+
+</script>
+
+<!--script para cargar datos-->
+<script>
+/*CARGAR JUGADORES A MODAL GOLES*/
+$("#selectClub").change(function(){
+    let IdCLub = $(this).val();
+    $("#selectJugadores").html("");
+    let opcionDefault = document.createElement("option");
+    opcionDefault.value = "0";
+    opcionDefault.text = "Seleccionar Jugador";
+    document.getElementById("selectJugadores").appendChild(opcionDefault);
+
+    $.ajax({
+        url: "../ajax/php/obtenerJugadoresPorClub.php",
+        type: "POST",
+        data: {idClubphp: IdCLub,idpartido: <?=$_GET['partido']?>},
+        dataType: "json",
+        success: function(respuesta){
+            respuesta.forEach( jugadoresClub => {
+                let opcion = document.createElement("option");
+                opcion.value = jugadoresClub.RUT_PERSONA_FK;
+                opcion.text = jugadoresClub.NUMERO_JUGADOR;
+                document.getElementById("selectJugadores").appendChild(opcion);
+            });
+        },
+        error: function(){
+            console.log("No funciona cargar jugadores");
+        }
+    })
+});
+/*===================================================================================*/
+/*CARGAR JUGADORES A MODAL Amonestaciones*/
+$("#selectClubAmonestaciones").change(function(){
+    let IdCLub = $(this).val();
+    $("#selectJugadoresAmonestaciones").html("");
+    let opcionDefault = document.createElement("option");
+    opcionDefault.value = "0";
+    opcionDefault.text = "Seleccionar Jugador";
+    document.getElementById("selectJugadoresAmonestaciones").appendChild(opcionDefault);
+
+    $.ajax({
+        url: "../ajax/php/obtenerJugadoresPorClub.php",
+        type: "POST",
+        data: {idClubphp: IdCLub,idpartido: <?=$_GET['partido']?>},
+        dataType: "json",
+        success: function(respuesta){
+            respuesta.forEach( jugadoresClub => {
+                let opcion = document.createElement("option");
+                opcion.value = jugadoresClub.RUT_PERSONA_FK;
+                opcion.text = jugadoresClub.NUMERO_JUGADOR;
+                document.getElementById("selectJugadoresAmonestaciones").appendChild(opcion);
+            });
+        },
+        error: function(){
+            console.log("No funciona cargar jugadores");
+        }
+    })
+});
+/*===================================================================================*/
+/*CARGAR JUGADOR ENTRANTES Y SALIENTES*/
+$("#selectclubsustituciones").change(function(){
+    let IdCLub = $(this).val();
+
+    $("#selectjugadorSale").html("");
+    let opcionDefault = document.createElement("option");
+    opcionDefault.value = "0";
+    opcionDefault.text = "Seleccionar Jugador Saliente";
+    document.getElementById("selectjugadorSale").appendChild(opcionDefault);
+
+    $.ajax({
+        url: "../ajax/php/obtenerJugadoresPorClub.php",
+        type: "POST",
+        data: {idClubphp: IdCLub,idpartido: <?=$_GET['partido']?>},
+        dataType: "json",
+        success: function(respuesta){
+            respuesta.forEach( jugadoresClub => {
+                let opcion = document.createElement("option");
+                opcion.value = jugadoresClub.RUT_PERSONA_FK;
+                opcion.text = jugadoresClub.NUMERO_JUGADOR;
+                document.getElementById("selectjugadorSale").appendChild(opcion);
+            });
+        },
+        error: function(){
+            console.log("No funciona cargar jugadores");
+        }
+    }) 
+});
+
+$('#selectjugadorSale').change(function(){
+  let IdCLub = $('#selectclubsustituciones').val();
+  let RutJugadorS = $(this).val();
+  
+  $("#selectjugadorEntra").html("");
+  let opcionDefault = document.createElement("option");
+  opcionDefault.value = "0";
+  opcionDefault.text = "Seleccionar Jugador Entrante";
+  document.getElementById("selectjugadorEntra").appendChild(opcionDefault);
+  
+  $.ajax({
+        url: "../ajax/php/obtenerJugadoresNoSeleccionado.php",
+        type: "POST",
+        data: {idClubphp: IdCLub,idpartido: <?=$_GET['partido']?>,rutpersona: RutJugadorS},
+        dataType: "json",
+        success: function(respuesta){
+            respuesta.forEach( jugadoresClub => {
+                let opcion = document.createElement("option");
+                opcion.value = jugadoresClub.RUT_PERSONA_FK;
+                opcion.text = jugadoresClub.NUMERO_JUGADOR;
+                document.getElementById("selectjugadorEntra").appendChild(opcion);
+            });
+        },
+        error: function(){
+            console.log("No funciona cargar jugadores");
+        }
+    }) 
+  
+});
+/*===================================================================================*/
 
 </script>

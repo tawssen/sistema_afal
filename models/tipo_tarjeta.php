@@ -22,4 +22,15 @@ class Tipo_Targeta{
     public function setNombreTipoTarjeta($nombre_tipo_tarjeta){
         $this->nombre_tipo_tarjeta = $nombre_tipo_tarjeta;
     }
+
+    public function obtenerTiposTarjetas(){
+        $resultado = false;
+        $database = Database::connect();
+        $sql = "SELECT * FROM TIPO_TARJETA";
+        $respuesta = $database->query($sql);
+        if($respuesta){
+            $resultado = $respuesta;
+        }
+        return  $resultado;
+    }
 }
