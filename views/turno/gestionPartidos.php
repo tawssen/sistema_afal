@@ -83,7 +83,6 @@
         <div class="menu-container">
             <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalGoles">Goles</button>
             <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalAmonestaciones">Amonestaciones</button>
-            <button class="btn btn-success" id="iniciarPartido">Iniciar Partido</button>
             <button class="btn btn-danger">Terminar Partido</button>
             <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalSubstituciones">Substituciónes</button>
             <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalObserciones">Observaciones</button>
@@ -100,7 +99,7 @@
                     <div class="jugadores">
                         <ul class="list-group">
                           <?php while($jugadorLocal = mysqli_fetch_assoc($jugadoresLocal)){?>
-                              <li class="list-group-item"><?php echo $jugadorLocal['NOMBRE_1'].' '.$jugadorLocal['APELLIDO_1'].' '.$jugadorLocal['APELLIDO_2'];?></li>
+                              <li class="list-group-item"><?php echo '('.$jugadorLocal['NUMERO_JUGADOR'].') '.$jugadorLocal['NOMBRE_1'].' '.$jugadorLocal['APELLIDO_1'].' '.$jugadorLocal['APELLIDO_2'];?></li>
                           <?php }?>    
                         </ul>
                     </div>
