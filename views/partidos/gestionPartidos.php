@@ -100,7 +100,7 @@
             <div class="row">
                 <div class="col-6">
                 <label for="a" class="form-label">CLUB LOCAL (*)</label>
-                    <select name="clublocal" class="form-select" id="selectClubLocal" required>
+                    <select name="clublocal" class="form-select" id="selectClubLocales" required>
                         <option  value="">Seleccionar Local</option>
                     </select>
                     <div class="valid-feedback">Correcto.</div>
@@ -173,7 +173,6 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.5.4/umd/popper.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="<?=base_url?>javascript/main.js"></script>
-<script src="<?=base_url?>ajax/javascript/obtenerRegiones.js"></script>
 <script src="<?=base_url?>ajax/javascript/obtenerClubes.js"></script>
 <script src="<?=base_url?>ajax/javascript/partidosArbitros.js"></script>
 
@@ -199,4 +198,58 @@
     });
   }, false);
 })();
+</script>
+
+<script>
+$(document).ready(function(){
+    $.ajax({
+        url: "../ajax/php/obtenerClubes.php",
+        type: "POST",
+        data: {campeonato: <?=$_GET['campeonato']?>},
+        dataType: "json",
+        success: function(respuesta){
+            respuesta.forEach( club => {
+                let opcion = document.createElement("option");
+                opcion.value = club.ID_CLUB;
+                opcion.text = club.NOMBRE_CLUB;
+                document.getElementById("selectClubLocales").appendChild(opcion);
+            });
+        },
+        error: function(){
+            console.log("No funciona local");
+        }
+    })
+})
+
+
+$("#selectClubLocales").change(function(){
+    let IdCLub = $(this).val();
+    $("#selectClubVisita").html("");
+    let opcionDefault = document.createElement("option");
+    opcionDefault.value = "0";
+    opcionDefault.text = "Seleccionar Visita";
+    document.getElementById("selectClubVisita").appendChild(opcionDefault);
+
+    $.ajax({
+        url: "../ajax/php/obtenerClubRestante.php",
+        type: "POST",
+        data: {id: IdCLub,idcampeonato: <?=$_GET['campeonato']?>},
+        dataType: "json",
+        success: function(respuesta){
+            respuesta.forEach( clubRestante => {
+                let opcion = document.createElement("option");
+                opcion.value = clubRestante.ID_CLUB;
+                opcion.text = clubRestante.NOMBRE_CLUB;
+                document.getElementById("selectClubVisita").appendChild(opcion);
+            });
+        },
+        error: function(){
+            console.log("No funciona visita");
+        }
+    })
+
+
+});
+
+
 </script>

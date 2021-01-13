@@ -256,7 +256,12 @@ class campeonatosController{
 
                     header('location:'.base_url.'campeonatos/gestionarParticipantes&idcampeonato='.$_GET['idcampeonato']);                    
                 }else{
-                    echo '<div class="container text-center mt-5"><h2>No a ingresado uno de los INSERT!!</h2></div>';                
+                    $id = $_GET['idcampeonato'];
+                    
+                    echo '<div class="container text-center mt-5">'
+                    .'<h1>Por favor seleccione un participante!</h1>'.
+                    '<a class="btn btn-danger" href="gestionarParticipantes&idcampeonato='.$id.'"'.'>'.'Volver'.'</a>'.                                        
+                    '</div>';            
                 }
 
             }else{
