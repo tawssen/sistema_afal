@@ -81,11 +81,11 @@
               </div>
             </div>
         <div class="menu-container">
-            <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalGoles">Goles</button>
-            <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalAmonestaciones">Amonestaciones</button>
+            <button class="btn btn-primary" id="btnModalGoles" data-bs-toggle="modal" data-bs-target="#modalGoles">Goles</button>
+            <button class="btn btn-primary" id="btnModalAmonestaciones" data-bs-toggle="modal" data-bs-target="#modalAmonestaciones">Amonestaciones</button>
             <button class="btn btn-danger">Terminar Partido</button>
-            <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalSubstituciones">Substituciónes</button>
-            <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalObserciones">Observaciones</button>
+            <button class="btn btn-primary" id="btnModalSubstituciones" data-bs-toggle="modal" data-bs-target="#modalSubstituciones">Substituciónes</button>
+            <button class="btn btn-primary" id="btnModalObservaciones" data-bs-toggle="modal" data-bs-target="#modalObserciones">Observaciones</button>
         </div>
 
         <div class="body-container">
@@ -136,7 +136,7 @@
     </div>
 </div>
 
-                                            <!-- Modals -->
+   <!-- Modals -->
 
 <!-- Modal Goles -->
 <div class="modal fade" id="modalGoles" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -151,7 +151,7 @@
           <div class="row">
             <div class="col-5">
                 <label for="">CLUB</label>
-                <select name="" id="selectClub" class="form-select">
+                <select name="selectIdClub" id="selectClub" class="form-select">
                     <option value="0">Seleccionar Club</option>
                     <option value="<?=$datosPartido->ID_CLUB_LOCAL_FK?>"><?=$datosClubTecnico->CLUB_LOCAL?></option>                     
                     <option value="<?=$datosPartido->ID_CLUB_VISITA_FK?>"><?=$datosClubTecnico->CLUB_VISITA?></option> 
@@ -162,13 +162,13 @@
                 <select name="" id="selectJugadores" class="form-select" >
                     <option value="">Seleccionar Jugador</option>
                 </select>
-            </div>
+            </div>            
           </div>
 
           <div class="row mt-2">
-            <div class="col-5">
+            <div class="col-6">
                 <label for="">TIPO GOL</label>
-                <select name="" id="" class="form-select">                  
+                <select name="" id="selectGol" class="form-select">                  
                     <option value="">Seleccionar Tipo</option>
                     <?php while($goles = mysqli_fetch_assoc($todosLosTiposGoles)){?>
                     <option value="<?php echo $goles['ID_TIPO_GOL'];?>"><?php echo $goles['NOMBRE_TIPO_GOL'];?></option>
@@ -176,12 +176,20 @@
                     <?php ?>
                 </select>
             </div>            
+            <div class="col-6">
+              <label for="">TIEMPO</label>
+              <select name="" id="selecttiempo" class="form-select">
+                <option value="0">Seleccionar Tiempo</option>
+                <option value="Primero">Primer Tiempo</option>
+                <option value="Segundo">Segundo Tiempo</option>
+              </select>
+            </div>
           </div>
-
+          
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-        <button type="button" class="btn btn-primary">Guardar Gol</button>
+        <button type="button" id="btn-GenerarGol" class="btn btn-primary">Generar Gol</button>
       </div>
     </div>
   </div>
@@ -235,7 +243,7 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
+        <button type="button" class="btn btn-primary">Generar Amonestacion</button>
       </div>
     </div>
   </div>
@@ -289,7 +297,7 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
+        <button type="button" class="btn btn-primary">Generar Subtitucion</button>
       </div>
     </div>
   </div>
@@ -311,7 +319,7 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
+        <button type="button" class="btn btn-primary">Generar Observacion</button>
       </div>
     </div>
   </div>
@@ -382,6 +390,55 @@
 
 <!--script para cargar datos-->
 <script>
+let minuto = "";
+
+/*Ajax Insertar Datos*/
+
+
+/*=======================================*/
+
+$('#btnModalGoles').click(function(){
+  minuto = $('#time').text();
+ 
+  $('#btn-GenerarGol').click(function(){
+   
+   let selectIdClub = $('#selectClub').val();
+   let selectRutJugador = $('#selectJugadores').val();
+   let selectIdGol = $('#selectGol').val();
+   let selectTiempo = $('#selecttiempo').val();
+   
+    $.ajax({
+        url: "../ajax/php/insertarGolesPartidos.php",
+        type: "POST",
+        data: {
+        idpartidofk: <?=$_GET['partido']?>,
+        rutGoleador: selectRutJugador,
+        idtipogol: selectIdGol,
+        min: minuto,
+        tiempo: selectTiempo},
+        dataType: "json",
+        success: function(respuesta){
+           console.log(respuesta);
+        },
+        error: function(){
+            console.log("No funciona ");
+        }
+    }) 
+   
+   
+  })
+
+})
+$('#btnModalAmonestaciones').click(function(){
+  minuto = $('#time').text();
+})
+$('#btnModalObservaciones').click(function(){
+  minuto = $('#time').text();
+})
+$('#btnModalSubstituciones').click(function(){
+  minuto = $('#time').text();
+})
+
 /*CARGAR JUGADORES A MODAL GOLES*/
 $("#selectClub").change(function(){
     let IdCLub = $(this).val();

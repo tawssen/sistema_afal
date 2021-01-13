@@ -17,12 +17,13 @@ class turnoController{
     }
 
     public function gestionPartidos(){
+        /*CLASES*/
         $partidoJugadores = new Partido_Jugadores();
         $partido = new Partido();
         $tipoGol = new Tipo_Gol();
         $tipotarjeta = new Tipo_Targeta();
         $tipofalta = new Tipo_Falta();
-
+        /*===================================================*/
         $partidoJugadores->setIdPartidosFk($_GET['partido']);
         $partido->setIdPartido($_GET['partido']);
 
