@@ -206,4 +206,11 @@ class Partido{
         return $respuesta;
     }
 
+    public function eliminar(){
+        $database = Database::connect();
+        $sql = 'DELETE FROM partidos WHERE ID_PARTIDO= '.$this->getIdPartido();
+        $respuesta = $database->query($sql);
+        return $respuesta;
+    }
+
 }

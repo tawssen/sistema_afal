@@ -152,7 +152,14 @@ class partidosController{
     public function eliminar(){
         $identity = $_SESSION['identity'];
         if(isset($_SESSION['identity']) && $identity->ID_PERFIL_FK=="1"){
-            echo $_GET['partido'];
+            $partido = new Partido();
+            $partido->setIdPartido($_GET['partido']);
+            $res = $partido->eliminar();
+            if($res){
+                header('location:'.base_url.'partidos/partidos&campeonato='.$_GET['campeonato']);
+            }else{
+                header('location:'.base_url.'partidos/partidos&campeonato='.$_GET['campeonato'].'&error=1');
+            }
         }else{
             echo '<div class="container mt-5">';
             echo '<h1>No tienes permiso para acceder a este apartado del sistema</h1>';

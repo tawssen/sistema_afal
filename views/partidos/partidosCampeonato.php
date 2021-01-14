@@ -5,8 +5,14 @@
 </div>
 </div>
 
+
 <?php $todoslosClubes?>
 <div class="container-xl mt-3 border-top border-bottom p-4">
+<?php
+  if(isset($_GET['error'])){
+    echo '<p class="alert alert-danger text-center">No se puede eliminar un partido en el que ya hay jugadores cargados</p>';
+  }
+?>
     <div class="row">
         <div class="col-lg-12">
             <div class="table-responsive">
@@ -85,6 +91,6 @@
         let boton = document.getElementById("eliminarPartido");
         let id = $(this).val();
         boton.removeAttribute("onclick");
-        boton.setAttribute("onclick","document.location.href='<?=base_url?>partidos/eliminar&partido="+id+"'");        
+        boton.setAttribute("onclick","document.location.href='<?=base_url?>partidos/eliminar&partido="+id+"&campeonato=<?=$_GET['campeonato']?>'");        
     });
 </script>
