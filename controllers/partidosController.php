@@ -106,5 +106,57 @@ class partidosController{
             echo '<h1>No tienes permiso para acceder a este apartado del sistema</h1>';
             echo '</div>';
         }
-    }   
+    }
+
+    public function editar(){
+        $identity = $_SESSION['identity'];
+        if(isset($_SESSION['identity']) && $identity->ID_PERFIL_FK=="1"){
+            $persona = new Persona();
+            $todosLosArbitros = $persona->obtenerArbitros();
+            $todosLosArbitros2 = $todosLosArbitros;
+            $todosLosTurnos = $persona->obtenerTurnos();
+            $partido = new Partido();
+            $partido->setIdPartido($_GET['partido']);
+            $datosPartido = $partido->obtenerUnPartido();
+            require_once 'views/partidos/editarPartido.php';
+        }else{
+            echo '<div class="container mt-5">';
+            echo '<h1>No tienes permiso para acceder a este apartado del sistema</h1>';
+            echo '</div>';
+        }
+    }
+
+    public function editarPartido(){
+        $partido = new Partido();
+        $club = new Club();
+        $partido->setIdPartido((int)$_GET['partido']);
+        $partido->setFechaDate($_POST['fechapartido']);
+        $partido->setFechaCampeonato($_POST['fechacampeonato']);
+        $partido->setIdCLubLocal((int) $_POST['clublocal']);
+        $clubLocal = $club->obtenerUnClub($partido->getIdCLubLocal());
+        $partido->setIdCLubVisita((int) $_POST['clubvisita']);
+        $partido->setRutTurno((int) $_POST['turnopartido']);
+        $partido->setRutArbitro1((int)$_POST['arbitroprincipal']);
+        $partido->setRutArbitro2((int)$_POST['segundoarbitro']);
+        $partido->setRutArbitro3((int)$_POST['tercerarbitro']);
+        $partido->setNombreEstadio($clubLocal['NOMBRE_ESTADIO']);
+        $partido->setIdCampeonato((int)$_GET['campeonato']);
+        $respuesta = $partido->actualizarPartido();
+        if($respuesta){
+            header('location:'.base_url.'partidos/partidos&campeonato='.$_GET['campeonato']);
+        }else{
+            header('location:'.base_url.'partidos/editar&error=1&partido='.$_GET['partido'].'&campeonato='.$_GET['campeonato']);
+        }
+    }
+
+    public function eliminar(){
+        $identity = $_SESSION['identity'];
+        if(isset($_SESSION['identity']) && $identity->ID_PERFIL_FK=="1"){
+            echo $_GET['partido'];
+        }else{
+            echo '<div class="container mt-5">';
+            echo '<h1>No tienes permiso para acceder a este apartado del sistema</h1>';
+            echo '</div>';
+        }
+    }
 }

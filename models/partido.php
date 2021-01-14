@@ -190,4 +190,20 @@ class Partido{
         return $respuesta->fetch_object();
     }
 
+    public function actualizarPartido(){
+        $database = Database::connect();
+        $sql = '';
+        if($this->getRutArbitro1()>0 && $this->getRutArbitro2()<1 && $this->getRutArbitro3()<1){
+            $sql = 'UPDATE partidos SET FECHA_DATE="'.$this->getFechaDate().'", FECHA_CAMPEONATO ="'.$this->getFechaCampeonato().'", ID_CLUB_LOCAL_FK ='.$this->getIdCLubLocal().', ID_CLUB_VISITA_FK='.$this->getIdCLubVisita().', RUT_PERSONA_TURNO_FK='.$this->getRutTurno().', RUT_PERSONA_ARBITRO_1 ='.$this->getRutArbitro1().', RUT_PERSONA_ARBITRO_2 = null , RUT_PERSONA_ARBITRO_3 = null, NOMBRE_ESTADIO = "'.$this->getNombreEstadio().'", ID_CAMPEONATO_FK = '.$this->getIdCampeonato().' WHERE ID_PARTIDO ='.$this->getIdPartido();
+        }elseif($this->getRutArbitro1()>0 && $this->getRutArbitro2()>0 && $this->getRutArbitro3()<1){
+            $sql = 'UPDATE partidos SET FECHA_DATE="'.$this->getFechaDate().'", FECHA_CAMPEONATO ="'.$this->getFechaCampeonato().'", ID_CLUB_LOCAL_FK ='.$this->getIdCLubLocal().', ID_CLUB_VISITA_FK='.$this->getIdCLubVisita().', RUT_PERSONA_TURNO_FK='.$this->getRutTurno().', RUT_PERSONA_ARBITRO_1 ='.$this->getRutArbitro1().', RUT_PERSONA_ARBITRO_2 ='.$this->getRutArbitro2().', RUT_PERSONA_ARBITRO_3 = null, NOMBRE_ESTADIO = "'.$this->getNombreEstadio().'", ID_CAMPEONATO_FK = '.$this->getIdCampeonato().' WHERE ID_PARTIDO ='.$this->getIdPartido();
+
+        }elseif($this->getRutArbitro1()>0 && $this->getRutArbitro2()>0 && $this->getRutArbitro3()>0){
+            $sql = 'UPDATE partidos SET FECHA_DATE="'.$this->getFechaDate().'", FECHA_CAMPEONATO ="'.$this->getFechaCampeonato().'", ID_CLUB_LOCAL_FK ='.$this->getIdCLubLocal().', ID_CLUB_VISITA_FK='.$this->getIdCLubVisita().', RUT_PERSONA_TURNO_FK='.$this->getRutTurno().', RUT_PERSONA_ARBITRO_1 ='.$this->getRutArbitro1().', RUT_PERSONA_ARBITRO_2 ='.$this->getRutArbitro2().', RUT_PERSONA_ARBITRO_3 ='.$this->getRutArbitro3().', NOMBRE_ESTADIO = "'.$this->getNombreEstadio().'", ID_CAMPEONATO_FK = '.$this->getIdCampeonato().' WHERE ID_PARTIDO ='.$this->getIdPartido();
+        }
+
+        $respuesta = $database->query($sql);
+        return $respuesta;
+    }
+
 }
