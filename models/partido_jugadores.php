@@ -58,7 +58,7 @@ class Partido_Jugadores{
 
     public function datosPartidosClubes($serie){
         $database = Database::connect();
-        $sql = 'SELECT cl.NOMBRE_CLUB as CLUB_LOCAL, cv.NOMBRE_CLUB as CLUB_VISITA,
+        $sql = 'SELECT cl.ID_CLUB as ID_CLUB_LOCAL,cl.NOMBRE_CLUB as CLUB_LOCAL,cv.ID_CLUB as ID_CLUB_VISITA ,cv.NOMBRE_CLUB as CLUB_VISITA,
         CONCAT(praL.NOMBRE_1," ",praL.NOMBRE_2," ",praL.APELLIDO_1," ",praL.APELLIDO_2) AS NOMBRE_TECNICO_LOCAL,
         CONCAT(praV.NOMBRE_1," ",praV.NOMBRE_2," ",praV.APELLIDO_1," ",praV.APELLIDO_2) AS NOMBRE_TECNICO_VISITA
         from partidos p 

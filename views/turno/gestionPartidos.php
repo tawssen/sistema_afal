@@ -93,8 +93,9 @@
             <div class="izq">
                 <div class="arriba">
                     <div class="datos">
-                        <h4><?=$datosClubTecnico->CLUB_LOCAL?> (LOCAL)</h4>
+                        <h4 id=""><?=$datosClubTecnico->CLUB_LOCAL?></h4> <!--Agregar un id local-->
                         <p>Director Técnico: <?=$datosClubTecnico->NOMBRE_TECNICO_LOCAL?></p>
+                        <input type="hidden" name="" id="idClubLocal" value="<?=$datosClubTecnico->ID_CLUB_LOCAL?>">
                     </div>
                     <div class="jugadores">
                         <ul class="list-group">
@@ -105,7 +106,7 @@
                     </div>
                 </div>
                 <div class="abajo">
-                    <div class="sucesos" id?="Su">
+                    <div class="sucesos" id="sucesoLocal">
 
                     </div>
                 </div>
@@ -114,8 +115,9 @@
             <div class="der">
                 <div class="arriba">
                     <div class="datos">
-                      <h4><?=$datosClubTecnico->CLUB_VISITA?> (VISITA)</h4>
+                      <h4 id=""><?=$datosClubTecnico->CLUB_VISITA?> (VISITA)</h4> <!--Agregar un id Visita-->
                       <p>Director Técnico: <?=$datosClubTecnico->NOMBRE_TECNICO_VISITA?></p>
+                       <input type="hidden" name="" id="idClubVisita" value="<?=$datosClubTecnico->ID_CLUB_VISITA?>">
                     </div>
                     <div class="jugadores">
                         <ul class="list-group">
@@ -126,7 +128,7 @@
                     </div>
                 </div>
                 <div class="abajo">
-                    <div class="sucesos">
+                    <div class="sucesos" id="sucesoVisita">
                     
                     </div>
                 </div>
@@ -404,6 +406,10 @@ $('#btn-GenerarGol').click(function(){
   let selectRutJugador = $('#selectJugadores').val();
   let selectIdGol = $('#selectGol').val();
   let selectTiempo = $('#selecttiempo').val();
+  
+  let idclublocal = $('#idClubLocal').val();
+  let idclubvisita = $('#idClubVisita').val();  
+  let numeroJugadorG = $('#selectJugadores option:selected').text()  
    
   $.ajax({
     url: "../ajax/php/insertarGolesPartidos.php",
@@ -420,19 +426,33 @@ $('#btn-GenerarGol').click(function(){
       $('#selectJugadores').val(0);
       $('#selectGol').val(0);
       $('#selecttiempo').val(0);
-  
+      
+      if(selectIdClub == idclublocal){
+        $( "#sucesoLocal" ).append( "<p>El Jugador con numero "+numeroJugadorG+" hizo un gol en el minuto "+minuto+"</p>" );
+      }else if(selectIdClub == idclubvisita){ 
+        $( "#sucesoLocal" ).append( "<p>El Jugador con numero "+numeroJugadorG+" hizo un gol en el minuto "+minuto+"</p>" );
+      }
+      
+      alert(nameLocal);
+      
     },
     error: function(){
       console.log("No funciona ");
     }
-  })   
+  })  
 })
 $('#btn-GenerarAmonestacion').click(function(){
- 
+  let clubseleccionado = $('#selectClubAmonestaciones').val();
   let jugadorAmonestado = $('#selectJugadoresAmonestaciones').val()
   let IdTarjeta = $('#selectIdTarjeta').val()
   let IdFalta = $('#selectIdFalta').val()
   let Tiempo = $('#selecttiempoAmonestaciones').val()
+
+  let idclublocal = $('#idClubLocal').val();
+  let idclubvisita = $('#idClubVisita').val(); 
+  let numeroJugadorA = $('#selectJugadoresAmonestaciones option:selected').text()
+  let tipoTarjetaA = $('#selectIdTarjeta option:selected').text()
+
   $.ajax({
     url: "../ajax/php/insertarAmonestacionesPartidos.php",
     type: "POST",
@@ -445,24 +465,38 @@ $('#btn-GenerarAmonestacion').click(function(){
     tiempo: Tiempo},
     dataType: "json",
     success: function(respuesta){
-      $('#selectClub').val(0);
+      $('#selectClubAmonestaciones').val(0);
       $('#selectJugadoresAmonestaciones').val(0)
       $('#selectIdTarjeta').val(0)
       $('#selectIdFalta').val(0)
       $('#selecttiempoAmonestaciones').val(0);
-  
+         
+      if(clubseleccionado == idclublocal){
+        $( "#sucesoLocal" ).append( "<p>El Jugador con numero "+numeroJugadorA+" se le puso tarjeta "+tipoTarjetaA+"</p>" );
+      }else if(clubseleccionado == idclubvisita){ 
+        $( "#sucesoLocal" ).append( "<p>El Jugador con numero "+numeroJugadorA+" se le puso tarjeta "+tipoTarjetaA+"</p>" );
+      }else{
+        alert("No funca");
+      }
+        
     },
     error: function(){
       console.log("No funciona ");
     }
-  }) 
+  })
 
 })
 $('#btn-GenerarSubtitucion').click(function(){
-
+  let clubseleccionaSubtitucion = $('#selectclubsustituciones').val();
   let jugadorSale = $('#selectjugadorSale').val();
   let jugadorEntra = $('#selectjugadorEntra').val();
   let Tiempo = $('#selecttiempoSubtituciones').val();
+  
+  let idclublocal = $('#idClubLocal').val();
+  let idclubvisita = $('#idClubVisita').val();
+  let numeroSale = $('#selectjugadorSale option:selected').text();
+  let numeroEntra = $('#selectjugadorEntra option:selected').text();
+
 
   $.ajax({
     url: "../ajax/php/insertSubtitucionPartido.php",
@@ -479,7 +513,15 @@ $('#btn-GenerarSubtitucion').click(function(){
       $('#selectjugadorSale').val(0)
       $('#selectjugadorEntra').val(0)
       $('#selecttiempoSubtituciones').val(0)    
-  
+    
+   
+      if(clubseleccionaSubtitucion == idclublocal){
+        $( "#sucesoLocal" ).append( "<p>El Jugador con numero "+numeroEntra+" subtituye al jugador con nuemro "+numeroSale+"</p>" );
+      }else if(clubseleccionaSubtitucion == idclubvisita){ 
+        $( "#sucesoLocal" ).append( "<p>El Jugador con numero "+numeroEntra+" subtituye al jugador con nuemro "+numeroSale+"</p>" );
+      }else{
+        alert("No funca");
+      }
     },
     error: function(){
       console.log("No funciona ");
@@ -508,7 +550,7 @@ $('#btn-GenerarObservacion').click(function(){
 
 })
 /*=======================================*/
-
+ /*OBTENER TIEMPO AL HACER CLICK EN EL BOTON DEL MODAL*/
 $('#btnModalGoles').click(function(){
   minuto = $('#time').text();
 })
@@ -521,7 +563,7 @@ $('#btnModalObservaciones').click(function(){
 $('#btnModalSubstituciones').click(function(){
   minuto = $('#time').text();
 })
-
+/*=======================================*/
 /*CARGAR JUGADORES A MODAL GOLES*/
 $("#selectClub").change(function(){
     let IdCLub = $(this).val();
@@ -550,7 +592,7 @@ $("#selectClub").change(function(){
     })
 });
 /*===================================================================================*/
-/*CARGAR JUGADORES A MODAL Amonestaciones*/
+/*CARGAR JUGADORES A MODAL AMONESTACIONES*/
 $("#selectClubAmonestaciones").change(function(){
     let IdCLub = $(this).val();
     $("#selectJugadoresAmonestaciones").html("");
@@ -578,7 +620,7 @@ $("#selectClubAmonestaciones").change(function(){
     })
 });
 /*===================================================================================*/
-/*CARGAR JUGADOR ENTRANTES Y SALIENTES*/
+/*CARGAR JUGADOR ENTRANTES Y SALIENTES A MODAL SUBTITUCIONES*/
 $("#selectclubsustituciones").change(function(){
     let IdCLub = $(this).val();
 
@@ -606,7 +648,6 @@ $("#selectclubsustituciones").change(function(){
         }
     }) 
 });
-
 $('#selectjugadorSale').change(function(){
   let IdCLub = $('#selectclubsustituciones').val();
   let RutJugadorS = $(this).val();
@@ -637,5 +678,4 @@ $('#selectjugadorSale').change(function(){
   
 });
 /*===================================================================================*/
-
 </script>

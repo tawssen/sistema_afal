@@ -22,7 +22,7 @@
                        <tr>
                          <td><?php echo $arbitro['RUT_PERSONA'].'-'.$arbitro['DV'] ?></td>
                          <td><?php echo $arbitro['NOMBRE_1'].' '.$arbitro['NOMBRE_2'].' '.$arbitro['APELLIDO_1'].' '.$arbitro['APELLIDO_2'] ?></td>
-                         <td><?php echo $arbitro['NUMERO_TELEFONO'] ?></td>
+                         <td><?php echo $arbitro['NUMERO_TELEFONO_PERSONA'] ?></td>
                          <td><?php echo $arbitro['CORREO_ELECTRONICO'] ?></td>
                          <td><?php echo $arbitro['NOMBRE_COMUNA'].', '.$arbitro['CALLE_PASAJE'] ?></td>                    
                          <td><?php echo $arbitro['NOMBRE_ASOCIACION'] ?></td>
