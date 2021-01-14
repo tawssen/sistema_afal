@@ -14,6 +14,7 @@ class Partido{
     private $rut_persona_arbitro_3; 
     private $nombre_estadio;
     private $id_campeonato;
+    private $estado;
     
     public function getIdPartido(){
         return $this->id_partido;
@@ -99,6 +100,14 @@ class Partido{
 
     public function setIdCampeonato($id_campeonato){
         $this->id_campeonato = $id_campeonato;
+    }
+
+    public function getEstado(){
+        return $this->estado;
+    }
+
+    public function setEstado($estado){
+        $this->estado = $estado;
     }
 
     public function obtenerPartidos(){
@@ -209,6 +218,13 @@ class Partido{
     public function eliminar(){
         $database = Database::connect();
         $sql = 'DELETE FROM partidos WHERE ID_PARTIDO= '.$this->getIdPartido();
+        $respuesta = $database->query($sql);
+        return $respuesta;
+    }
+
+    public function actualizarEstado(){
+        $database = Database::connect();
+        $sql = 'UPDATE partidos SET ID_ESTADO_PARTIDO_FK ='.$this->getEstado().' WHERE ID_PARTIDO='.$this->getIdPartido();
         $respuesta = $database->query($sql);
         return $respuesta;
     }

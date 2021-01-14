@@ -22,11 +22,7 @@ foreach ($jugadores as $jugador){
 $resultado = 0;
 
 if(count($jugadores)==$contador){
-    $sql = 'UPDATE partidos SET ID_ESTADO_PARTIDO_FK = 3 WHERE ID_PARTIDO = '.$partido;
-    $respuesta = $database->query($sql);
-    if($respuesta){
-        $resultado = 1;
-    }
+    $resultado = 1;
 }
 
 echo $resultado;

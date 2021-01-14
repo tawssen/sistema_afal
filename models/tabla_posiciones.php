@@ -116,5 +116,19 @@ class Tabla_Posiciones{
         $respuesta = $database->query($sql);
         return $sql;
     }
+
+    public function obtenerDatosEquipo(){
+        $database = Database::connect();
+        $sql = 'SELECT * FROM tabla_posiciones WHERE ID_CLUB_FK = '.$this->getidClubFk().' AND ID_CAMPEONATO_FK='.$this->getidCampeonatoFk(); 
+        $respuesta = $database->query($sql);
+        return $respuesta->fetch_object();
+    }
+
+    public function actualizarTabla(){
+        $database = Database::connect();
+        $sql = 'UPDATE tabla_posiciones SET PTS ='.$this->getPTS().', PJ ='.$this->getPJ().', PG = '.$this->getPG().', PE = '.$this->getPE().', PP ='.$this->getPP().', GF ='.$this->getGF().', GC ='.$this->getGC().', DIF ='.$this->getDIF().' WHERE ID_CLUB_FK ='.$this->getidClubFk().' AND ID_CAMPEONATO_FK='.$this->getidCampeonatoFk(); 
+        $respuesta = $database->query($sql);
+        return $respuesta;
+    }
     
 }

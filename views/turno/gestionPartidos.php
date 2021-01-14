@@ -1,89 +1,10 @@
-<style>
-  :root{
-    --background: rgb(255,255,255);
-    --background-linear1: rgba(255,255,255,1);
-    --background-linear2: rgba(255,255,130,1);
-    --container: #353535;
-    --text-color: white;
-    --screen: #353535;
-    --btn-hover: black;
-    --btn-hover-text: white;
-    --shadow: rgba(59,59,59,0.75);
-  }
-
-  span{
-    font-weight: 300;
-    font-size: 45px;
-  }
-
-  .c-body{
-    background: var(--background);
-    background: linear-gradient(135deg, var(--background-linear1) 0%);
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-
-  .c-time{
-    background-color: var(--container);
-    width: 400px;
-    border-radius: 10px;
-    box-shadow: 4px 10px 15px 0 var(--shadow);
-  }
-
-  .c-time>.screen{
-    color: var(--text-color);
-    background-color: var(--screen);
-    margin: 1px;
-    text-align: center;
-  }
-
-  .c-btn{
-    display: grid;
-    grid-template-columns: repeat(3,1fr);
-    gap: 5px;
-    margin: 0px 0px;
-  }
-
-  .c-btn>button{
-    display: block;
-    background: none;
-    border: none;
-    outline: inherit;
-    cursor: pointer;
-    height: 65px;
-    border-radius: 3%;
-    color: var(--text-color);
-    font-size: 40px;
-  }
-
-  button:hover{
-    transition: 0.5s;
-    background-color: var(--btn-hover);
-    color: var(--btn-hover-text);
-  }
-
-</style>
-
 <div class="container">
     <div class="max-container mt-3">
     <div class="c-body">
-              <div class="c-time">
-                <div class="screen">
-                  <span id="time">00:00:00:00</span>
-                </div>
-                <div class="c-btn">
-                  <button id="btn-start">&#9658;</button>
-                  <button id="btn-stop">&#8718;</button>
-                  <button id="btn-reset">&#8635;</button>
-                </div>
-              </div>
-            </div>
         <div class="menu-container">
             <button class="btn btn-primary" id="btnModalGoles" data-bs-toggle="modal" data-bs-target="#modalGoles">Goles</button>
             <button class="btn btn-primary" id="btnModalAmonestaciones" data-bs-toggle="modal" data-bs-target="#modalAmonestaciones">Amonestaciones</button>
-            <button class="btn btn-danger">Terminar Partido</button>
+            <button class="btn btn-danger" id="btnTerminarPartido">Terminar Partido</button>
             <button class="btn btn-primary" id="btnModalSubstituciones" data-bs-toggle="modal" data-bs-target="#modalSubstituciones">Substituciónes</button>
             <button class="btn btn-primary" id="btnModalObservaciones" data-bs-toggle="modal" data-bs-target="#modalObserciones">Observaciones</button>
         </div>
@@ -93,7 +14,7 @@
             <div class="izq">
                 <div class="arriba">
                     <div class="datos">
-                        <h4 id=""><?=$datosClubTecnico->CLUB_LOCAL?></h4> <!--Agregar un id local-->
+                        <h4 id=""><?=$datosClubTecnico->CLUB_LOCAL?> (LOCAL)</h4> <!--Agregar un id local-->
                         <p>Director Técnico: <?=$datosClubTecnico->NOMBRE_TECNICO_LOCAL?></p>
                         <input type="hidden" name="" id="idClubLocal" value="<?=$datosClubTecnico->ID_CLUB_LOCAL?>">
                     </div>
@@ -187,6 +108,13 @@
               </select>
             </div>
           </div>
+
+         <div class="row mt-2">
+            <div class="col-12">
+              <label for="" class="form-label">MINUTO</label>
+              <input type="text" class="form-control" id="minutoGol" placeholder="1-45">
+            </div>
+         </div>
           
       </div>
       <div class="modal-footer">
@@ -222,7 +150,7 @@
             </div>
           </div>
           <div class="row mt-2">
-            <div class="col-4">
+            <div class="col-3">
                 <label for="">TIPO TARJETA</label>
                 <select name="" id="selectIdTarjeta" class="form-select">
                     <option value="0">Seleccionar Tarjeta</option>
@@ -231,7 +159,7 @@
                   <?php } mysqli_free_result($todosLosTiposTarjeta);?>
                 </select>
             </div>
-            <div class="col-4">
+            <div class="col-3">
                 <label for="">TIPO FALTA</label>
                 <select name="" id="selectIdFalta" class="form-select">
                     <option value="0">Seleccionar Falta</option>
@@ -240,14 +168,18 @@
                   <?php } mysqli_free_result($todosLosTiposFalta);?>
                 </select>
             </div> 
-            <div class="col-4">
+            <div class="col-3">
               <label for="">TIEMPO</label>
               <select name="" id="selecttiempoAmonestaciones" class="form-select">
                 <option value="0">Seleccionar Tiempo</option>
                 <option value="Primero">Primer Tiempo</option>
                 <option value="Segundo">Segundo Tiempo</option>
               </select>
-            </div>          
+            </div>
+            <div class="col-3">
+              <label for="" class="form-label">MINUTO</label>
+              <input type="text" class="form-control" id="minutoAmonestacion" placeholder="1-45">
+            </div>      
           </div>
       </div>
       <div class="modal-footer">
@@ -293,7 +225,7 @@
           </div>          
         </div>
         <div class="row">
-          <div class="col-12">
+          <div class="col-6">
             <label for="">TIEMPO</label>
             <select name="" id="selecttiempoSubtituciones" class="form-select">
               <option value="0">Seleccionar Tiempo</option>
@@ -301,6 +233,10 @@
               <option value="Segundo">Segundo Tiempo</option>
             </select>
           </div>
+          <div class="col-6">
+              <label for="" class="form-label">MINUTO</label>
+              <input type="text" class="form-control" id="minutoSubstitucion" placeholder="1-45">
+            </div>    
         </div>
       </div>
       <div class="modal-footer">
@@ -345,63 +281,12 @@
 <script src="<?=base_url?>javascript/main.js"></script>
 <script src="<?=base_url?>datatables/datatables.min.js"></script>
 
-<script>
-  window.onload = ()=>{
-    h= 0; m= 0; s=0; mls=0; timeStarted=0;
-    time = document.getElementById("time");
-    btnStart = document.getElementById("btn-start");
-    btnStop = document.getElementById("btn-stop");
-    btnReset = document.getElementById("btn-reset");
-    event();
-  };
-
-  function event(){
-    btnStart.addEventListener("click",start);
-    btnStop.addEventListener("click",stop)
-    btnReset.addEventListener("click",reset)
-  }
-
-  function write(){
-    let ht,mt,st,mlst;
-    mls++;
-    if(mls>99){s++;mls=0;}
-    if(s>59){m++;s=0;}
-    if(m>59){h++;m=0;}
-    if(h>24) h=0;
-    mlst = ('0' + mls).slice(-2);
-    st = ('0'+s).slice(-2);
-    mt = ('0'+m).slice(-2);
-    ht = ('0'+h).slice(-2);
-    time.innerHTML = `${ht}:${mt}:${st}:${mlst}`;
-  }
-
-  function start(){
-    write();
-    timeStarted = setInterval(write,10);
-    btnStart.removeEventListener("click", start);
-  }
-
-  function stop(){
-      clearInterval(timeStarted);
-      btnStart.addEventListener("click",start);
-  }
-
-  function reset(){
-    clearInterval(timeStarted);
-    time.innerHTML = "00:00:00:00";
-    h= 0; m=0; s=0; mls=0;
-    btnStart.addEventListener("click",start);
-  }
-
-</script>
-
 <!--script para cargar datos-->
 <script>
-let minuto = "";
 
 /*Ajax Insertar Datos*/
 $('#btn-GenerarGol').click(function(){
-   
+  let minuto = $('#minutoGol').val();
   let selectIdClub = $('#selectClub').val();
   let selectRutJugador = $('#selectJugadores').val();
   let selectIdGol = $('#selectGol').val();
@@ -426,28 +311,32 @@ $('#btn-GenerarGol').click(function(){
       $('#selectJugadores').val(0);
       $('#selectGol').val(0);
       $('#selecttiempo').val(0);
+      $('#minutoGol').val("");
       
       if(selectIdClub == idclublocal){
         $( "#sucesoLocal" ).append( "<p>El Jugador con numero "+numeroJugadorG+" hizo un gol en el minuto "+minuto+"</p>" );
       }else if(selectIdClub == idclubvisita){ 
-        $( "#sucesoLocal" ).append( "<p>El Jugador con numero "+numeroJugadorG+" hizo un gol en el minuto "+minuto+"</p>" );
+        $( "#sucesoVisita" ).append( "<p>El Jugador con numero "+numeroJugadorG+" hizo un gol en el minuto "+minuto+"</p>" );
       }
-      
-      alert(nameLocal);
+
+    $("#modalGoles").modal('hide');//ocultamos el modal
+    $('body').removeClass('modal-open');//eliminamos la clase del body para poder hacer scroll
+    //$('.modal-backdrop').remove();//eliminamos el backdrop del modal
       
     },
     error: function(){
       console.log("No funciona ");
     }
-  })  
+  })
 })
+
 $('#btn-GenerarAmonestacion').click(function(){
   let clubseleccionado = $('#selectClubAmonestaciones').val();
   let jugadorAmonestado = $('#selectJugadoresAmonestaciones').val()
   let IdTarjeta = $('#selectIdTarjeta').val()
   let IdFalta = $('#selectIdFalta').val()
   let Tiempo = $('#selecttiempoAmonestaciones').val()
-
+  let minuto = $('#minutoAmonestacion').val();
   let idclublocal = $('#idClubLocal').val();
   let idclubvisita = $('#idClubVisita').val(); 
   let numeroJugadorA = $('#selectJugadoresAmonestaciones option:selected').text()
@@ -470,11 +359,12 @@ $('#btn-GenerarAmonestacion').click(function(){
       $('#selectIdTarjeta').val(0)
       $('#selectIdFalta').val(0)
       $('#selecttiempoAmonestaciones').val(0);
+      $('#minutoAmonestacion').val("");
          
       if(clubseleccionado == idclublocal){
         $( "#sucesoLocal" ).append( "<p>El Jugador con numero "+numeroJugadorA+" se le puso tarjeta "+tipoTarjetaA+"</p>" );
       }else if(clubseleccionado == idclubvisita){ 
-        $( "#sucesoLocal" ).append( "<p>El Jugador con numero "+numeroJugadorA+" se le puso tarjeta "+tipoTarjetaA+"</p>" );
+        $( "#sucesoVisita" ).append( "<p>El Jugador con numero "+numeroJugadorA+" se le puso tarjeta "+tipoTarjetaA+"</p>" );
       }else{
         alert("No funca");
       }
@@ -484,14 +374,15 @@ $('#btn-GenerarAmonestacion').click(function(){
       console.log("No funciona ");
     }
   })
-
 })
+
+
 $('#btn-GenerarSubtitucion').click(function(){
   let clubseleccionaSubtitucion = $('#selectclubsustituciones').val();
   let jugadorSale = $('#selectjugadorSale').val();
   let jugadorEntra = $('#selectjugadorEntra').val();
   let Tiempo = $('#selecttiempoSubtituciones').val();
-  
+  let minuto = $('#minutoSubstitucion').val();
   let idclublocal = $('#idClubLocal').val();
   let idclubvisita = $('#idClubVisita').val();
   let numeroSale = $('#selectjugadorSale option:selected').text();
@@ -513,12 +404,13 @@ $('#btn-GenerarSubtitucion').click(function(){
       $('#selectjugadorSale').val(0)
       $('#selectjugadorEntra').val(0)
       $('#selecttiempoSubtituciones').val(0)    
+      $('#minutoSubstitucion').val("");
     
    
       if(clubseleccionaSubtitucion == idclublocal){
         $( "#sucesoLocal" ).append( "<p>El Jugador con numero "+numeroEntra+" subtituye al jugador con nuemro "+numeroSale+"</p>" );
       }else if(clubseleccionaSubtitucion == idclubvisita){ 
-        $( "#sucesoLocal" ).append( "<p>El Jugador con numero "+numeroEntra+" subtituye al jugador con nuemro "+numeroSale+"</p>" );
+        $( "#sucesoVisita" ).append( "<p>El Jugador con numero "+numeroEntra+" subtituye al jugador con nuemro "+numeroSale+"</p>" );
       }else{
         alert("No funca");
       }
@@ -528,6 +420,7 @@ $('#btn-GenerarSubtitucion').click(function(){
     }
   }) 
 })
+
 $('#btn-GenerarObservacion').click(function(){
    let observacion = $('#Text-area-observacion').val();
    let rut_Turno = <?php echo $_SESSION['RutUsuario'] ?>;
@@ -548,20 +441,6 @@ $('#btn-GenerarObservacion').click(function(){
     }
   }) 
 
-})
-/*=======================================*/
- /*OBTENER TIEMPO AL HACER CLICK EN EL BOTON DEL MODAL*/
-$('#btnModalGoles').click(function(){
-  minuto = $('#time').text();
-})
-$('#btnModalAmonestaciones').click(function(){
-  minuto = $('#time').text();
-})
-$('#btnModalObservaciones').click(function(){
-  minuto = $('#time').text();
-})
-$('#btnModalSubstituciones').click(function(){
-  minuto = $('#time').text();
 })
 /*=======================================*/
 /*CARGAR JUGADORES A MODAL GOLES*/
@@ -659,23 +538,49 @@ $('#selectjugadorSale').change(function(){
   document.getElementById("selectjugadorEntra").appendChild(opcionDefault);
   
   $.ajax({
-        url: "../ajax/php/obtenerJugadoresNoSeleccionado.php",
-        type: "POST",
-        data: {idClubphp: IdCLub,idpartido: <?=$_GET['partido']?>,rutpersona: RutJugadorS},
-        dataType: "json",
-        success: function(respuesta){
-            respuesta.forEach( jugadoresClub => {
-                let opcion = document.createElement("option");
-                opcion.value = jugadoresClub.RUT_PERSONA_FK;
-                opcion.text = jugadoresClub.NUMERO_JUGADOR;
-                document.getElementById("selectjugadorEntra").appendChild(opcion);
-            });
-        },
-        error: function(){
-            console.log("No funciona cargar jugadores");
-        }
-    }) 
+      url: "../ajax/php/obtenerJugadoresNoSeleccionado.php",
+      type: "POST",
+      data: {idClubphp: IdCLub,idpartido: <?=$_GET['partido']?>,rutpersona: RutJugadorS},
+      dataType: "json",
+      success: function(respuesta){
+        respuesta.forEach( jugadoresClub => {
+          let opcion = document.createElement("option");
+            opcion.value = jugadoresClub.RUT_PERSONA_FK;
+            opcion.text = jugadoresClub.NUMERO_JUGADOR;
+            document.getElementById("selectjugadorEntra").appendChild(opcion);
+        });
+      },
+      error: function(){
+        console.log("No funciona cargar jugadores");
+      }
+  }) 
   
 });
 /*===================================================================================*/
+
+$('#btnTerminarPartido').click(function(){
+  $.ajax({
+      url: "../ajax/php/terminarPartido.php",
+      type: "POST",
+      data: {partido:<?=$_GET['partido']?>},
+      dataType: "json",
+      success: function(respuesta){
+        let golesLocal = respuesta.golesLocal.length;
+        let golesVisita = respuesta.golesVisita.length;
+        if(golesLocal>golesVisita){
+          console.log("Gano el equipo Local");
+          document.location.href='<?=base_url?>turno/terminarPartido&partido=<?=$_GET['partido']?>&ganador=<?=$datosPartido->ID_CLUB_LOCAL_FK?>&perdedor=<?=$datosPartido->ID_CLUB_VISITA_FK?>&gg='+golesLocal+'&gp='+golesVisita+'';
+        }else if(golesLocal<golesVisita){
+          console.log("Gano el equipo Visitante");
+          document.location.href='<?=base_url?>turno/terminarPartido&partido=<?=$_GET['partido']?>&ganador=<?=$datosPartido->ID_CLUB_VISITA_FK?>&perdedor=<?=$datosPartido->ID_CLUB_LOCAL_FK?>';
+        }else{
+          console.log("Han empatado");
+          document.location.href='<?=base_url?>turno/terminarPartido&partido=<?=$_GET['partido']?>&empate=1';
+        }
+      },
+      error: function(){
+        console.log("No funciona cargar jugadores");
+      }
+  }) 
+})
 </script>

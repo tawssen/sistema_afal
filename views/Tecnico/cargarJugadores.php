@@ -222,6 +222,9 @@ table tbody::-webkit-scrollbar-thumb:active {
                 if(($(check).prop('checked')) && (!isNaN(dorsal))){
                     listaDeDorsales.push(parseInt($(imput).val()));
                 }else{
+                    $('#mensajeError').html("");
+                    let mensajeError = "<p class='alert alert-danger'>Debe ingresar número de dorsal para todos los jugadores</p>";
+                    $('#mensajeError').append(mensajeError);
                     return false;
                 }
             })
@@ -239,11 +242,17 @@ table tbody::-webkit-scrollbar-thumb:active {
                         const result = listaDeDorsales.filter(numero => numero==dorsal);
                         if(result.length>1){
                             verificacion = false;
+                            $('#mensajeError').html("");
+                            let mensajeError = "<p class='alert alert-danger'>Hay números de dorsal que se repiten</p>";
+                            $('#mensajeError').append(mensajeError);
                             return false;
                         }else{
                             verificacion = true;
                         }
                     }else{
+                        $('#mensajeError').html("");
+                        let mensajeError = "<p class='alert alert-danger'>Debe ingresar número de dorsal para todos los jugadores</p>";
+                        $('#mensajeError').append(mensajeError);
                         return false;
                     }
                 })
@@ -273,7 +282,6 @@ table tbody::-webkit-scrollbar-thumb:active {
                         }
                     });
                     $('#mensajeError').html("");
-                    alert("Enviando lista");
                     $.ajax({
                         url: "../ajax/php/cargarJugadoresPartido.php",
                         type: "POST",
@@ -288,13 +296,6 @@ table tbody::-webkit-scrollbar-thumb:active {
 
                         }
                     })
-                }else{ 
-                    //quiere decir que un número se repite
-                    console.log("Un número se repite");
-                }
-            }else{
-                //Mensaje que debe ingresar números en todos los jugadores seleccionados
-                console.log("Las listas tienen diferentes cantidades. Rebobinar por faor.");
             }
         }
     })

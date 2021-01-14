@@ -89,8 +89,8 @@ $('#selectEstadoPartido').change(function(){
         type: "POST",
         data: {estado: estadoPartido,partido: idPartido},
         dataType: "json",
-        success: function(respuesta){  
-          alert("funciona");
+        success: function(respuesta){
+          
         },
         error: function(){
 
