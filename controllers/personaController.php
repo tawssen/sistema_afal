@@ -277,7 +277,7 @@ class personaController{
             $datos = $usuario->obtenerUnUsuariosConRut();
             
 
-                if($datos == false){                                                                  
+                if($datos == false && $_POST['perfilPersona'] == 1 || $_POST['perfilPersona'] == 2 || $_POST['perfilPersona'] == 3 || $_POST['perfilPersona'] == 5){                                                                  
 
                     $usuario->crearUsuario();
 

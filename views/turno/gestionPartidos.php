@@ -105,7 +105,7 @@
                     </div>
                 </div>
                 <div class="abajo">
-                    <div class="sucesos">
+                    <div class="sucesos" id?="Su">
 
                     </div>
                 </div>
@@ -140,7 +140,7 @@
 
 <!-- Modal Goles -->
 <div class="modal fade" id="modalGoles" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
+  <div class="modal-dialog modal-lg">
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title" id="exampleModalLabel">Goles del Partido</h5>
@@ -149,7 +149,7 @@
       <div class="modal-body">
 
           <div class="row">
-            <div class="col-5">
+            <div class="col-6">
                 <label for="">CLUB</label>
                 <select name="selectIdClub" id="selectClub" class="form-select">
                     <option value="0">Seleccionar Club</option>
@@ -157,10 +157,10 @@
                     <option value="<?=$datosPartido->ID_CLUB_VISITA_FK?>"><?=$datosClubTecnico->CLUB_VISITA?></option> 
                 </select>
             </div>
-            <div class="col-7">
+            <div class="col-6">
                 <label for="">JUGADOR</label>
                 <select name="" id="selectJugadores" class="form-select" >
-                    <option value="">Seleccionar Jugador</option>
+                    <option value="0">Seleccionar Jugador</option>
                 </select>
             </div>            
           </div>
@@ -169,7 +169,7 @@
             <div class="col-6">
                 <label for="">TIPO GOL</label>
                 <select name="" id="selectGol" class="form-select">                  
-                    <option value="">Seleccionar Tipo</option>
+                    <option value="0">Seleccionar Tipo</option>
                     <?php while($goles = mysqli_fetch_assoc($todosLosTiposGoles)){?>
                     <option value="<?php echo $goles['ID_TIPO_GOL'];?>"><?php echo $goles['NOMBRE_TIPO_GOL'];?></option>
                     <?php } mysqli_free_result($todosLosTiposGoles);?>
@@ -194,10 +194,9 @@
     </div>
   </div>
 </div>
-
 <!-- Modal Amonestaciones -->
 <div class="modal fade" id="modalAmonestaciones" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
+  <div class="modal-dialog modal-lg">
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title" id="exampleModalLabel">Amonestaciones del Partido</h5>
@@ -216,15 +215,15 @@
             <div class="col-7">
                 <label for="">JUGADOR</label> 
                 <select name="" id="selectJugadoresAmonestaciones" class="form-select" >
-                    <option value="">Seleccionar Jugador</option>
+                    <option value="0">Seleccionar Jugador</option>
                 </select>
             </div>
           </div>
           <div class="row mt-2">
             <div class="col-4">
                 <label for="">TIPO TARJETA</label>
-                <select name="" id="" class="form-select">
-                    <option value="">Seleccionar Tipo</option>
+                <select name="" id="selectIdTarjeta" class="form-select">
+                    <option value="0">Seleccionar Tarjeta</option>
                   <?php while($tarjeta = mysqli_fetch_assoc($todosLosTiposTarjeta)){?>                
                     <option value="<?php echo $tarjeta['ID_TIPO_TARJETA'];?>"><?php echo $tarjeta['NOMBRE_TIPO_TARJETA'];?></option>
                   <?php } mysqli_free_result($todosLosTiposTarjeta);?>
@@ -232,23 +231,30 @@
             </div>
             <div class="col-4">
                 <label for="">TIPO FALTA</label>
-                <select name="" id="" class="form-select">
-                    <option value="">Seleccionar Falta</option>
+                <select name="" id="selectIdFalta" class="form-select">
+                    <option value="0">Seleccionar Falta</option>
                     <?php while($falta = mysqli_fetch_assoc($todosLosTiposFalta)){?>                
                     <option value="<?php echo $falta['ID_TIPO_FALTA'];?>"><?php echo $falta['NOMBRE_TIPO_FALTA'];?></option>
                   <?php } mysqli_free_result($todosLosTiposFalta);?>
                 </select>
-            </div>           
+            </div> 
+            <div class="col-4">
+              <label for="">TIEMPO</label>
+              <select name="" id="selecttiempoAmonestaciones" class="form-select">
+                <option value="0">Seleccionar Tiempo</option>
+                <option value="Primero">Primer Tiempo</option>
+                <option value="Segundo">Segundo Tiempo</option>
+              </select>
+            </div>          
           </div>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Generar Amonestacion</button>
+        <button type="button" id="btn-GenerarAmonestacion" class="btn btn-primary">Generar Amonestacion</button>
       </div>
     </div>
   </div>
 </div>
-
 <!-- Modal Substituciones -->
 <div class="modal fade" id="modalSubstituciones" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog">
@@ -273,12 +279,12 @@
         <div class="row">               
           <div class="col-6">
             <label for="">JUGADOR SALIENTE</label> 
-            <select name="" id="selectjugadorSale" class="form-select" >
+            <select name="0" id="selectjugadorSale" class="form-select" >
               <option value="">Seleccionar Jugador Salienete</option>
             </select>
           </div>
           <div class="col-6">
-           <label for="">JUGADOR ENTRANTE</label> 
+           <label for="0">JUGADOR ENTRANTE</label> 
             <select name="" id="selectjugadorEntra" class="form-select" >
              <option value="">Seleccionar Jugador Entrante</option>
            </select>
@@ -287,22 +293,21 @@
         <div class="row">
           <div class="col-12">
             <label for="">TIEMPO</label>
-            <select name="" id="" class="form-select">
+            <select name="" id="selecttiempoSubtituciones" class="form-select">
               <option value="0">Seleccionar Tiempo</option>
-              <option value="1">Primer Tiempo</option>
-              <option value="2">Segundo Tiempo</option>
+              <option value="Primero">Primer Tiempo</option>
+              <option value="Segundo">Segundo Tiempo</option>
             </select>
           </div>
         </div>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Generar Subtitucion</button>
+        <button type="button" id="btn-GenerarSubtitucion" class="btn btn-primary">Generar Subtitucion</button>
       </div>
     </div>
   </div>
 </div>
-
 <!-- Modal Observaciones -->
 <div class="modal fade" id="modalObserciones" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-lg">
@@ -314,12 +319,12 @@
       <div class="modal-body">
        <div class="col-12">
           <label for="" class="form-label">OBSERVACION</label>
-          <textarea class="form-control" id="" rows="5"  maxlength="255"></textarea>
+          <textarea class="form-control" id="Text-area-observacion" rows="5"  maxlength="255"></textarea>
         </div>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Generar Observacion</button>
+        <button type="button" id="btn-GenerarObservacion" class="btn btn-primary">Generar Observacion</button>
       </div>
     </div>
   </div>
@@ -393,41 +398,119 @@
 let minuto = "";
 
 /*Ajax Insertar Datos*/
+$('#btn-GenerarGol').click(function(){
+   
+  let selectIdClub = $('#selectClub').val();
+  let selectRutJugador = $('#selectJugadores').val();
+  let selectIdGol = $('#selectGol').val();
+  let selectTiempo = $('#selecttiempo').val();
+   
+  $.ajax({
+    url: "../ajax/php/insertarGolesPartidos.php",
+    type: "POST",
+    data: {
+    idpartidofk: <?=$_GET['partido']?>,
+    rutGoleador: selectRutJugador,
+    idtipogol: selectIdGol,
+    min: minuto,
+    tiempo: selectTiempo},
+    dataType: "json",
+    success: function(respuesta){
+      $('#selectClub').val(0);
+      $('#selectJugadores').val(0);
+      $('#selectGol').val(0);
+      $('#selecttiempo').val(0);
+  
+    },
+    error: function(){
+      console.log("No funciona ");
+    }
+  })   
+})
+$('#btn-GenerarAmonestacion').click(function(){
+ 
+  let jugadorAmonestado = $('#selectJugadoresAmonestaciones').val()
+  let IdTarjeta = $('#selectIdTarjeta').val()
+  let IdFalta = $('#selectIdFalta').val()
+  let Tiempo = $('#selecttiempoAmonestaciones').val()
+  $.ajax({
+    url: "../ajax/php/insertarAmonestacionesPartidos.php",
+    type: "POST",
+    data: {
+    idpartidofk: <?=$_GET['partido']?>,
+    rutamonestado: jugadorAmonestado,
+    idtipotarjeta: IdTarjeta,
+    idtipofalta: IdFalta,
+    min: minuto,
+    tiempo: Tiempo},
+    dataType: "json",
+    success: function(respuesta){
+      $('#selectClub').val(0);
+      $('#selectJugadoresAmonestaciones').val(0)
+      $('#selectIdTarjeta').val(0)
+      $('#selectIdFalta').val(0)
+      $('#selecttiempoAmonestaciones').val(0);
+  
+    },
+    error: function(){
+      console.log("No funciona ");
+    }
+  }) 
 
+})
+$('#btn-GenerarSubtitucion').click(function(){
 
+  let jugadorSale = $('#selectjugadorSale').val();
+  let jugadorEntra = $('#selectjugadorEntra').val();
+  let Tiempo = $('#selecttiempoSubtituciones').val();
+
+  $.ajax({
+    url: "../ajax/php/insertSubtitucionPartido.php",
+    type: "POST",
+    data: {
+    idpartidofk: <?=$_GET['partido']?>,
+    rutjugadorEntra: jugadorEntra,
+    rutjugadorSale: jugadorSale,
+    min: minuto,
+    tiempo: Tiempo},
+    dataType: "json",
+    success: function(respuesta){
+      $('#selectclubsustituciones').val(0);
+      $('#selectjugadorSale').val(0)
+      $('#selectjugadorEntra').val(0)
+      $('#selecttiempoSubtituciones').val(0)    
+  
+    },
+    error: function(){
+      console.log("No funciona ");
+    }
+  }) 
+})
+$('#btn-GenerarObservacion').click(function(){
+   let observacion = $('#Text-area-observacion').val();
+   let rut_Turno = <?php echo $_SESSION['RutUsuario'] ?>;
+   
+   $.ajax({
+    url: "../ajax/php/insertarObservacionPartidos.php",
+    type: "POST",
+    data: {
+    idpartidofk: <?=$_GET['partido']?>,
+    observacion: observacion,
+    rutturno: rut_Turno},
+    dataType: "json",
+    success: function(respuesta){
+      $('#Text-area-observacion').val("");     
+    },
+    error: function(){
+      console.log("No funciona ");
+    }
+  }) 
+
+})
 /*=======================================*/
 
 $('#btnModalGoles').click(function(){
   minuto = $('#time').text();
- 
-  $('#btn-GenerarGol').click(function(){
-   
-   let selectIdClub = $('#selectClub').val();
-   let selectRutJugador = $('#selectJugadores').val();
-   let selectIdGol = $('#selectGol').val();
-   let selectTiempo = $('#selecttiempo').val();
-   
-    $.ajax({
-        url: "../ajax/php/insertarGolesPartidos.php",
-        type: "POST",
-        data: {
-        idpartidofk: <?=$_GET['partido']?>,
-        rutGoleador: selectRutJugador,
-        idtipogol: selectIdGol,
-        min: minuto,
-        tiempo: selectTiempo},
-        dataType: "json",
-        success: function(respuesta){
-           console.log(respuesta);
-        },
-        error: function(){
-            console.log("No funciona ");
-        }
-    }) 
-   
-   
-  })
-
 })
 $('#btnModalAmonestaciones').click(function(){
   minuto = $('#time').text();
