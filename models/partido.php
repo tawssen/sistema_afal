@@ -229,4 +229,38 @@ class Partido{
         return $respuesta;
     }
 
+    public function cargarProgramacion($serie){
+        $database = Database::connect();
+        $sql = 'SELECT CL.ID_CLUB AS ID_CLUB_LOCAL,
+        CL.NOMBRE_CLUB AS CLUB_LOCAL,
+        CV.ID_CLUB AS ID_CLUB_VISITA, 
+        CV.NOMBRE_CLUB AS CLUB_VISITA, 
+        CL.NOMBRE_ESTADIO AS ESTADIO_LOCAL,
+        P.FECHA_DATE AS FECHA_PARTIDO FROM PARTIDOS P 
+        INNER JOIN CAMPEONATO C ON (P.ID_CAMPEONATO_FK = C.ID_CAMPEONATO) 
+        INNER JOIN CLUB CL ON (P.ID_CLUB_LOCAL_FK = CL.ID_CLUB) 
+        INNER JOIN CLUB CV ON (P.ID_CLUB_VISITA_FK = CV.ID_CLUB) 
+        WHERE ID_SERIE_FK ='.$serie.' AND C.ID_ESTADO_CAMPEONATO_FK = 2';
+        $respuesta = $database->query($sql);
+        return $respuesta;
+    }
+
+    public function obtenerResultados($serie){
+        $database = Database::connect();
+        $sql = 'SELECT P.ID_PARTIDO AS ID_PARTIDO, CL.ID_CLUB AS ID_CLUB_LOCAL, CL.NOMBRE_CLUB AS CLUB_LOCAL,CV.ID_CLUB AS ID_CLUB_VISITA, CV.NOMBRE_CLUB AS CLUB_VISITA, CL.NOMBRE_ESTADIO AS ESTADIO_LOCAL,P.FECHA_DATE AS FECHA_PARTIDO FROM PARTIDOS P
+        INNER JOIN CAMPEONATO C ON (P.ID_CAMPEONATO_FK = C.ID_CAMPEONATO)
+        INNER JOIN CLUB CL ON (P.ID_CLUB_LOCAL_FK = CL.ID_CLUB)
+        INNER JOIN CLUB CV ON (P.ID_CLUB_VISITA_FK = CV.ID_CLUB) WHERE ID_SERIE_FK ='.$serie.' AND C.ID_ESTADO_CAMPEONATO_FK = 2 AND P.ID_ESTADO_PARTIDO_FK = 4';
+        $respuesta = $database->query($sql);
+        return $respuesta;
+    }
+
+    public function obtenerGoles($club,$partido){
+        $database = Database::connect();
+        $sql = 'SELECT * FROM PARTIDOS_GOLES PG 
+        INNER JOIN PARTIDOS P ON (PG.ID_PARTIDO_FK = P.ID_PARTIDO) 
+        INNER JOIN PERSONA_JUGADOR PJ ON (PG.RUT_GOLEADOR_FK = PJ.RUT_PERSONA_FK) WHERE ID_PARTIDO_FK ='.$partido.' AND ID_CLUB_FK ='.$club;
+        $respuesta = $database->query($sql);
+        return $respuesta->fetch_all(MYSQLI_ASSOC);
+    }
 }

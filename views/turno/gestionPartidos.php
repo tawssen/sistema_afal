@@ -572,7 +572,7 @@ $('#btnTerminarPartido').click(function(){
           document.location.href='<?=base_url?>turno/terminarPartido&partido=<?=$_GET['partido']?>&ganador=<?=$datosPartido->ID_CLUB_LOCAL_FK?>&perdedor=<?=$datosPartido->ID_CLUB_VISITA_FK?>&gg='+golesLocal+'&gp='+golesVisita+'';
         }else if(golesLocal<golesVisita){
           console.log("Gano el equipo Visitante");
-          document.location.href='<?=base_url?>turno/terminarPartido&partido=<?=$_GET['partido']?>&ganador=<?=$datosPartido->ID_CLUB_VISITA_FK?>&perdedor=<?=$datosPartido->ID_CLUB_LOCAL_FK?>';
+          document.location.href='<?=base_url?>turno/terminarPartido&partido=<?=$_GET['partido']?>&ganador=<?=$datosPartido->ID_CLUB_VISITA_FK?>&perdedor=<?=$datosPartido->ID_CLUB_LOCAL_FK?>&gg='+golesVisita+'&gp='+golesLocal+'';
         }else{
           console.log("Han empatado");
           document.location.href='<?=base_url?>turno/terminarPartido&partido=<?=$_GET['partido']?>&empate=1';

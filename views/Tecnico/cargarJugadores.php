@@ -296,7 +296,8 @@ table tbody::-webkit-scrollbar-thumb:active {
 
                         }
                     })
-            }
+                }
+            }   
         }
     })
 </script>

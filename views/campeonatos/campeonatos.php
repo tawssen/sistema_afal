@@ -5,6 +5,9 @@
 </div>
 
 <div class="container-xl mt-3 border-top border-bottom p-4">
+    <div class="d-flex justify-content-center w-100">
+        <p class="alert alert-warning text-center">Procure tener un campeonato vigente por serie</p>
+    </div>
     <div class="row">
         <div class="col-lg-12">
             <div class="table-responsive">

@@ -18,6 +18,7 @@
     <link href="<?=base_url?>styles/aside.css" rel="stylesheet">
     <link rel="stylesheet" href="<?=base_url?>styles/turno.css">
     <link rel="stylesheet" href="<?=base_url?>styles/toastr.css">
+    <link rel="stylesheet" href="<?=base_url?>styles/programacion.css">
 
 
     <style>
@@ -54,10 +55,13 @@
             <a class="nav-link" aria-current="page" href="<?=base_url?>">Inicio</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">Programación</a>
+            <a class="nav-link" href="<?=base_url?>publico/programacion&serie=1">Programación</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">Posiciones</a>
+            <a class="nav-link" href="<?=base_url?>publico/posiciones&campeonato=1">Posiciones</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="<?=base_url?>publico/resultados&serie=1">Resultados</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="#">Noticias</a>

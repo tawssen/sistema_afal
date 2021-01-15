@@ -130,5 +130,12 @@ class Tabla_Posiciones{
         $respuesta = $database->query($sql);
         return $respuesta;
     }
+
+    public function obtenerTablaCampeonato(){
+        $database = Database::connect();
+        $sql = 'SELECT * FROM tabla_posiciones INNER JOIN club ON tabla_posiciones.ID_CLUB_FK = club.ID_CLUB WHERE ID_CAMPEONATO_FK='.$this->getidCampeonatoFk().' ORDER BY PTS DESC'; 
+        $respuesta = $database->query($sql);
+        return $respuesta;
+    }
     
 }

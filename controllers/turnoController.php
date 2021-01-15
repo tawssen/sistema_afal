@@ -70,8 +70,8 @@ class turnoController{
             $pgGanador = (int)$datosClubGanador->PG+1;
             $peGanador = (int)$datosClubGanador->PE;
             $ppGanador = (int)$datosClubGanador->PP;
-            $gfGanador = (int)$_GET['gg'];
-            $gcGanador = (int)$_GET['gp'];
+            $gfGanador = (int)$datosClubGanador->GF+(int)$_GET['gg'];
+            $gcGanador = (int)$datosClubGanador->GC+(int)$_GET['gp'];
             $difGanador = $gfGanador+$gcGanador;
             $tablaGanador->setPTS($ptsGanador);
             $tablaGanador->setPJ($pjGanador);
@@ -91,8 +91,8 @@ class turnoController{
             $pgPerdedor = (int)$datosClubPerdedor->PG+0;
             $pePerdedor = (int)$datosClubPerdedor->PE+0;
             $ppPerdedor = (int)$datosClubPerdedor->PP+1;
-            $gfPerdedor = (int)$_GET['gp'];
-            $gcPerdedor = (int)$_GET['gg'];
+            $gfPerdedor = (int)$datosClubPerdedor->GF+(int)$_GET['gp'];
+            $gcPerdedor = (int)$datosClubPerdedor->GC+(int)$_GET['gg'];
             $difPerdedor = $gfPerdedor-$gcPerdedor;
             $tablaPerdedor->setPTS($ptsPerdedor);
             $tablaPerdedor->setPJ($pjPerdedor);
